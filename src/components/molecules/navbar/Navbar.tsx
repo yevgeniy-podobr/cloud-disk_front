@@ -1,5 +1,6 @@
 import React from 'react'
 import './navbar.scss'
+import { NavLink } from 'react-router-dom'
 
 export const Navbar = () => {
   return (
@@ -9,10 +10,10 @@ export const Navbar = () => {
           MERN CLOUD
         </div>
         <div className="navbar__login">
-          Sing In
+          <NavLink to='/login'>Sing In</NavLink>
         </div>
         <div className="navbar__registration">
-          Sign Up
+          <NavLink to='/registration'>Sing Up</NavLink>
         </div>
       </div>
     </div>
