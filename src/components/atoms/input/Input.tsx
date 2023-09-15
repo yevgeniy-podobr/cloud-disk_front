@@ -1,13 +1,12 @@
 import React from "react";
 import './input.scss'
 
-interface Props {
-  type: string,
-  placeholder: string
-}
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export const Input = (pros: Props) => {
+  const {type, placeholder, value, onChange } = pros
+
   return (
-    <input type={pros.type} placeholder={pros.placeholder} />
+    <input type={type} placeholder={placeholder} value={value} onChange={onChange}/>
   )
 }
