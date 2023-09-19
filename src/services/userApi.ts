@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { toast } from 'react-toastify'
-import { AppDispatch, setIsAuth, setUser, useAppDispatch } from '../reducers'
+import { AppDispatch, setIsAuth, setUser } from '../reducers'
 
 export const registration = async (email: string, password: string) => {
   try {
@@ -20,7 +19,7 @@ export const login = (email: string, password: string) => {
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
     } catch (error: any) {
-      alert(error.responce.data.message)
+      alert(error.response.data.message)
     }
   }
 }

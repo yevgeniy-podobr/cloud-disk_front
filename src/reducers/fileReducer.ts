@@ -1,32 +1,36 @@
-import { AsyncThunk, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-const defaultState = {
-
+interface IFile {
+  childs: string[]
+  name: string
+  path: string
+  size: number
+  type: string
+  user: string
+  _id: string
+}
+interface IFiles {
+  files: IFile[],
+  currentDir: null | string
 }
 
-// export default function fileReducer (state = defaultState, action: any) {
-//   switch (action) {
-  
-//     default:
-//       return state;
-//   }
-// }
-
-// export default function userReducer (state = defaultState, action: any) {
-//   switch (action) {
-  
-//     default:
-//       return state;
-//   }
-// }
+const defaultState: IFiles = {
+  files: [],
+  currentDir: null,
+}
 
 export const fileSlice = createSlice({
   name: 'FILE-REDUCER',
   initialState: defaultState,
   reducers: {
-
+    setFiles: (state, action) => {
+      state.files = action.payload
+    },
+    setCurrentDir: (state, action) => {
+      state.currentDir = action.payload
+    },
   }
 })
 
-// export const { setWorkerInfo } = obInfoSlice.actions
+export const { setFiles,  setCurrentDir} = fileSlice.actions
 export const fileReducer = fileSlice.reducer
