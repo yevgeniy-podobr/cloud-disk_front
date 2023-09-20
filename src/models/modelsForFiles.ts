@@ -10,5 +10,5 @@ export interface IFile {
 }
 export interface IFiles {
   files: IFile[],
-  currentDir: null | string
+  currentFolder: null | string
 }

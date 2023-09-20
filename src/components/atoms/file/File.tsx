@@ -1,6 +1,6 @@
 import React from "react";
 import './file.scss'
-import dirIcon from '../../../assets/dir-icon.png'
+import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
 
 interface IProps {
@@ -16,7 +16,7 @@ export const File = (props: IProps) => {
     <div className="file">
       <img 
         className="file__icon" 
-        src={type === 'dir' ? dirIcon : fileIcon} 
+        src={type === 'dir' ? folderIcon : fileIcon} 
         alt="dir icon" 
       />
       <div className="file__name">{name}</div>

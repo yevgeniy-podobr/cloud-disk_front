@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import './disk.scss';
 import { useAppDispatch, useTypedSelector } from "../../../reducers";
-import { creatDir, getFiles } from "../../../services/fileApi";
+import { creatFolder, getFiles } from "../../../services/fileApi";
 import { FilesList } from "../../molecules";
 
 export const Disk = React.memo(() => {
   const dispatch = useAppDispatch()
-  const currentDir = useTypedSelector(state => state.file.currentDir)
+  const currentFolder = useTypedSelector(state => state.file.currentFolder)
 
-  const createDirHandler = () => {
-    dispatch(creatDir(currentDir, 'child_dir_074_05'))
+  const createFolderHandler = () => {
+    dispatch(creatFolder(currentFolder, 'child_dir_074_05'))
   }
 
   useEffect(() => {
-    dispatch(getFiles(currentDir))
-  }, [currentDir, dispatch])
+    dispatch(getFiles(currentFolder))
+  }, [currentFolder, dispatch])
 
   return  (
     <div className="disk">
@@ -22,7 +22,7 @@ export const Disk = React.memo(() => {
         <button className="disk__btns-back">
           Back
         </button>
-        <button className="disk__btns-create" onClick={() => createDirHandler()}>
+        <button className="disk__btns-create" onClick={() => createFolderHandler()}>
           Create a folder
         </button>
       </div>

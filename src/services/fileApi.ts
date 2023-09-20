@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { AppDispatch, addFile, setFiles } from '../reducers'
 
-export const getFiles = (dirId: string | null) => {
+export const getFiles = (folderId: string | null) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/files${dirId ? `?parent=${dirId}` : ''}`, {
+      const response = await axios.get(`http://localhost:5000/api/files${folderId ? `?parent=${folderId}` : ''}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -16,12 +16,12 @@ export const getFiles = (dirId: string | null) => {
   }
 }
 
-export const creatDir = (dirId: string | null, name: string) => {
+export const creatFolder = (folderId: string | null, name: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       const response = await axios.post('http://localhost:5000/api/files', {
         name,
-        parent: dirId,
+        parent: folderId,
         type: 'dir'
       }, {
         headers: {
