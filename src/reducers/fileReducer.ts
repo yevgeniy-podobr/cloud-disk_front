@@ -16,8 +16,11 @@ export const fileSlice = createSlice({
     setCurrentDir: (state, action) => {
       state.currentDir = action.payload
     },
+    addFile: (state, action) => {
+      state.files = [...state.files, action.payload]
+    },
   }
 })
 
-export const { setFiles,  setCurrentDir} = fileSlice.actions
+export const { setFiles,  setCurrentDir, addFile} = fileSlice.actions
 export const fileReducer = fileSlice.reducer
