@@ -1,0 +1,28 @@
+@import '../../../utils/main.scss';
+
+.file {
+  padding-top: 20px;
+  box-sizing: border-box;
+  border-bottom: solid 2px $font-color;
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  align-items: center;
+  &:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+  &__name {
+    grid-column-start: 2;
+  }
+  &__date {
+    grid-column-start: 5;
+    justify-self: center;
+  }
+  &__size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+  &__icon {
+    justify-self: center;
+  }
+}

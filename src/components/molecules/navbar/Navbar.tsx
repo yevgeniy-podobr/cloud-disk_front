@@ -14,7 +14,7 @@ export const Navbar = () => {
   } 
 
   return (
-    <div className="navbar">
+    <div className="navbar container">
       <div className="navbar__container">
         <div className="navbar__header">
           MERN CLOUD
@@ -29,7 +29,7 @@ export const Navbar = () => {
             </div>
           </>
         ) : (
-          <div className="navbar__login" onClick={() => onLogout()}>
+          <div className="navbar__sign-out" onClick={() => onLogout()}>
             Sing Out
           </div>
         )}

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import './disk.scss';
 import { useAppDispatch, useTypedSelector } from "../../../reducers";
 import { getFiles } from "../../../services/fileApi";
+import { FilesList } from "../../molecules";
 
 export const Disk = React.memo(() => {
   const dispatch = useAppDispatch()
@@ -13,7 +14,16 @@ export const Disk = React.memo(() => {
 
   return  (
     <div className="disk">
-      DISK
+      <div className="disk__btns">
+        <button className="disk__btns-back">
+          Back
+        </button>
+        <button className="disk__btns-create">
+          Create a folder
+        </button>
+      </div>
+      <FilesList />
+
     </div>
   )
 })

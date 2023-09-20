@@ -20,7 +20,7 @@ const App = React.memo(() => {
     <BrowserRouter>
       <div className="app">
         <Navbar/>
-        <div className="app__wrapper">
+        <div className="app__wrapper container">
           {!isAuth 
             ? (
                 <Routes>

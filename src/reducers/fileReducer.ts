@@ -1,18 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-interface IFile {
-  childs: string[]
-  name: string
-  path: string
-  size: number
-  type: string
-  user: string
-  _id: string
-}
-interface IFiles {
-  files: IFile[],
-  currentDir: null | string
-}
+import { IFiles } from '../models'
 
 const defaultState: IFiles = {
   files: [],

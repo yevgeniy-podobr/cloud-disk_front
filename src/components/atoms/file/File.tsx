@@ -1,10 +1,27 @@
 import React from "react";
 import './file.scss'
+import dirIcon from '../../../assets/dir-icon.png'
+import fileIcon from '../../../assets/file-icon.png'
 
-export const File = () => {
+interface IProps {
+  name: string,
+  date: string,
+  size: number,
+  type: string,
+}
+
+export const File = (props: IProps) => {
+  const { name, date, size, type} = props
   return (
     <div className="file">
-      File
+      <img 
+        className="file__icon" 
+        src={type === 'dir' ? dirIcon : fileIcon} 
+        alt="dir icon" 
+      />
+      <div className="file__name">{name}</div>
+      <div className="file__date">{date}</div>
+      <div className="file__size">{size}</div>
     </div>
   )
 }

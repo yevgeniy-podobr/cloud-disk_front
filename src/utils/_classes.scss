@@ -1,0 +1,21 @@
+.container {
+  box-sizing: border-box;
+  padding: $padding-page 15px;
+  width: 100%;
+  max-width: $smallWidth;
+  @media (min-width: $mediumWidth) {
+    width: calc(100% - 40px);
+    max-width: calc($largeWidth - 124px);
+  }
+  @media (min-width: $largeWidth) {
+    width: calc(100% - 124px);
+    max-width: $largeWidth;
+  }
+  @media (min-width: $extraLargeWidth) {
+    width: calc(100% - 200px);
+    max-width: calc(#{$extraLargeWidth} - 200px);
+  }
+  @media (max-width: $extraSmallWidth) {
+    padding: $padding-page 10px;
+  }
+}
