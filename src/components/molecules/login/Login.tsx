@@ -26,7 +26,7 @@ export const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="login__btn" onClick={() => dispatch(login(email, password))}>
+      <button className="login__btn button" onClick={() => dispatch(login(email, password))}>
         Sign In
       </button>
     </div>

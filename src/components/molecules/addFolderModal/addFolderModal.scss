@@ -27,7 +27,7 @@
     }
     &-btn-close {
       cursor: pointer;
-      width: 20px;
+      width: 23px;
     }
   }
 
@@ -36,13 +36,11 @@
       display: flex;
       justify-content: flex-end;
     }
-    width: 100px;
-    height: 25px;
-    cursor: pointer;
+    height: 25px
   }
 
   &__btn-create:disabled {
-    color: grey;
+    background-color: #ccc;
   }
 
   input {

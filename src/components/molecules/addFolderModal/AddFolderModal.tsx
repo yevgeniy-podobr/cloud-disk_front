@@ -33,7 +33,7 @@ export const AddFolderModal = (props: IProps) => {
         />
         <div className="add-folder-modal__btn-create-wrapper">
           <button 
-            className="add-folder-modal__btn-create"
+            className="add-folder-modal__btn-create button"
             onClick={() => {
               createFolderHandler(folderName)
               setAddFolderModalOpen(false)

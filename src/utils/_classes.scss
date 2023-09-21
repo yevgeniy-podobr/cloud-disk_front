@@ -1,3 +1,5 @@
+@import './variables';
+
 .container {
   box-sizing: border-box;
   padding: $padding-page 15px;
@@ -17,5 +19,20 @@
   }
   @media (max-width: $extraSmallWidth) {
     padding: $padding-page 10px;
+  }
+}
+
+.button {
+  border: none;
+  background-color: $font-color;
+  border-radius: 15px;
+  color: white;
+  padding: 5px 10px;
+  align-items: flex-end;
+  font-weight: 700;
+  width: 100px;
+  height: 30px;
+  &:hover {
+    cursor: pointer;
   }
 }
