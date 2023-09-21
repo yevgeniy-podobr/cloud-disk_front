@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './disk.scss';
 import { setCurrentFolder, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
-import { creatFolder, getFiles } from "../../../services/fileApi";
+import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 
 export const Disk = () => {
@@ -20,6 +20,12 @@ export const Disk = () => {
     dispatch(setFolderStack(folderStack.slice(0, folderStack.length-1)))
   }
 
+  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = new Array(e.target.files![0])
+
+    files.forEach(file => dispatch(uploadFile(file, currentFolder)))
+  }
+
   useEffect(() => {
     dispatch(getFiles(currentFolder))
   }, [currentFolder, dispatch])
@@ -33,6 +39,18 @@ export const Disk = () => {
         <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>
           Create a folder
         </button>
+
+        {/* //TODO need refactoring upload file */}
+        <div className="disk__btns-upload">    
+          <label htmlFor="disk__btns-upload-input" className="disk__btns-upload-label">Upload file</label>
+          <input 
+            type="file" 
+            id="disk__btns-upload-input" 
+            className="disk__btns-upload-input" 
+            onChange={(e) => fileUploadHandler(e)}  
+            // multiple={true}
+          />
+        </div>
       </div>
       <FilesList />
       {isAddFolderModalOpen && (
