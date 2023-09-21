@@ -1,7 +1,7 @@
 import React from 'react'
 import './navbar.scss'
 import { NavLink } from 'react-router-dom'
-import { setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../reducers'
+import { setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 
 export const Navbar = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth)

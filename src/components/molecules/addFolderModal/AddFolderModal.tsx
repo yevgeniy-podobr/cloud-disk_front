@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './addFolderModal.scss';
 import { Input } from "../../atoms/input";
+import { useTypedSelector } from "../../../redux";
 
 interface IProps {
   setAddFolderModalOpen: React.Dispatch<React.SetStateAction<boolean>>

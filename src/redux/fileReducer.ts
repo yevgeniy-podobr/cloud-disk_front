@@ -4,6 +4,7 @@ import { IFiles } from '../models'
 const defaultState: IFiles = {
   files: [],
   currentFolder: null,
+  folderStack: [],
 }
 
 export const fileSlice = createSlice({
@@ -19,8 +20,11 @@ export const fileSlice = createSlice({
     addFile: (state, action) => {
       state.files = [...state.files, action.payload]
     },
-  }
+    setFolderStack: (state, action) => {
+      state.folderStack = action.payload
+    }
+   }
 })
 
-export const { setFiles,  setCurrentFolder, addFile} = fileSlice.actions
+export const { setFiles,  setCurrentFolder, addFile, setFolderStack } = fileSlice.actions
 export const fileReducer = fileSlice.reducer

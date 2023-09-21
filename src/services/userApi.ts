@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AppDispatch, setIsAuth, setUser } from '../reducers'
+import { AppDispatch, setIsAuth, setUser } from '../redux'
 
 export const registration = async (email: string, password: string) => {
   try {

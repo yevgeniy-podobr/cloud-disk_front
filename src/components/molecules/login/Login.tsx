@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './login.scss'
 import { Input } from "../../atoms";
 import { login } from "../../../services/userApi";
-import {  useAppDispatch } from "../../../reducers";
+import {  useAppDispatch } from "../../../redux";
 
 export const Login = () => {
   const [email, setEmail] = useState('')

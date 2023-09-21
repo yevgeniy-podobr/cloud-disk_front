@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AppDispatch, addFile, setFiles } from '../reducers'
+import { AppDispatch, addFile, setFiles } from '../redux'
 
 export const getFiles = (folderId: string | null) => {
   return async (dispatch: AppDispatch) => {

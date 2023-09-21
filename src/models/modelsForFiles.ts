@@ -10,5 +10,6 @@ export interface IFile {
 }
 export interface IFiles {
   files: IFile[],
-  currentFolder: null | string
+  currentFolder: null | string,
+  folderStack: (string | null)[]
 }

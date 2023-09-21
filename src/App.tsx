@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
 import { Registration, Login } from './components/molecules';
-import { useAppDispatch, useTypedSelector } from './reducers';
+import { useAppDispatch, useTypedSelector } from './redux';
 import { auth } from './services/userApi';
 import { Disk } from './components/organism';
 
