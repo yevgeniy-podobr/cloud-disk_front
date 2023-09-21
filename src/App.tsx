@@ -7,13 +7,14 @@ import { useAppDispatch, useTypedSelector } from './redux';
 import { auth } from './services/userApi';
 import { Disk } from './components/organism';
 
-const App = React.memo(() => {
+const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
   const dispatch = useAppDispatch()
+  const tokenFromStorage = localStorage.getItem("token")
 
   useEffect(() => {
-    localStorage.getItem("token") && dispatch(auth())
-    // eslint-disable-next-line
+    tokenFromStorage && dispatch(auth())
+    // eslint-disable-next-line 
   }, [])
 
   return (
@@ -21,7 +22,7 @@ const App = React.memo(() => {
       <div className="app">
         <Navbar/>
         <div className="app__wrapper container">
-          {!isAuth 
+          {(!isAuth && !tokenFromStorage )
             ? (
                 <Routes>
                   <Route path='/registration' element={<Registration />}/>
@@ -40,6 +41,6 @@ const App = React.memo(() => {
     </BrowserRouter>
 
   );
-})
+}
 
 export default App;
