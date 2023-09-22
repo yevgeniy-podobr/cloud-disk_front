@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { AppDispatch, addFile, deleteFile, setFiles } from '../redux'
+import { toast } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css';
 
 export const getFiles = (folderId: string | null) => {
   return async (dispatch: AppDispatch) => {
@@ -11,7 +13,7 @@ export const getFiles = (folderId: string | null) => {
       })
       dispatch(setFiles(response.data))
     } catch (error: any) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 }
@@ -30,7 +32,7 @@ export const creatFolder = (folderId: string | null, name: string) => {
       })
       dispatch(addFile(response.data))
     } catch (error: any) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 }
@@ -48,7 +50,7 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
       })
       dispatch(addFile(response.data))
     } catch (error: any) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 }
@@ -77,9 +79,9 @@ export const deleteFileApi = (fileId: string,) => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
       })
       dispatch(deleteFile(fileId))
-      alert(response.data.message)
+      toast.success(response.data.message)
     } catch (error: any) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 }

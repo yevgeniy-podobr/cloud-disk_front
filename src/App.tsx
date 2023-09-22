@@ -6,6 +6,8 @@ import { Registration, Login } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth } from './services/userApi';
 import { Disk } from './components/organism';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
@@ -20,6 +22,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="app">
+          <ToastContainer
+            limit={3}
+            newestOnTop={true}
+            autoClose={3000}
+            theme="light"
+          />
         <Navbar/>
         <div className="app__wrapper container">
           {(!isAuth && !tokenFromStorage )

@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { AppDispatch, setIsAuth, setUser } from '../redux'
+import { toast } from 'react-toastify'
 
 export const registration = async (email: string, password: string) => {
   try {
     const response = await axios.post(`http://localhost:5000/api/auth/registration`, {email, password})
 
-    alert(response.data.message)
+    toast.success(response.data.message)
   } catch (error: any) {
-    alert(error.response.data.message)
+    toast.error(error.response.data.message)
   }
 }
 
@@ -19,7 +20,7 @@ export const login = (email: string, password: string) => {
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
     } catch (error: any) {
-      alert(error.response.data.message)
+      toast.error(error.response.data.message)
     }
   }
 }
@@ -37,7 +38,7 @@ export const auth = () => {
       localStorage.setItem("token", response.data.token)
     } catch (error: any) {
       localStorage.removeItem("token")
-      alert(error.message)
+      toast.error(error.response.data.message)
     }
   }
 }

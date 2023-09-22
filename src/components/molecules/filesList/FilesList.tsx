@@ -13,7 +13,14 @@ export const FilesList = () => {
         <div className="files-list__header-date">Date</div>
         <div className="files-list__header-size">Size</div>
       </div>
-      {files.map(file => {
+      {!files.length ? (
+        <div className="files-list__empty">
+          The cloud is empty.
+          <br/>
+          Please create a folder or upload a file...
+        </div>
+      ) : (
+        files.map(file => {
           return (
             <File 
               key={file._id} 
@@ -23,8 +30,9 @@ export const FilesList = () => {
               id={file._id}
               type={file.type}
             />
-          )
-        })}
+          )}
+        )
+      )}
     </div>
   )
 }

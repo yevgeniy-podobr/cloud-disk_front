@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import './registration.scss'
 import { Input } from "../../atoms";
-import { registration } from "../../../services/userApi";
+import { login, registration } from "../../../services/userApi";
+import { useAppDispatch } from "../../../redux";
 
 export const Registration = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useAppDispatch()
 
+  const registrationHandler = () => {
+    registration(email, password).then((_) => 
+      setTimeout(() => {
+        dispatch(login(email, password))
+      }, 4000)
+    )
+  }
   return (
     <div className="registration">
       <p className="registration__header">Registration</p>
@@ -24,7 +33,7 @@ export const Registration = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="registration__btn" onClick={() => registration(email, password)}>
+      <button className="registration__btn" onClick={() => registrationHandler()}>
         Sign Up
       </button>
     </div>
