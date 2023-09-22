@@ -27,3 +27,13 @@
     }
   }
 }
+
+.drop-area {
+  width: 100%;
+  height: 80vh;
+  border: dashed $font-color 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}

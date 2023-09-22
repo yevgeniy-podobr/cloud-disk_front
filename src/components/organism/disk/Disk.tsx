@@ -22,9 +22,34 @@ export const Disk = () => {
   }
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = new Array(e.target.files![0])
+    ///TODO: add the ability to upload multiple files
+  
+    // const files = new Array(e.target.files)
 
-    files.forEach(file => dispatch(uploadFile(file, currentFolder)))
+    // files.forEach(file => dispatch(uploadFile(file, currentFolder)))
+
+    dispatch(uploadFile(e.target.files![0], currentFolder))
+  }
+
+  const dragEnterHandler = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDrageEnter(true)
+  }
+
+  const dragLeaveHendler = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDrageEnter(false)
+  }
+
+  const dragOverHendler = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDrageEnter(true)
+  }
+  
+  const dropHandler = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDrageEnter(false)
+    dispatch(uploadFile(e.dataTransfer.files[0], currentFolder))
   }
 
   useEffect(() => {
@@ -32,34 +57,51 @@ export const Disk = () => {
   }, [currentFolder, dispatch])
 
   return  (
-    <div className="disk">
-      <div className="disk__btns">
-        <button className="disk__btns-back" onClick={() => onClickBack()}>
-          Back
-        </button>
-        <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>
-          Create a folder
-        </button>
+    !dragEnter ? (
+      <div className="disk" 
+        onDragEnter={dragEnterHandler} 
+        onDragLeave={dragLeaveHendler}
+        onDragOver={dragOverHendler}
+      >
+        <div className="disk__btns">
+          <button className="disk__btns-back" onClick={() => onClickBack()}>
+            Back
+          </button>
+          <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>
+            Create a folder
+          </button>
 
-        {/* //TODO need refactoring upload file and drug and drop */}
-        <div className="disk__btns-upload">    
-          <label htmlFor="disk__btns-upload-input" className="disk__btns-upload-label">Upload file</label>
-          <input 
-            type="file" 
-            id="disk__btns-upload-input" 
-            className="disk__btns-upload-input" 
-            onChange={(e) => fileUploadHandler(e)}  
-            // multiple={true}
-          />
+          {/* //TODO need refactoring upload file and drug and drop */}
+          <div className="disk__btns-upload">    
+            <label htmlFor="disk__btns-upload-input" className="disk__btns-upload-label">Upload file</label>
+            <input 
+              type="file" 
+              id="disk__btns-upload-input" 
+              className="disk__btns-upload-input" 
+              onChange={(e) => fileUploadHandler(e)}  
+              // multiple={true}
+            />
+          </div>
         </div>
+        <FilesList />
+        {isAddFolderModalOpen && (
+          <AddFolderModal 
+            setAddFolderModalOpen={setAddFolderModalOpen}
+            createFolderHandler={createFolderHandler}
+          />
+        )}
       </div>
-      <FilesList />
-      {isAddFolderModalOpen && (
-        <AddFolderModal 
-          setAddFolderModalOpen={setAddFolderModalOpen}
-          createFolderHandler={createFolderHandler}
-        />
-      )}
-    </div>
+    ) : (
+      <div 
+        className="drop-area"
+        onDragEnter={dragEnterHandler} 
+        onDragLeave={dragLeaveHendler} 
+        onDragOver={dragOverHendler}
+        onDrop={dropHandler}
+      >
+        Add file...
+      </div>
+    )
+ 
   )
 }
