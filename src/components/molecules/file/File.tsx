@@ -3,7 +3,7 @@ import './file.scss'
 import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
 import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector } from "../../../redux";
-import { downloadFile } from "../../../services/fileApi";
+import { deleteFileApi, downloadFile } from "../../../services/fileApi";
 
 interface IProps {
   name: string,
@@ -29,6 +29,11 @@ export const File = (props: IProps) => {
     downloadFile(id, name)
   }
 
+  const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation()
+    dispatch(deleteFileApi(id))
+  }
+
   return (
     <div className="file" onClick={() => type === 'dir' && openFolderHandler()}>
       <img 
@@ -40,7 +45,7 @@ export const File = (props: IProps) => {
       <div className="file__date">{date}</div>
       <div className="file__size">{size}</div>
       {type !== 'dir' && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
-      <button className="file__btn-delete"> Delete file</button>
+      <button className="file__btn-delete" onClick={(e) => onDeleteFile(e)}> Delete file</button>
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { AppDispatch, addFile, setFiles } from '../redux'
-import { IFile } from '../models'
+import { AppDispatch, addFile, deleteFile, setFiles } from '../redux'
 
 export const getFiles = (folderId: string | null) => {
   return async (dispatch: AppDispatch) => {
@@ -12,7 +11,7 @@ export const getFiles = (folderId: string | null) => {
       })
       dispatch(setFiles(response.data))
     } catch (error: any) {
-      alert(error.message)
+      alert(error.response.data.message)
     }
   }
 }
@@ -31,7 +30,7 @@ export const creatFolder = (folderId: string | null, name: string) => {
       })
       dispatch(addFile(response.data))
     } catch (error: any) {
-      alert(error.message)
+      alert(error.response.data.message)
     }
   }
 }
@@ -49,7 +48,7 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
       })
       dispatch(addFile(response.data))
     } catch (error: any) {
-      alert(error.message)
+      alert(error.response.data.message)
     }
   }
 }
@@ -68,5 +67,19 @@ export const downloadFile = async ( fileId: string, fileName: string ) => {
     link.click()
     link.remove()
 
+  }
+}
+
+export const deleteFileApi = (fileId: string,) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/files?id=${fileId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
+      })
+      dispatch(deleteFile(fileId))
+      alert(response.data.message)
+    } catch (error: any) {
+      alert(error.response.data.message)
+    }
   }
 }
