@@ -25,4 +25,51 @@
   &__icon {
     justify-self: center;
   }
+
+  &__btn {
+    &-download {
+      display: none;
+    }
+    &-delete {
+      display: none;
+    }
+  }
+
+  &:hover &__date{
+    grid-column-start: 3;
+  }
+  &:hover &__size{
+    grid-column-start: 4;
+  }
+  &:hover &__btn-download{
+    grid-column-start: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed;
+    border-radius: 10px;
+    margin-right: 5px;
+    height: 25px;
+    cursor: pointer;
+  }
+  &:hover &__btn-delete {
+    grid-column-start: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed;
+    border-radius: 10px;
+    height: 25px;
+    cursor: pointer;
+  }
+  &:hover &__btn-delete:hover {
+    background-color: $font-color;
+    color: white;
+    border: none;
+  }
+  &:hover &__btn-download:hover {
+    background-color: $font-color;
+    color: white;
+    border: none;
+  }
 }

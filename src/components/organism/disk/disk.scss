@@ -23,6 +23,11 @@
         cursor: pointer;
         padding: 5px 10px;
         border-radius: 10px;
+        &:hover {
+          background-color: $font-color;
+          color: white;
+          border: 2px solid $font-color;
+        }
       }
     }
   }

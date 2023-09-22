@@ -53,3 +53,20 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
     }
   }
 }
+
+export const downloadFile = async ( fileId: string, fileName: string ) => {
+  const response = await fetch(`http://localhost:5000/api/files/download?id=${fileId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}`}
+  })
+  if (response.status === 200) {
+    const blob = await response.blob()
+    const downloadUrl = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = fileName
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+
+  }
+}
