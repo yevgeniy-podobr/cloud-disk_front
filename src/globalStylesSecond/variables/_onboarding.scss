@@ -1,0 +1,19 @@
+@import './general';
+
+/*** PADDING SIZES ***/
+$_padding-ob-page: 34px;
+
+/*** SIZES ***/
+$maxSliderWrapperWidth: 875px;
+$obInputHeight: 37px;
+
+/*** COLORS ***/
+$errorColor: #d14c4c;
+$darkOrange: #f5af3e;
+$darkOrange2: #ab7b2b;
+
+/*** BORDERS ***/
+$sGreyInputBorder: 1px solid #acacac;
+$mGreyInputBorder: 2px solid #acacac;
+$sBlackInputBorder: 1px solid $blackColor;
+$mBlackInputBorder: 2px solid $blackColor;

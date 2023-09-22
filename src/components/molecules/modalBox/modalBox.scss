@@ -1,0 +1,29 @@
+@import '/src/globalStyles/main.scss';
+
+.modal-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: calc(100vh);
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: relative;
+  background-color: $mainBackWhiteColor;
+  margin: 0 auto;
+  padding: 20px 20px 40px;
+  border-top: 5px solid $mainLightOrangeColor;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 600px;
+  &__close {
+    @extend %closeIcon;
+  }
+}

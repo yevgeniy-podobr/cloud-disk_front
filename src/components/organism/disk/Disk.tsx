@@ -9,6 +9,7 @@ export const Disk = () => {
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
+  const [dragEnter, setDrageEnter] = useState(false)
 
   const createFolderHandler = (folderName: string) => {
     dispatch(creatFolder(currentFolder, folderName))
@@ -40,7 +41,7 @@ export const Disk = () => {
           Create a folder
         </button>
 
-        {/* //TODO need refactoring upload file */}
+        {/* //TODO need refactoring upload file and drug and drop */}
         <div className="disk__btns-upload">    
           <label htmlFor="disk__btns-upload-input" className="disk__btns-upload-label">Upload file</label>
           <input 

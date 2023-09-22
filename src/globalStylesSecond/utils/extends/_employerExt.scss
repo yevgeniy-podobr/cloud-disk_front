@@ -1,0 +1,49 @@
+%backLink {
+  padding: 12px 20px;
+  background: $darkGrey;
+  border-radius: 7px;
+  top: 14px;
+  left: 18px;
+  color: $mainLightOrangeColor;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 4px;
+  }
+}
+
+%workerDetailsText {
+  font-size: 14px;
+  line-height: 22px;
+  color: $lightGreyEmployerText;
+}
+
+%workerDetailsTitle {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+%modalContent {
+  border-top: none;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  .simple-card {
+    min-width: 258px;
+  }
+
+  .modal-content__close {
+    top: 17px;
+    right: 20px;
+  }
+}
+
+%darkGreyBorder {
+  border: 1px solid #8c8c8c;
+  border-radius: 3px;
+}

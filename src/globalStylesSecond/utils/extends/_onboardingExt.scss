@@ -1,0 +1,14 @@
+%obInputText {
+  font-weight: 500;
+  line-height: 24px;
+  &::placeholder {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: $blackColor;
+    opacity: 0.3;
+  }
+  &:focus {
+    outline: none;
+  }
+}

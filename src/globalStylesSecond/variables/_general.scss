@@ -1,0 +1,55 @@
+/*** SIZES OF NAVIGATION ***/
+$navbarHeight: 56px;
+$navFooterHeight: 64px;
+
+/*** BREAKPOINTS ***/
+$extraSmallWidth: 360px;
+$smallWidth: 540px;
+$mediumWidth: 760px;
+$largeWidth: 1024px;
+$extraLargeWidth: 1600px;
+
+/*** MARGIN SIZES ***/
+$_s-sign-in-up-marging: 54px;
+$_l-sign-in-up-marging: 145px;
+$_secondaryCardMargin: 76px;
+
+/*** PADDING SIZES ***/
+$sPadding: 16px; // --- max-width: 900px ---
+$mPadding: 48px; // --- min-width: 900px ---
+$lPadding: 72px; // --- min-width: 1440px ---
+$s-PaddingLoginForm: 28px;
+$l-PaddingLoginForm: 133px;
+$_padding-interview-page: 44px;
+$inputPadding: 12px;
+
+/*** SIZES ***/
+$_visible-translate: 80px;
+$_desktopImgHeight: 239px;
+$_containerWidth: 1440px;
+$_navSidebarWidth: 198px;
+$iconHeight: 102px;
+$inputWidth: calc(100% - #{$inputPadding * 2});
+$loginContainerMaxWidth: 587px;
+
+/*** MAIN DESIGN COLORS ***/
+$mainColor: #000000;
+$mainOrangeColor: #efae26;
+$mainLightOrangeColor: #f5bc3e;
+$mainBackWhiteColor: #fff;
+$mainBackGreyColor: #e5e5e5;
+$mainBackBodyColor: #f4f5f6;
+
+/*** COLORS ***/
+$blackColor: #000;
+$whiteColor: #fff;
+$darkGrey: #333333;
+$lightGrey: #d9d9d9;
+$lightGrey2: #f4f5f6;
+$lightGrey3: #c1c2c3;
+$redErrorColor: #a81a2a;
+
+/*** TEXT COLORS ***/
+$textColorActive: #f5bc3d;
+$blueTextColor: #1a788f;
+$darkBlueText: #15374f;

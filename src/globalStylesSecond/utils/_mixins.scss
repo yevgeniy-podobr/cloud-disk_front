@@ -1,0 +1,34 @@
+@mixin bckImgProps(
+  $_url: none,
+  $_height,
+  $_width,
+  $_percent: 1,
+  $_maxHeight: 400px
+) {
+  @if $_percent == 1 {
+    height: $_height;
+  } @else {
+    height: calc(100vw / #{$_percent});
+    max-height: $_maxHeight;
+  }
+
+  width: $_width;
+  @if $_url == none {
+    background-image: none;
+  } @else {
+    background-image: url($_url);
+  }
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+@mixin containerPadding() {
+  padding: $sPadding;
+  @media (min-width: 900px) {
+    padding: $mPadding;
+  }
+  @media (min-width: $_containerWidth) {
+    padding: $lPadding;
+  }
+}
