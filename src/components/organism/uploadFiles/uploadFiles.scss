@@ -116,13 +116,13 @@
       height: 121px;
       transition: 0.5s;
     }
-    &-icon {
-      @include bckImgProps(
-        '../../assets/icons/other/upload-cloud.png',
-        44px,
-        44px
-      );
-    }
+    // &-icon {
+    //   @include bckImgProps(
+    //     44px,
+    //     44px,
+    //     '../../assets/icons/other/upload-cloud.png',
+    //   );
+    // }
     &-prompt {
       font-weight: 600;
       font-size: 12px;

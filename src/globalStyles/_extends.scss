@@ -1,3 +1,6 @@
+@import './variables';
+@import './mixins';
+
 %boxShadow {
   box-shadow: 0px 14px 21px 2px rgba(0, 0, 0, 0.05),
     0px 5px 26px 4px rgba(0, 0, 0, 0.06);
@@ -5,11 +8,6 @@
 
 %transition_1 {
   transition: all 0.2s cubic-bezier(0, 0, 0.3, 1);
-}
-
-%interviewContainerWidth {
-  max-width: 350px;
-  margin: auto;
 }
 
 %closeButtonStyle {
@@ -46,11 +44,11 @@
     background-color: $mainLightOrangeColor;
   }
   & .select__input-drop-down-icon {
-    @include bckImgProps(
-      '../../assets/icons/arrows/black_arrow_down.svg',
-      7px,
-      11px
-    );
+    // @include bckImgProps(
+    //   7px,
+    //   11px
+    //   '../../assets/icons/arrows/black_arrow_down.svg',
+    // );
     transform: rotate(0);
     transition: all 0.25s ease-in-out;
     &_rotate {
@@ -69,40 +67,17 @@
   }
 }
 
-%loginPageContent {
-  font-size: 12px;
-  box-shadow: 0px -6px 16px 2px rgb(0 0 0 / 5%),
-    0px 5px 26px 4px rgb(0 0 0 / 6%);
-  &-link {
-    color: $blueTextColor;
+%modalContent {
+  border-top: none;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  .simple-card {
+    min-width: 258px;
   }
-}
 
-%linkWrapperText {
-  text-align: center;
-  font-size: 14px;
-  color: #8c8c8c;
-  padding-bottom: 20px;
-}
-
-%loginTitleText {
-  font-weight: bold;
-  font-size: 30px;
-  line-height: 30px;
-  letter-spacing: 0.230769px;
-  color: $whiteColor;
-  @media (min-width: $largeWidth) {
-    font-size: 48px;
-    font-weight: normal;
+  .modal-content__close {
+    top: 17px;
+    right: 20px;
   }
-}
-
-%defaultImgNameLetter {
-  background-color: $mainOrangeColor;
-  border-radius: 50%;
-  font-weight: 600;
-  font-size: 32px;
-  color: $whiteColor;
-  text-align: center;
-  text-transform: uppercase;
 }

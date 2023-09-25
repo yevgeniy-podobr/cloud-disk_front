@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './uploadFiles.scss'
-import { Button } from '../../atoms/Button'
+import { Button } from '../../atoms/button'
 import { TypeRenderMemo } from './TypeRender'
 // import { useStateWithDep } from '../../../../utils/hooks'
 // import { ModalBox, ConfirmationUpdateModal } from '../../../molecules'

@@ -1,5 +1,3 @@
-$background-color: #E9E6E6;
-$font-color: #566885;
 
 $navbarHeight: 50px;
 
@@ -9,3 +7,42 @@ $smallWidth: 540px;
 $mediumWidth: 760px;
 $largeWidth: 1024px;
 $extraLargeWidth: 1600px;
+
+/*** MAIN COLORS ***/
+$background-color: #E9E6E6;
+$font-color: #566885;
+$mainColor: #000000;
+$mainOrangeColor: #efae26;
+$mainLightOrangeColor: #f5bc3e;
+$mainBackWhiteColor: #fff;
+$mainBackGreyColor: #e5e5e5;
+$mainBackBodyColor: #f4f5f6;
+
+/*** COLORS ***/
+$blackColor: #000;
+$whiteColor: #fff;
+$darkGrey: #333333;
+$lightGrey: #d9d9d9;
+$lightGrey2: #f4f5f6;
+$lightGrey3: #c1c2c3;
+$redErrorColor: #a81a2a;
+$errorColor: #d14c4c;
+$darkOrange: #f5af3e;
+$darkOrange2: #ab7b2b;
+
+/*** BORDERS ***/
+$greyBorder: 1px solid #e5e5e5;
+$lightGreyEmployerBorder: 1px solid $lightGrey2;
+$sGreyInputBorder: 1px solid #acacac;
+$mGreyInputBorder: 2px solid #acacac;
+$sBlackInputBorder: 1px solid $blackColor;
+$mBlackInputBorder: 2px solid $blackColor;
+
+/*** TEXT COLORS ***/
+$lightGreyText: #8c8c8c;
+$darkGreyText: #6b6b6b;
+$blueText: #3a758c;
+$darkBrownText: #28211f;
+$greyText: #666e7a;
+$lightGreyText2: #737373;
+

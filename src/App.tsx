@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
@@ -8,14 +8,19 @@ import { auth } from './services/userApi';
 import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoadingContent } from './components/molecules/loadingContent';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
   const dispatch = useAppDispatch()
   const tokenFromStorage = localStorage.getItem("token")
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    tokenFromStorage && dispatch(auth())
+    if (tokenFromStorage) {
+      setIsLoading(true)
+      dispatch(auth()).finally(() => setIsLoading(false))
+    }
     // eslint-disable-next-line 
   }, [])
 
@@ -28,23 +33,30 @@ const App = () => {
             autoClose={3000}
             theme="light"
           />
-        <Navbar/>
-        <div className="app__wrapper container">
-          {(!isAuth && !tokenFromStorage )
-            ? (
-                <Routes>
-                  <Route path='/registration' element={<Registration />}/>
-                  <Route path='/login' element={<Login />}/>
-                  <Route path="*" element={<Navigate replace to="/login" />} />
-                </Routes>
-            ) : (
-              <Routes>
-                <Route path='/' element={<Disk />}/>
-                <Route path="*" element={<Navigate replace to="/" />} />
-              </Routes>
-            )
-          }
-        </div>
+      {isLoading 
+        ? <LoadingContent isLoading={isLoading} /> 
+        : (
+          <>
+            <Navbar/>
+            <div className="app__wrapper container">
+              {(!isAuth && !tokenFromStorage )
+                ? (
+                    <Routes>
+                      <Route path='/registration' element={<Registration />}/>
+                      <Route path='/login' element={<Login />}/>
+                      <Route path="*" element={<Navigate replace to="/login" />} />
+                    </Routes>
+                ) : (
+                  <Routes>
+                    <Route path='/' element={<Disk />}/>
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                  </Routes>
+                )
+              }
+            </div>
+          </>
+        )
+      }
       </div>
     </BrowserRouter>
 

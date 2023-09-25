@@ -1,6 +1,6 @@
-@import '../../../../globalStyles/main.scss';
+@import '../../../globalStyles/main.scss';
 
-.button {
+.button-atom {
   padding: 7px 17px 8px 22px;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
   line-height: 25px;
   text-align: center;
   letter-spacing: 1px;
-  color: $darkBlueText;
+  color: #000;
   outline: none;
   text-transform: uppercase;
 

@@ -33,7 +33,7 @@ export const Registration = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="registration__btn" onClick={() => registrationHandler()}>
+      <button className="registration__btn button" onClick={() => registrationHandler()}>
         Sign Up
       </button>
     </div>

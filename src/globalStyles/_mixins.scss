@@ -1,9 +1,9 @@
 @mixin bckImgProps(
-  $_url: none,
   $_height,
   $_width,
+  $_url: none,
   $_percent: 1,
-  $_maxHeight: 400px
+  $_maxHeight: 400px,
 ) {
   @if $_percent == 1 {
     height: $_height;
@@ -21,14 +21,4 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-}
-
-@mixin containerPadding() {
-  padding: $sPadding;
-  @media (min-width: 900px) {
-    padding: $mPadding;
-  }
-  @media (min-width: $_containerWidth) {
-    padding: $lPadding;
-  }
 }
