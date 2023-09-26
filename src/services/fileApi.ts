@@ -63,7 +63,6 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
       }      
       dispatch(setIsVisible(true))      
       return response                                 
-      // dispatch(addFile(response.data))
     } catch (error: any) {
       toast.error(error.response.data.message)
     }

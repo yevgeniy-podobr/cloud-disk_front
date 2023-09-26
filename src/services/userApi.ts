@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { AppDispatch, setIsAuth, setUser } from '../redux'
 import { toast } from 'react-toastify'
+import { ESSKeys } from '../utils/constants/sessionStorageKeys'
 
 export const registration = async (email: string, password: string) => {
   try {
@@ -36,8 +37,10 @@ export const auth = () => {
       dispatch(setUser(response.data.user))
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
+      sessionStorage.removeItem(ESSKeys.downloads)
     } catch (error: any) {
       localStorage.removeItem("token")
+      sessionStorage.removeItem(ESSKeys.downloads)
       toast.error(error.response.data.message)
     }
   }
