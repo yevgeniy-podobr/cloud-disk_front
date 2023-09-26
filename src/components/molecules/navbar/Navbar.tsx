@@ -2,6 +2,8 @@ import React from 'react'
 import './navbar.scss'
 import { NavLink } from 'react-router-dom'
 import { setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
+import { setUploadFiles } from '../../../redux/uploadReducer'
+import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
 
 export const Navbar = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth)
@@ -11,6 +13,8 @@ export const Navbar = () => {
     dispatch(setUser({}))
     dispatch(setIsAuth(false))
     localStorage.removeItem("token")
+    sessionStorage.removeItem(ESSKeys.downloads)
+    dispatch(setUploadFiles([]))
   } 
 
   return (

@@ -1,0 +1,31 @@
+@import '../../../globalStyles/main.scss';
+
+.uploader-file {
+  background-color: $background-color;
+  justify-content: space-between;
+  border-radius: 8px;
+  // margin: 5px 0;
+  padding: 5px 10px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__progress-bar {
+    height: 1rem;
+    border-radius: 8px;
+    background-color: $font-color;
+    display: flex;
+    margin: 3px 0;
+    &_upload-bar {
+      background-color: green;
+      border-radius: 8px;
+    }
+    &_percent {
+      color: $background-color;
+      left: 50%;
+      position: absolute;
+    }
+  }
+}

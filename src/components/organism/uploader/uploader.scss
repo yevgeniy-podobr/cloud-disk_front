@@ -1,0 +1,29 @@
+@import '../../../globalStyles/main.scss';
+
+.uploader {
+  height: 300px;
+  width: 300px;
+  position: fixed;
+  background-color: $font-color;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  border-radius: 12px;
+  overflow-y: auto;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    &-title {
+      color: $background-color;
+      font-size: 1.2rem;
+    }
+    &-close {
+      padding: 3px;
+    }
+  }
+
+  & .uploader-file {
+    margin: 10px 0;
+  } 
+}

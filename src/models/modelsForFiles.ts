@@ -13,3 +13,9 @@ export interface IFiles {
   currentFolder: null | string,
   folderStack: (string | null)[]
 }
+
+export interface IUploadFile {
+  id: number,
+  name: string,
+  progress: number
+}

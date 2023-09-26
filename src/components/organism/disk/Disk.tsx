@@ -4,12 +4,14 @@ import { setCurrentFolder, setFolderStack, useAppDispatch, useTypedSelector } fr
 import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
+import { Uploader } from "../uploader";
 
 export const Disk = () => {
   const dispatch = useAppDispatch()
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const isAuth = useTypedSelector(state => state.user.isAuth)
+  const isVisible = useTypedSelector(state => state.uploadFiles.isVisible)
   const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDrageEnter] = useState(false)
@@ -101,6 +103,7 @@ export const Disk = () => {
             createFolderHandler={createFolderHandler}
           />
         )}
+       {isVisible && <Uploader />} 
       </div>
     ) : (
       <div 
