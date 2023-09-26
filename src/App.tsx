@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
@@ -16,23 +16,27 @@ const App = () => {
   const tokenFromStorage = localStorage.getItem("token")
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
+  const authHandler = useCallback(() => {
     if (tokenFromStorage) {
       setIsLoading(true)
       dispatch(auth()).finally(() => setIsLoading(false))
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    authHandler()
+  }, [authHandler])
 
   return (
     <BrowserRouter>
       <div className="app">
-          <ToastContainer
-            limit={3}
-            newestOnTop={true}
-            autoClose={3000}
-            theme="light"
-          />
+        <ToastContainer
+          limit={3}
+          newestOnTop={true}
+          autoClose={3000}
+          theme="light"
+        />
       {isLoading 
         ? <LoadingContent isLoading={isLoading} /> 
         : (

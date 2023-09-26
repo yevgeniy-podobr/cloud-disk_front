@@ -68,7 +68,6 @@ export const downloadFile = async ( fileId: string, fileName: string ) => {
     document.body.appendChild(link)
     link.click()
     link.remove()
-
   }
 }
 

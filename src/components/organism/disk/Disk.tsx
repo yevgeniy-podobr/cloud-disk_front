@@ -3,11 +3,14 @@ import './disk.scss';
 import { setCurrentFolder, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
 import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
+import { LoadingContent } from "../../molecules/loadingContent";
 
 export const Disk = () => {
   const dispatch = useAppDispatch()
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
+  const isAuth = useTypedSelector(state => state.user.isAuth)
+  const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDrageEnter] = useState(false)
 
@@ -53,8 +56,12 @@ export const Disk = () => {
   }
 
   useEffect(() => {
-    dispatch(getFiles(currentFolder))
-  }, [currentFolder, dispatch])
+    if (isAuth) {
+      setIsLoading(true)
+      dispatch(getFiles(currentFolder)).finally(() => setIsLoading(false))
+    }
+    
+  }, [currentFolder, isAuth, dispatch])
 
   return  (
     !dragEnter ? (
@@ -64,7 +71,7 @@ export const Disk = () => {
         onDragOver={dragOverHendler}
       >
         <div className="disk__btns">
-          <button className="disk__btns-back" onClick={() => onClickBack()}>
+          <button className="disk__btns-back" onClick={() => currentFolder && onClickBack()}>
             Back
           </button>
           <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>
@@ -83,7 +90,11 @@ export const Disk = () => {
             />
           </div>
         </div>
-        <FilesList />
+        {isLoading 
+          ? <LoadingContent isLoading={isLoading} /> 
+          : <FilesList />
+        }
+        
         {isAddFolderModalOpen && (
           <AddFolderModal 
             setAddFolderModalOpen={setAddFolderModalOpen}

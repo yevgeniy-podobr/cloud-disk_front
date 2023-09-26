@@ -5,6 +5,7 @@ import { File } from "../file";
 
 export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
+  const currentFolder = useTypedSelector(state => state.file.currentFolder)
 
   return (
     <div className="files-list">
@@ -15,7 +16,7 @@ export const FilesList = () => {
       </div>
       {!files.length ? (
         <div className="files-list__empty">
-          The cloud is empty.
+          {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
           <br/>
           Please create a folder or upload a file...
         </div>

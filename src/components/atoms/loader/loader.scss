@@ -1,7 +1,7 @@
 @import '../../../globalStyles/main.scss';
 
 .loader {
-  @include bckImgProps(50px, 50px, '../../../assets/loaderRing.svg');
+  @include bckImgProps(50px, 50px, '../../../assets/loaderRing.png');
   animation: load 0.8s infinite linear;
 }
 
