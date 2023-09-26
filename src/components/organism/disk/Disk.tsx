@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './disk.scss';
-import { setCurrentFolder, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
+import { setCurrentFolder, setFiles, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
 import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
@@ -12,12 +12,14 @@ export const Disk = () => {
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const isAuth = useTypedSelector(state => state.user.isAuth)
   const isVisible = useTypedSelector(state => state.uploadFiles.isVisible)
+  const files = useTypedSelector(state => state.file.files)
   const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDrageEnter] = useState(false)
 
   const createFolderHandler = (folderName: string) => {
-    dispatch(creatFolder(currentFolder, folderName))
+    creatFolder(currentFolder, folderName)
+      .then(res => dispatch(setFiles([...files, res?.data])))
   }
 
   const onClickBack = () => {
@@ -34,6 +36,7 @@ export const Disk = () => {
     // files.forEach(file => dispatch(uploadFile(file, currentFolder)))
 
     dispatch(uploadFile(e.target.files![0], currentFolder))
+      .then(res => dispatch(setFiles([...files, res?.data])))
   }
 
   const dragEnterHandler = (e: React.DragEvent) => {
@@ -55,6 +58,7 @@ export const Disk = () => {
     e.preventDefault()
     setDrageEnter(false)
     dispatch(uploadFile(e.dataTransfer.files[0], currentFolder))
+      .then(res => dispatch(setFiles([...files, res?.data])))
   }
 
   useEffect(() => {

@@ -17,17 +17,11 @@ export const fileSlice = createSlice({
     setCurrentFolder: (state, action) => {
       state.currentFolder = action.payload
     },
-    addFile: (state, action) => {
-      state.files = [...state.files, action.payload]
-    },
     setFolderStack: (state, action) => {
       state.folderStack = action.payload
     },
-    deleteFile: (state, action) => {
-      state.files = [...state.files.filter(file => file._id !== action.payload)]
-    }
    }
 })
 
-export const { setFiles,  setCurrentFolder, addFile, setFolderStack, deleteFile } = fileSlice.actions
+export const { setFiles,  setCurrentFolder, setFolderStack } = fileSlice.actions
 export const fileReducer = fileSlice.reducer

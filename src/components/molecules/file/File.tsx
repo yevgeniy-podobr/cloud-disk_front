@@ -2,7 +2,7 @@ import React from "react";
 import './file.scss'
 import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
-import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector } from "../../../redux";
+import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
 import { deleteFileApi, downloadFile } from "../../../services/fileApi";
 
 interface IProps {
@@ -18,6 +18,7 @@ export const File = (props: IProps) => {
   const dispatch = useAppDispatch()
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
+  const files = useTypedSelector(state => state.file.files)
 
   const openFolderHandler = () => {
     dispatch(setFolderStack([...folderStack, currentFolder]))
@@ -31,7 +32,8 @@ export const File = (props: IProps) => {
 
   const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation()
-    dispatch(deleteFileApi(id))
+    deleteFileApi(id)
+      .then(_ => dispatch(setFiles(files.filter(file => file._id !== id))))
   }
 
   return (
