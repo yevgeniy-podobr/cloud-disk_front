@@ -64,9 +64,11 @@ export const Disk = () => {
   useEffect(() => {
     if (isAuth) {
       setIsLoading(true)
-      dispatch(getFiles(currentFolder)).finally(() => setIsLoading(false))
+      getFiles(currentFolder)
+        .then(res => dispatch(setFiles(res)))
+        .finally(() => setIsLoading(false))
+
     }
-    
   }, [currentFolder, isAuth, dispatch])
 
   return  (
@@ -77,7 +79,11 @@ export const Disk = () => {
         onDragOver={dragOverHendler}
       >
         <div className="disk__btns">
-          <button className="disk__btns-back" onClick={() => currentFolder && onClickBack()}>
+          <button 
+            className="disk__btns-back" 
+            onClick={() => currentFolder && onClickBack()}
+            disabled={!currentFolder}  
+          >
             Back
           </button>
           <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>

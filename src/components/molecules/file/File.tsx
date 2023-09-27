@@ -4,6 +4,7 @@ import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
 import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
 import { deleteFileApi, downloadFile } from "../../../services/fileApi";
+import { sizeFormat } from "../../../utils/script/sizeFormat";
 
 interface IProps {
   name: string,
@@ -45,7 +46,7 @@ export const File = (props: IProps) => {
       />
       <div className="file__name">{name}</div>
       <div className="file__date">{date}</div>
-      <div className="file__size">{size}</div>
+      <div className="file__size">{sizeFormat(size)}</div>
       {type !== 'dir' && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
       <button className="file__btn-delete" onClick={(e) => onDeleteFile(e)}> Delete file</button>
     </div>

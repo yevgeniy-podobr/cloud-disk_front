@@ -1,21 +1,19 @@
 import axios from 'axios'
-import { AppDispatch, setFiles } from '../redux'
+import { AppDispatch } from '../redux'
 import { toast } from 'react-toastify'
 import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
 
-export const getFiles = (folderId: string | null) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/files${folderId ? `?parent=${folderId}` : ''}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      dispatch(setFiles(response.data))
-    } catch (error: any) {
-      toast.error(error.response.data.message)
-    }
+export const getFiles = async (folderId: string | null) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/files${folderId ? `?parent=${folderId}` : ''}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    return response.data
+  } catch (error: any) {
+    toast.error(error.response.data.message)
   }
 }
 

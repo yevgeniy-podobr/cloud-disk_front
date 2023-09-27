@@ -7,6 +7,8 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
+  animation: file 500ms forwards;
+
   &:hover {
     transform: scale(1.02);
     cursor: pointer;
@@ -71,5 +73,16 @@
     background-color: $font-color;
     color: white;
     border: none;
+  }
+
+  @keyframes file {
+    0% {
+      opacity: 0;
+      transform: translateY(50%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

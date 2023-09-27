@@ -23,6 +23,13 @@
       border: 2px solid $font-color;
     }
 
+    &-back:disabled {
+      border-color: #cccccc;
+      &:hover {
+        color: #666666;
+      }
+    }
+
     &-upload {
       display: flex;
       &-input {
