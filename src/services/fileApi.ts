@@ -4,9 +4,16 @@ import { toast } from 'react-toastify'
 import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
 
-export const getFiles = async (folderId: string | null) => {
+export const getFiles = async (folderId: string | null, sortValue: string) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/files${folderId ? `?parent=${folderId}` : ''}`, {
+    let url = 'http://localhost:5000/api/files'
+    if (folderId) {
+      url = `http://localhost:5000/api/files?parent=${folderId}&sort=${sortValue}`
+    } else {
+      url = `http://localhost:5000/api/files?sort=${sortValue}`
+    }
+
+    const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
