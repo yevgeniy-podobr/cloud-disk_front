@@ -81,3 +81,39 @@
     right: 20px;
   }
 }
+
+%buttonSelectAdmin {
+  font-size: 12px;
+  line-height: 14px;
+  box-shadow: none;
+  font-weight: 500;
+  border: $sGreyInputBorder;
+  background: none;
+  border-radius: 7px;
+  height: 30px;
+  text-transform: none;
+  color: $blackColor;
+  letter-spacing: normal;
+  &:hover {
+    background: #ededee;
+  }
+  img {
+    margin-left: 7px;
+  }
+}
+
+%selectedButtonSelectAdmin {
+  border: 1px solid $blackColor;
+}
+
+%activeButtonSelectAdmin {
+  background-color: $mainBackWhiteColor;
+  border: $sGreyInputBorder;
+  &:hover {
+    background-color: rgb(251, 251, 251);
+  }
+
+  & img {
+    transform: rotateZ(180deg);
+  }
+}
