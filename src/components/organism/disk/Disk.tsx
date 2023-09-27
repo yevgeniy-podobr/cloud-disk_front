@@ -5,6 +5,13 @@ import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
 import { Uploader } from "../uploader";
+import { ElemObj, Multiselect } from "../../atoms";
+
+const sortingOptions: ElemObj[] = [
+  {id: 1, element: 'By type'},
+  {id: 2, element: 'By name'},
+  {id: 3, element: 'By date'}
+]
 
 export const Disk = () => {
   const dispatch = useAppDispatch()
@@ -16,7 +23,7 @@ export const Disk = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDrageEnter] = useState(false)
-  const [sortValue, setSortValue] = useState('type')
+  const [sortValue, setSortValue] = useState<ElemObj>(sortingOptions[0])
 
   const createFolderHandler = (folderName: string) => {
     creatFolder(currentFolder, folderName)
@@ -65,7 +72,8 @@ export const Disk = () => {
   useEffect(() => {
     if (isAuth) {
       setIsLoading(true)
-      getFiles(currentFolder, sortValue)
+      const preparedSortValue = sortValue.element.replace('By ', '')
+      getFiles(currentFolder, preparedSortValue)
         .then(res => dispatch(setFiles(res)))
         .finally(() => setIsLoading(false))
 
@@ -102,21 +110,13 @@ export const Disk = () => {
               // multiple={true}
             />
           </div>
-          <select 
-            value={sortValue} 
-            onChange={(e) => setSortValue(e.target.value)} 
-            className="disk__btns-select"
-          >
-            <option className="disk__btns-select_option" value='name'>
-              By name
-            </option>
-            <option className="disk__btns-select_option" value='type'>
-              By type
-            </option>
-            <option className="disk__btns-select_option" value='date'>
-              By date
-            </option>
-          </select>
+          <Multiselect
+            className={`disk__btns-select`}
+            multiSelect={false}
+            elements={sortingOptions}
+            selectedElement={sortingOptions[0]}
+            getSelectedElement={option => option && setSortValue(option)}
+          />
         </div>
         {isLoading 
           ? <LoadingContent isLoading={isLoading} /> 
