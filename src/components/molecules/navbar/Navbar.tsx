@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import './navbar.scss'
 import { NavLink } from 'react-router-dom'
 import { setFiles, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 import { setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, searchFile } from '../../../services/fileApi'
+import _ from 'lodash'
 
 export const Navbar = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth)
@@ -20,16 +21,24 @@ export const Navbar = () => {
     dispatch(setUploadFiles([]))
   } 
 
+
+  const debounceFunc = useMemo(
+    () => _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+      searchFile(e.target.value).then(res => dispatch(setFiles(res)))
+    }, 500),
+    [dispatch]
+  )
+
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
     if (e.target.value === '') {
       getFiles(currentFolder, 'type')
         .then(res => dispatch(setFiles(res)))
     } else {
-      searchFile(e.target.value).then(res => dispatch(setFiles(res)))
+      debounceFunc(e)
     }
   }
-  console.log(currentFolder)
+
   return (
     <div className="navbar container">
       <div className="navbar__container">
