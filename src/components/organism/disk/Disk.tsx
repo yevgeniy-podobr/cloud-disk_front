@@ -8,9 +8,9 @@ import { Uploader } from "../uploader";
 import { ElemObj, Multiselect } from "../../atoms";
 
 const sortingOptions: ElemObj[] = [
-  {id: 1, element: 'By type'},
-  {id: 2, element: 'By name'},
-  {id: 3, element: 'By date'}
+  {id: 1, element: 'type'},
+  {id: 2, element: 'name'},
+  {id: 3, element: 'date'}
 ]
 
 export const Disk = () => {
@@ -72,8 +72,7 @@ export const Disk = () => {
   useEffect(() => {
     if (isAuth) {
       setIsLoading(true)
-      const preparedSortValue = sortValue.element.replace('By ', '')
-      getFiles(currentFolder, preparedSortValue)
+      getFiles(currentFolder, sortValue.element)
         .then(res => dispatch(setFiles(res)))
         .finally(() => setIsLoading(false))
 
@@ -110,6 +109,11 @@ export const Disk = () => {
               // multiple={true}
             />
           </div>
+
+          <div className="disk__btns-select_title">
+            Sorted by:
+          </div>
+          
           <Multiselect
             className={`disk__btns-select`}
             multiSelect={false}

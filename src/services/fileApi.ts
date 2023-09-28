@@ -90,12 +90,23 @@ export const downloadFile = async ( fileId: string, fileName: string ) => {
   }
 }
 
-export const deleteFileApi = async (fileId: string,) => {
+export const deleteFileApi = async (fileId: string) => {
   try {
     const response = await axios.delete(`http://localhost:5000/api/files?id=${fileId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
     })
     toast.success(response.data.message)
+  } catch (error: any) {
+    toast.error(error.response.data.message)
+  }
+}
+
+export const searchFile = async (searchValue: string) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/files/search?search=${searchValue}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
+    })
+    return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)
   }

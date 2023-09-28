@@ -15,8 +15,16 @@
   }
   
   &__header {
-    font-size: 24px;
-    font-weight: 700;
+    display: flex;
+
+    &-title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    &-search {
+      margin-left: 20px;
+    }
+
   }
   &__login {
     margin-left: auto;

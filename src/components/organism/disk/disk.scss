@@ -49,8 +49,13 @@
       }
     }
     &-select {
-      width: 115px;
-      margin-left: 10px;
+      width: 90px;
+      margin-left: 5px;
+      &_title {
+        display: flex;
+        align-items: center;
+        margin-left: 30px;
+      }
     }
   }
 
