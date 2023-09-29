@@ -24,24 +24,24 @@ export const Navbar = () => {
 
   const debounceFunc = useMemo(
     () => _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-      searchFile(e.target.value).then(res => dispatch(setFiles(res)))
+      if (e.target.value === '') {
+        getFiles(currentFolder, 'type')
+          .then(res => dispatch(setFiles(res)))
+      } else {
+        searchFile(e.target.value).then(res => dispatch(setFiles(res)))
+      }
     }, 500),
-    [dispatch]
+    [dispatch, currentFolder]
   )
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
-    if (e.target.value === '') {
-      getFiles(currentFolder, 'type')
-        .then(res => dispatch(setFiles(res)))
-    } else {
-      debounceFunc(e)
-    }
+    debounceFunc(e)
   }
 
   return (
     <div className="navbar container">
-      <div className="navbar__container">
+      <div className="navbar__wrapper">
         <div className="navbar__header">
           <div className="navbar__header-title">
             MERN CLOUD
