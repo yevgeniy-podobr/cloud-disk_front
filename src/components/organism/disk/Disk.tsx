@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './disk.scss';
-import { setCurrentFolder, setFiles, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
+import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
 import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
 import { Uploader } from "../uploader";
 import { ElemObj, Multiselect } from "../../atoms";
+import iconsDisplayIcon from '../../../assets/display-icons.png';
+import listDisplayIcon from '../../../assets/display-list.png';
+import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 
 const sortingOptions: ElemObj[] = [
   {id: 1, element: 'type'},
@@ -86,41 +89,59 @@ export const Disk = () => {
         onDragLeave={dragLeaveHendler}
         onDragOver={dragOverHendler}
       >
-        <div className="disk__btns">
-          <button 
-            className="disk__btns-back" 
-            onClick={() => currentFolder && onClickBack()}
-            disabled={!currentFolder}  
-          >
-            Back
-          </button>
-          <button className="disk__btns-create" onClick={() => setAddFolderModalOpen(true)}>
-            Create a folder
-          </button>
+        <div className="disk__header">
+          <div className="disk__header-btns">
+            <button 
+              className="disk__header-btns_back" 
+              onClick={() => currentFolder && onClickBack()}
+              disabled={!currentFolder}  
+            >
+              Back
+            </button>
+            <button className="disk__header-btns_create" onClick={() => setAddFolderModalOpen(true)}>
+              Create a folder
+            </button>
 
-          {/* //TODO need refactoring upload file and drug and drop */}
-          <div className="disk__btns-upload">    
-            <label htmlFor="disk__btns-upload-input" className="disk__btns-upload-label">Upload file</label>
-            <input 
-              type="file" 
-              id="disk__btns-upload-input" 
-              className="disk__btns-upload-input" 
-              onChange={(e) => fileUploadHandler(e)}  
-              // multiple={true}
+            {/* //TODO need refactoring upload file and drug and drop */}
+            <div className="disk__header-btns_upload">    
+              <label htmlFor="disk__header-btns_upload-input" className="disk__header-btns_upload-label">Upload file</label>
+              <input 
+                type="file" 
+                id="disk__header-btns_upload-input" 
+                className="disk__header-btns_upload-input" 
+                onChange={(e) => fileUploadHandler(e)}  
+                // multiple={true}
+              />
+            </div>
+          </div>
+          <div className="disk__header-right-side">
+            <div className="disk__header-sorting_title">
+              Sorted by:
+            </div>
+            
+            <Multiselect
+              className={`disk__header-sorting_select`}
+              multiSelect={false}
+              elements={sortingOptions}
+              selectedElement={sortingOptions[0]}
+              getSelectedElement={option => option && setSortValue(option)}
             />
+            <div className="disk__header-display-folder">
+              <img 
+                className="disk__header-display-folder_list"
+                src={listDisplayIcon}
+                alt="list display icon" 
+                onClick={() => dispatch(setFolderDisplay(EFolderDisplayOptions.list))}
+              />
+              <img 
+                className="disk__header-display-folder_plates"
+                src={iconsDisplayIcon}
+                alt="plate display icons" 
+                onClick={() => dispatch(setFolderDisplay(EFolderDisplayOptions.plates))}  
+              />
+            </div>
           </div>
 
-          <div className="disk__btns-select_title">
-            Sorted by:
-          </div>
-          
-          <Multiselect
-            className={`disk__btns-select`}
-            multiSelect={false}
-            elements={sortingOptions}
-            selectedElement={sortingOptions[0]}
-            getSelectedElement={option => option && setSortValue(option)}
-          />
         </div>
         {isLoading 
           ? <LoadingContent isLoading={isLoading} /> 

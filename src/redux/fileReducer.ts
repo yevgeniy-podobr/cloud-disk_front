@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IFiles } from '../models'
+import { EFolderDisplayOptions } from '../utils/constants/fileConstants'
 
 const defaultState: IFiles = {
   files: [],
   currentFolder: null,
   folderStack: [],
+  folderDisplay: EFolderDisplayOptions.list,
 }
 
 export const fileSlice = createSlice({
@@ -20,8 +22,11 @@ export const fileSlice = createSlice({
     setFolderStack: (state, action) => {
       state.folderStack = action.payload
     },
+    setFolderDisplay: (state, action) => {
+      state.folderDisplay = action.payload
+    },
    }
 })
 
-export const { setFiles,  setCurrentFolder, setFolderStack } = fileSlice.actions
+export const { setFiles,  setCurrentFolder, setFolderStack, setFolderDisplay } = fileSlice.actions
 export const fileReducer = fileSlice.reducer

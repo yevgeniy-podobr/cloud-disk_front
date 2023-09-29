@@ -117,3 +117,20 @@
     transform: rotateZ(180deg);
   }
 }
+
+%buttonFile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed;
+  border-radius: 10px;
+  margin-right: 5px;
+  height: 25px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $font-color;
+    color: white;
+    border: none;
+  }
+}

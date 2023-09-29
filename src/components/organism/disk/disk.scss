@@ -2,59 +2,80 @@
 
 .disk {
   width: 100%;
-  &__btns {
+  &__header {
     display: flex;
-    justify-content: flex-start;
-    &-create {
-      margin-left: 10px;
-    }
+    justify-content: space-between;
 
-    &-create, &-back {
-      background-color: rgba(255, 255, 255, 0.1);
-      border: 2px solid $font-color;
-      cursor: pointer;
-      border-radius: 10px;
-      padding: 5px 10px;
-    }
-
-    &-create:hover, &-back:hover {
-      background-color: $font-color;
-      color: white;
-      border: 2px solid $font-color;
-    }
-
-    &-back:disabled {
-      border-color: #cccccc;
-      &:hover {
-        color: #666666;
-      }
-    }
-
-    &-upload {
+    &-btns {
       display: flex;
-      &-input {
-        display: none;
-      }
-      &-label {
+      &_create {
         margin-left: 10px;
-        border: 2px dashed $font-color;
+      }
+  
+      &_create, &_back {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid $font-color;
         cursor: pointer;
-        padding: 7px 10px;
         border-radius: 10px;
+        padding: 5px 10px;
+      }
+  
+      &_create:hover, &_back:hover {
+        background-color: $font-color;
+        color: white;
+        border: 2px solid $font-color;
+      }
+  
+      &_back:disabled {
+        border-color: #cccccc;
         &:hover {
-          background-color: $font-color;
-          color: white;
-          border: 2px solid $font-color;
+          color: #666666;
+        }
+      }
+  
+      &_upload {
+        display: flex;
+        &-input {
+          display: none;
+        }
+        &-label {
+          margin-left: 10px;
+          border: 2px dashed $font-color;
+          cursor: pointer;
+          padding: 7px 10px;
+          border-radius: 10px;
+          &:hover {
+            background-color: $font-color;
+            color: white;
+            border: 2px solid $font-color;
+          }
         }
       }
     }
-    &-select {
-      width: 90px;
-      margin-left: 5px;
+    
+    &-right-side {
+      display: flex;
+    }
+    &-sorting {
       &_title {
         display: flex;
         align-items: center;
-        margin-left: 30px;
+      }
+      &_select {
+        width: 90px;
+        margin-left: 5px;
+      }
+    }
+    &-display-folder {
+      display: flex;
+      align-items: center;
+      &_list, &_plates {
+        width: 25px;
+        height: 25px;
+        margin-left: 10px;
+      }
+      &_list:hover, &_plates:hover {
+        cursor: pointer;
       }
     }
   }

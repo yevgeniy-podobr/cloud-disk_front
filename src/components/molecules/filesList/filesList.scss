@@ -30,3 +30,10 @@
     font-size: 40px;
   }
 }
+
+.files-plates {
+  display: flex;
+  padding-top: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
