@@ -6,12 +6,16 @@ import { setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, searchFile } from '../../../services/fileApi'
 import _ from 'lodash'
+import defaultLogo from '../../../assets/default-logo.png'
+import { UploadAvatarModal } from '../uploadAvatarModal'
 
 export const Navbar = () => {
-  const isAuth = useTypedSelector(state => state.user.isAuth)
   const dispatch = useAppDispatch()
+  const isAuth = useTypedSelector(state => state.user.isAuth)
+  const currentFolder = useTypedSelector(state => state.file.currentFolder)
+  const user = useTypedSelector(state => state.user.currentUser)
   const [searchValue, setSearchValue] = useState<string | null>(null)
-  const currentFolder =useTypedSelector(state => state.file.currentFolder)
+  const [isUploadAvatarModalOpen, setIsUploadAvatarModalOpen] = useState(false)
 
   const onLogout = () => {
     dispatch(setUser({}))
@@ -20,7 +24,6 @@ export const Navbar = () => {
     sessionStorage.removeItem(ESSKeys.downloads)
     dispatch(setUploadFiles([]))
   } 
-
 
   const debounceFunc = useMemo(
     () => _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +44,9 @@ export const Navbar = () => {
 
   return (
     <div className="navbar container">
+      {isUploadAvatarModalOpen && (
+        <UploadAvatarModal setIsUploadAvatarModalOpen={setIsUploadAvatarModalOpen}/>
+      )}
       <div className="navbar__wrapper">
         <div className="navbar__header">
           <div className="navbar__header-title">
@@ -58,22 +64,30 @@ export const Navbar = () => {
           )}
         </div>
         
-        
-        {!isAuth ? (
-          <>
-            <div className="navbar__login">
-              <NavLink to='/login'>Sing In</NavLink>
-            </div>
-            <div className="navbar__registration">
-              <NavLink to='/registration'>Sing Up</NavLink>
-            </div>
-          </>
-        ) : (
-          <div className="navbar__sign-out" onClick={() => onLogout()}>
-            Sing Out
-          </div>
-        )}
-
+        <div className="navbar__authorization">
+          {!isAuth ? (
+            <>
+              <div className="navbar__authorization-login">
+                <NavLink to='/login'>Sing In</NavLink>
+              </div>
+              <div className="navbar__authorization-registration">
+                <NavLink to='/registration'>Sing Up</NavLink>
+              </div>
+            </>
+          ) : (
+            <>
+              <img 
+                className='navbar__authorization-avatar' 
+                src={defaultLogo} 
+                alt='avatar'
+                onClick={() => setIsUploadAvatarModalOpen(true)}  
+              />
+              <div className="navbar__authorization-sign-out" onClick={() => onLogout()}>
+                Sing Out
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

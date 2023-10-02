@@ -26,14 +26,25 @@
     }
 
   }
-  &__login {
-    margin-left: auto;
-    margin-right: 20px;
+  &__authorization {
+    display: flex;
+    align-items: center;
+    &-login {
+      margin-right: 20px;
+    }
+    &-avatar {
+      margin-right: 10px;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    &-sign-out {
+      text-decoration: underline;
+    }
+    &-login, &-registration, &-sign-out, &-avatar {
+      cursor: pointer;
+    }
   }
-  &__sign-out {
-    text-decoration: underline;
-  }
-  &__login, &__registration, &__sign-out {
-    cursor: pointer;
-  }
+
 }
