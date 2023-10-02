@@ -3,7 +3,7 @@ import { AppDispatch } from '../redux'
 import { toast } from 'react-toastify'
 import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
-import { API_URL } from '../config'
+import { API_URL } from './config'
 
 export const getFiles = async (folderId: string | null, sortValue: string) => {
   try {

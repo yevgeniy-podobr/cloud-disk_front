@@ -8,7 +8,7 @@ import { getFiles, searchFile } from '../../../services/fileApi'
 import _ from 'lodash'
 import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../uploadAvatarModal'
-import { API_URL } from '../../../config'
+import { API_URL } from '../../../services/config'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()

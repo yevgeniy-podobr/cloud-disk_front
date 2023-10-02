@@ -2,7 +2,7 @@ import axios from 'axios'
 import { AppDispatch, setIsAuth, setUser } from '../redux'
 import { toast } from 'react-toastify'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
-import { API_URL } from '../config'
+import { API_URL } from './config'
 
 export const registration = async (email: string, password: string) => {
   try {
