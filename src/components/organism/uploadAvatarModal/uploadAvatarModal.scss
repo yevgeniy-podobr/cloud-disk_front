@@ -35,9 +35,8 @@
     width: 200px;
     margin-top: 20px;
     height: 35px;
-
-    // input {
-    //   z-index: -1;
-    // }
+  }
+  &__input {
+    display: none;
   }
 }

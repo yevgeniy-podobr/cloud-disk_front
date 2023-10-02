@@ -8,6 +8,7 @@ import { getFiles, searchFile } from '../../../services/fileApi'
 import _ from 'lodash'
 import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../uploadAvatarModal'
+import { API_URL } from '../../../config'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -78,7 +79,7 @@ export const Navbar = () => {
             <>
               <img 
                 className='navbar__authorization-avatar' 
-                src={defaultLogo} 
+                src={user?.avatar ? `${API_URL}${user?.avatar}` : defaultLogo} 
                 alt='avatar'
                 onClick={() => setIsUploadAvatarModalOpen(true)}  
               />

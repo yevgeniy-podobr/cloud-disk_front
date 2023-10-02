@@ -3,9 +3,10 @@ export interface IUser {
   email: string
   id: string
   usedSpace: number | null
+  avatar: string | null
 }
 
 export interface IUserData { 
-  currentUser: IUser | {},
+  currentUser: IUser | null,
   isAuth: boolean
 } 

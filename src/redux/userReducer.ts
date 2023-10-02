@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IUserData } from '../models'
 
 const defaultState: IUserData = {
-  currentUser: {},
+  currentUser: null,
   isAuth: false,
 }
 

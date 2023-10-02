@@ -3,14 +3,15 @@ import { AppDispatch } from '../redux'
 import { toast } from 'react-toastify'
 import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
+import { API_URL } from '../config'
 
 export const getFiles = async (folderId: string | null, sortValue: string) => {
   try {
-    let url = 'http://localhost:5000/api/files'
+    let url = `${API_URL}api/files`
     if (folderId) {
-      url = `http://localhost:5000/api/files?parent=${folderId}&sort=${sortValue}`
+      url = `${API_URL}api/files?parent=${folderId}&sort=${sortValue}`
     } else {
-      url = `http://localhost:5000/api/files?sort=${sortValue}`
+      url = `${API_URL}api/files?sort=${sortValue}`
     }
 
     const response = await axios.get(url, {
@@ -26,7 +27,7 @@ export const getFiles = async (folderId: string | null, sortValue: string) => {
 
 export const creatFolder = async (folderId: string | null, name: string) => {
   try {
-    const response = await axios.post('http://localhost:5000/api/files', {
+    const response = await axios.post(`${API_URL}api/files`, {
       name,
       parent: folderId,
       type: 'dir'
@@ -52,7 +53,7 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
       const uploadFile = {id: Date.now(), name: file.name, progress: 0}
       const downloads = sessionStorage.getItem(ESSKeys.downloads)
 
-      const response = await axios.post('http://localhost:5000/api/files/upload', formData, {
+      const response = await axios.post(`${API_URL}api/files/upload`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
         ///TODO add progress for uploading files
       })  
@@ -75,7 +76,7 @@ export const uploadFile = (file: File, folderId: string | null, ) => {
 }
 
 export const downloadFile = async ( fileId: string, fileName: string ) => {
-  const response = await fetch(`http://localhost:5000/api/files/download?id=${fileId}`, {
+  const response = await fetch(`${API_URL}api/files/download?id=${fileId}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}`}
   })
   if (response.status === 200) {
@@ -92,7 +93,7 @@ export const downloadFile = async ( fileId: string, fileName: string ) => {
 
 export const deleteFileApi = async (fileId: string) => {
   try {
-    const response = await axios.delete(`http://localhost:5000/api/files?id=${fileId}`, {
+    const response = await axios.delete(`${API_URL}api/files?id=${fileId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
     })
     toast.success(response.data.message)
@@ -103,7 +104,7 @@ export const deleteFileApi = async (fileId: string) => {
 
 export const searchFile = async (searchValue: string) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/files/search?search=${searchValue}`, {
+    const response = await axios.get(`${API_URL}api/files/search?search=${searchValue}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
     })
     return response.data
