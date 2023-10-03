@@ -97,6 +97,7 @@ export const deleteFileApi = async (fileId: string) => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
     })
     toast.success(response.data.message)
+    return response.status
   } catch (error: any) {
     toast.error(error.response.data.message)
   }

@@ -36,7 +36,9 @@ export const File = (props: IProps) => {
   const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation()
     deleteFileApi(id)
-      .then(_ => dispatch(setFiles(files.filter(file => file._id !== id))))
+      .then(status => {
+        if (status) dispatch(setFiles(files.filter(file => file._id !== id)))
+      })
   }
 
   if (folderDisplay === EFolderDisplayOptions.plates) {
