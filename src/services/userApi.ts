@@ -1,12 +1,11 @@
-import axios from 'axios'
 import { AppDispatch, setIsAuth, setUser } from '../redux'
 import { toast } from 'react-toastify'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
-import { API_URL } from './config'
+import { API } from './API'
 
 export const registration = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`${API_URL}api/auth/registration`, {email, password})
+    const response = await API.post('api/auth/registration', {email, password})
 
     toast.success(response.data.message)
   } catch (error: any) {
@@ -17,7 +16,7 @@ export const registration = async (email: string, password: string) => {
 export const login = (email: string, password: string) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await axios.post(`${API_URL}api/auth/login`, {email, password})
+      const response = await API.post('api/auth/login', {email, password})
       dispatch(setUser(response.data.user))
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
@@ -30,11 +29,7 @@ export const login = (email: string, password: string) => {
 export const auth = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await axios.get(`${API_URL}api/auth/auth`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+      const response = await API.get('api/auth/auth')
       dispatch(setUser(response.data.user))
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
@@ -51,9 +46,7 @@ export const uploadAvatar = async (file: File) => {
   try {
     const formData = new FormData()
     formData.append('file', file)
-    const response = await axios.post(`${API_URL}api/files/avatar`, formData, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
-    })
+    const response = await API.post('api/files/avatar', formData)
     return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)
@@ -62,9 +55,7 @@ export const uploadAvatar = async (file: File) => {
 
 export const deleteAvatar = async () => {
   try {
-    const response = await axios.delete(`${API_URL}api/files/avatar`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}`},
-    })
+    const response = await API.delete('api/files/avatar')
     return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)

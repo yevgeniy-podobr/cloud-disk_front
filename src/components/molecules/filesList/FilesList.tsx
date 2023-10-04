@@ -17,7 +17,7 @@ export const FilesList = () => {
           <div className="files-list__header-date">Date</div>
           <div className="files-list__header-size">Size</div>
         </div>
-        {!files.length ? (
+        {!files?.length ? (
           <div className="files-list__empty">
             {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
             <br/>
