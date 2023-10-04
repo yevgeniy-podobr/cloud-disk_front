@@ -9,6 +9,8 @@ import { ElemObj, Multiselect } from "../../atoms";
 import iconsDisplayIcon from '../../../assets/display-icons.png';
 import listDisplayIcon from '../../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
+import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
+import { setIsVisible, setUploadFiles } from "../../../redux/uploadReducer";
 
 const sortingOptions: ElemObj[] = [
   {id: 1, element: 'type'},
@@ -27,7 +29,8 @@ export const Disk = () => {
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDrageEnter] = useState(false)
   const [sortValue, setSortValue] = useState<ElemObj>(sortingOptions[0])
-
+  const formData = new FormData()
+  
   const createFolderHandler = (folderName: string) => {
     creatFolder(currentFolder, folderName)
       .then(res => dispatch(setFiles([...files, res?.data])))
@@ -39,15 +42,35 @@ export const Disk = () => {
     dispatch(setFolderStack(folderStack.slice(0, folderStack.length-1)))
   }
 
+  const fileHandler = (newFile: File) => {
+    formData.append('file', newFile)
+    if (currentFolder) {
+      formData.append('parent', currentFolder)
+    }
+    const fileForDownload = {id: Date.now(), name: newFile.name, progress: 0}
+    const downloads = sessionStorage.getItem(ESSKeys.downloads)
+    dispatch(setIsVisible(true))
+
+    if (!downloads) {
+      dispatch(setUploadFiles([fileForDownload]))
+      sessionStorage.setItem(ESSKeys.downloads, JSON.stringify([fileForDownload]))
+    } else {
+      const preparedData = [...(JSON.parse(downloads)), fileForDownload]
+
+      dispatch(setUploadFiles(preparedData))
+      sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedData))
+    }   
+
+    uploadFile(formData).then(res => dispatch(setFiles([...files, res?.data])))
+  }
+
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     ///TODO: add the ability to upload multiple files
   
     // const files = new Array(e.target.files)
 
     // files.forEach(file => dispatch(uploadFile(file, currentFolder)))
-
-    dispatch(uploadFile(e.target.files![0], currentFolder))
-      .then(res => dispatch(setFiles([...files, res?.data])))
+    fileHandler(e.target.files![0])
   }
 
   const dragEnterHandler = (e: React.DragEvent) => {
@@ -68,8 +91,7 @@ export const Disk = () => {
   const dropHandler = (e: React.DragEvent) => {
     e.preventDefault()
     setDrageEnter(false)
-    dispatch(uploadFile(e.dataTransfer.files[0], currentFolder))
-      .then(res => dispatch(setFiles([...files, res?.data])))
+    fileHandler(e.dataTransfer.files[0])
   }
 
   useEffect(() => {

@@ -1,7 +1,4 @@
-import { AppDispatch } from '../redux'
 import { toast } from 'react-toastify'
-import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
-import { ESSKeys } from '../utils/constants/sessionStorageKeys'
 import { API } from './API'
 
 export const getFiles = async (folderId: string | null, sortValue: string) => {
@@ -33,35 +30,15 @@ export const creatFolder = async (folderId: string | null, name: string) => {
   }
 }
 
-export const uploadFile = (file: File, folderId: string | null, ) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-      if (folderId) {
-        formData.append('parent', folderId)
-      }
-      const uploadFile = {id: Date.now(), name: file.name, progress: 0}
-      const downloads = sessionStorage.getItem(ESSKeys.downloads)
-      dispatch(setIsVisible(true))
-      const response = await API.post(`api/files/upload`, formData
-        ///TODO add progress for uploading files
-      )  
-
-      if (!downloads) {
-        dispatch(setUploadFiles([uploadFile]))
-        sessionStorage.setItem(ESSKeys.downloads, JSON.stringify([uploadFile]))
-      } else {
-        const preparedData = [...(JSON.parse(downloads)), uploadFile]
-
-        dispatch(setUploadFiles(preparedData))
-        sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedData))
-      }      
-            
-      return response                                 
-    } catch (error: any) {
-      toast.error(error.response.data.message)
-    }
+export const uploadFile = async (formData: FormData) => {
+  try {
+    
+    const response = await API.post(`api/files/upload`, formData
+      ///TODO add progress for uploading files
+    )    
+    return response                                 
+  } catch (error: any) {
+    toast.error(error.response.data.message)
   }
 }
 

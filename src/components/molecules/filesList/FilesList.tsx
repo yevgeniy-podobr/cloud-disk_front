@@ -8,7 +8,7 @@ export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folserDisplay = useTypedSelector(state => state.file.folderDisplay)
-
+  const preparedFiles = files.filter(file => file)
   return (
     folserDisplay === EFolderDisplayOptions.list ? (
       <div className="files-list">
@@ -17,14 +17,14 @@ export const FilesList = () => {
           <div className="files-list__header-date">Date</div>
           <div className="files-list__header-size">Size</div>
         </div>
-        {!files?.length ? (
+        {!preparedFiles?.length ? (
           <div className="files-list__empty">
             {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
             <br/>
             Please create a folder or upload a file...
           </div>
         ) : (
-          files.map(file => {
+          preparedFiles.filter(file => file).map(file => {
             return (
               <File 
                 key={file._id} 
@@ -40,7 +40,7 @@ export const FilesList = () => {
       </div>
     ) : (
       <div className="files-plates">
-        {files.map(file => {
+        {preparedFiles.map(file => {
           return (
             <File 
               key={file._id} 
