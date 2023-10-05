@@ -1,5 +1,11 @@
 import { toast } from 'react-toastify'
 import { API } from './API'
+import { ESSKeys } from '../utils/constants/sessionStorageKeys'
+import { AppDispatch } from '../redux'
+import { IUploadFile } from '../models'
+import { setUploadFiles } from '../redux/uploadReducer'
+import axios from 'axios'
+import { API_URL } from './config'
 
 export const getFiles = async (folderId: string | null, sortValue: string) => {
   try {
@@ -17,7 +23,7 @@ export const getFiles = async (folderId: string | null, sortValue: string) => {
   }
 }
 
-export const creatFolder = async (folderId: string | null, name: string) => {
+export const createFolder = async (folderId: string | null, name: string) => {
   try {
     const response = await API.post(`api/files`, {
       name,
@@ -30,16 +36,38 @@ export const creatFolder = async (folderId: string | null, name: string) => {
   }
 }
 
-export const uploadFile = async (formData: FormData) => {
-  try {
-    
-    const response = await API.post(`api/files/upload`, formData
-      ///TODO add progress for uploading files
-    )    
-    return response                                 
-  } catch (error: any) {
-    toast.error(error.response.data.message)
+export const uploadFile = (formData: FormData, fileId: number) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const filesFromSS = sessionStorage.getItem(ESSKeys.downloads) 
+          ? JSON.parse(sessionStorage.getItem(ESSKeys.downloads) ?? '') 
+          : []
+
+      const response = await axios.post(`${API_URL}api/files/upload`, formData, 
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        onUploadProgress: (progressEvent: any) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          )
+          const preparedFiles = filesFromSS.map((file: IUploadFile) => {
+            return file.id === fileId ? {
+              ...file,
+              progress: percentCompleted
+            } : file
+          })
+          dispatch(setUploadFiles(preparedFiles))
+          sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedFiles))
+        },
+      })    
+      return response                                 
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
   }
+
 }
 
 export const downloadFile = async ( fileId: string, fileName: string ) => {

@@ -22,7 +22,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   onTrackingUploadFile?: () => void
 }
 
-export interface Config {
+interface Config {
   onUploadProgress: (progressEvent: any) => void
 }
 

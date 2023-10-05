@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './disk.scss';
 import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, useAppDispatch, useTypedSelector } from "../../../redux";
-import { creatFolder, getFiles, uploadFile } from "../../../services/fileApi";
+import { createFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
 import { Uploader } from "../uploader";
@@ -32,7 +32,7 @@ export const Disk = () => {
   const formData = new FormData()
   
   const createFolderHandler = (folderName: string) => {
-    creatFolder(currentFolder, folderName)
+    createFolder(currentFolder, folderName)
       .then(res => dispatch(setFiles([...files, res?.data])))
   }
 
@@ -47,7 +47,7 @@ export const Disk = () => {
     if (currentFolder) {
       formData.append('parent', currentFolder)
     }
-    const fileForDownload = {id: Date.now(), name: newFile.name, progress: 0}
+    const fileForDownload = {id: Date.now(), name: newFile?.name, progress: 0}
     const downloads = sessionStorage.getItem(ESSKeys.downloads)
     dispatch(setIsVisible(true))
 
@@ -59,9 +59,9 @@ export const Disk = () => {
 
       dispatch(setUploadFiles(preparedData))
       sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedData))
-    }   
+    }
 
-    uploadFile(formData).then(res => dispatch(setFiles([...files, res?.data])))
+    dispatch(uploadFile(formData, fileForDownload.id)).then(res => dispatch(setFiles([...files, res?.data])))
   }
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +124,7 @@ export const Disk = () => {
               Create a folder
             </button>
 
-            {/* //TODO need refactoring upload file and drug and drop */}
+            {/* //TODO need add multiply for upload file*/}
             <div className="disk__header-btns_upload">    
               <label htmlFor="disk__header-btns_upload-input" className="disk__header-btns_upload-label">Upload file</label>
               <input 

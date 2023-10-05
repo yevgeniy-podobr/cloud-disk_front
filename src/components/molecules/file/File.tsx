@@ -37,7 +37,7 @@ export const File = (props: IProps) => {
     e.stopPropagation()
     deleteFileApi(id)
       .then(status => {
-        if (status) dispatch(setFiles(files.filter(file => file._id !== id)))
+        if (status) dispatch(setFiles(files.filter(file => file?._id !== id)))
       })
   }
 
@@ -68,7 +68,7 @@ export const File = (props: IProps) => {
       />
       <div className="file__name">{name}</div>
       <div className="file__date">{date}</div>
-      <div className="file__size">{sizeFormat(size)}</div>
+      <div className="file__size">{type !== 'dir' ? sizeFormat(size) : '---'}</div>
       {type !== 'dir' && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
       <button className="file__btn-delete" onClick={(e) => onDeleteFile(e)}> Delete file</button>
     </div>
