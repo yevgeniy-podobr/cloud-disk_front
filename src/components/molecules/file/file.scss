@@ -45,6 +45,7 @@
   }
   &:hover &__btn-download{
     grid-column-start: 5;
+    margin-right: 5px;
     @extend %buttonFile;
   }
   &:hover &__btn-delete {
