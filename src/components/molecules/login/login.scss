@@ -1,10 +1,11 @@
+@import '../../../globalStyles/main.scss';
 
 .login {
   display: flex;
   flex-direction: column;
   width: 500px;
   align-items: center;
-  background-color: white;
+  background-color: $whiteColor;
   border-radius: 20px;
   padding: 30px;
   align-self: center;

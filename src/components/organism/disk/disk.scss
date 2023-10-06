@@ -17,22 +17,25 @@
   
       &_create, &_back {
         background-color: rgba(255, 255, 255, 0.1);
-        border: 2px solid $font-color;
+        border: 2px solid $fontColor;
         cursor: pointer;
         border-radius: 10px;
         padding: 5px 10px;
       }
   
       &_create:hover, &_back:hover {
-        background-color: $font-color;
-        color: white;
-        border: 2px solid $font-color;
+        background-color: $fontColor;
+        color: $whiteColor;
+        border: 2px solid $fontColor;
       }
   
       &_back:disabled {
-        border-color: #cccccc;
+        border-color: $greyColor;
+        background-color: $greyColor;
+        color: $darkGreyColor;
         &:hover {
-          color: #666666;
+          background-color: $greyColor;
+          cursor: auto;
         }
       }
   
@@ -43,14 +46,14 @@
         }
         &-label {
           margin-left: 10px;
-          border: 2px dashed $font-color;
+          border: 2px dashed $fontColor;
           cursor: pointer;
           padding: 7px 10px;
           border-radius: 10px;
           &:hover {
-            background-color: $font-color;
-            color: white;
-            border: 2px solid $font-color;
+            background-color: $fontColor;
+            color: $whiteColor;
+            border: 2px solid $fontColor;
           }
         }
       }
@@ -91,7 +94,7 @@
 .drop-area {
   width: 100%;
   height: 80vh;
-  border: dashed $font-color 2px;
+  border: dashed $fontColor 2px;
   display: flex;
   justify-content: center;
   align-items: center;

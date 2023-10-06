@@ -3,7 +3,7 @@
 .select {
   font-size: 16px;
   line-height: 23px;
-  color: #737373;
+  color: $darkGreyColor2;
 
   &__wrapper {
     position: relative;
@@ -19,7 +19,7 @@
     align-items: center;
     justify-items: center;
     min-height: 37px;
-    border: 2px solid $font-color;
+    border: 2px solid $fontColor;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
@@ -81,14 +81,14 @@
 
   &__selected-item_multi {
     padding: 0 5px;
-    background-color: #a5a5a5;
+    background-color: $lightGreyColor;
     color: $whiteColor;
     border-radius: 3px;
   }
 
   &__list {
     &-wrapper {
-      border: 0.92px solid #737373;
+      border: 0.92px solid $darkGreyColor2;
       border-top: 0;
       border-radius: 0 0 2.76px 2.76px;
       position: absolute;

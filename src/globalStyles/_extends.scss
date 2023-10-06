@@ -11,8 +11,8 @@
   cursor: pointer;
 
   &:hover {
-    background-color: $font-color;
-    color: white;
+    background-color: $fontColor;
+    color: $whiteColor;
     border: none;
   }
 }

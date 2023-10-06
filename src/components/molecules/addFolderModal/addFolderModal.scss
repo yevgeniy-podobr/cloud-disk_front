@@ -1,3 +1,5 @@
+@import '../../../globalStyles/main.scss';
+
 .add-folder-modal {
   width: 100%;
   height: 100vh;
@@ -40,7 +42,7 @@
   }
 
   &__btn-create:disabled {
-    background-color: #ccc;
+    background-color: $greyColor;
   }
 
   input {

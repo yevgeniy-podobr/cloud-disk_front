@@ -1,7 +1,7 @@
 @import '../../../globalStyles/main.scss';
 
 .uploader-file {
-  background-color: $background-color;
+  background-color: $backgroundColor;
   justify-content: space-between;
   border-radius: 8px;
   padding: 5px 10px;
@@ -14,15 +14,15 @@
   &__progress-bar {
     height: 1rem;
     border-radius: 8px;
-    background-color: $font-color;
+    background-color: $fontColor;
     display: flex;
     margin: 3px 0;
     &_upload-bar {
-      background-color: green;
+      background-color: $greenColor;
       border-radius: 8px;
     }
     &_percent {
-      color: $background-color;
+      color: $backgroundColor;
       left: 50%;
       position: absolute;
     }

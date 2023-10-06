@@ -66,10 +66,6 @@ export const Disk = () => {
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     ///TODO: add the ability to upload multiple files
-  
-    // const files = new Array(e.target.files)
-
-    // files.forEach(file => dispatch(uploadFile(file, currentFolder)))
     fileHandler(e.target.files![0])
   }
 

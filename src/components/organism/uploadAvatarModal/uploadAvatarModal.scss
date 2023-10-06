@@ -30,7 +30,7 @@
 
   &__btn {
     @extend %buttonFile;
-    background-color: #fff;
+    background-color: $whiteColor;
     border: solid;
     width: 200px;
     margin-top: 20px;
