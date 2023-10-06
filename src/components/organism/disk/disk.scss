@@ -5,6 +5,9 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    @media (max-width: $mediumWidth) {
+      flex-direction: column;
+    }
 
     &-btns {
       display: flex;

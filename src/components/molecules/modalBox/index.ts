@@ -1,1 +1,0 @@
-export { ModalBox } from './ModalBox'

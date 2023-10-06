@@ -16,13 +16,17 @@
   
   &__header {
     display: flex;
-
+    align-items: center;
     &-title {
       font-size: 24px;
       font-weight: 700;
     }
     &-search {
       margin-left: 20px;
+      @media (max-width: $mediumWidth) {
+        margin-left: 0;
+        margin-right: 20px;
+      }
     }
 
   }
