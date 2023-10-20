@@ -3,6 +3,10 @@ export enum EFolderDisplayOptions {
   plates= 'plates',
 }
 
+export enum EFileType {
+  dir = 'dir'
+}
+
 export enum TypeResume {
   png = 'image/png',
   jpg = 'image/jpg',

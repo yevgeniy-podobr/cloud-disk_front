@@ -39,21 +39,29 @@ export const FilesList = () => {
         )}
       </div>
     ) : (
-      <div className="files-plates">
-        {preparedFiles.map(file => {
-          return (
-            <File 
-              key={file._id} 
-              name={file.name} 
-              date={file.date.slice(0, 10)} 
-              size={file.size} 
-              id={file._id}
-              type={file.type}
-            />
-          )}
-        )
-      }
-    </div>
+      !preparedFiles?.length ? (
+        <div className="files-list__empty">
+          {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
+          <br/>
+          Please create a folder or upload a file...
+        </div>
+      ) : (
+        <div className="files-plates">
+          {preparedFiles.map(file => {
+            return (
+              <File 
+                key={file._id} 
+                name={file.name} 
+                date={file.date.slice(0, 10)} 
+                size={file.size} 
+                id={file._id}
+                type={file.type}
+              />
+            )}
+          )
+        }
+        </div>
+      )
     )
   )
 }

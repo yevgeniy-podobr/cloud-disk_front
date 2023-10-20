@@ -7,7 +7,7 @@ import downloadIcon from '../../../assets/download-icon.png'
 import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
 import { deleteFileApi, downloadFile } from "../../../services/fileApi";
 import { sizeFormat } from "../../../utils/script/sizeFormat";
-import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
+import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 
 interface IProps {
   name: string,
@@ -24,6 +24,8 @@ export const File = (props: IProps) => {
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const files = useTypedSelector(state => state.file.files)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
+
+  const isDir = type === EFileType.dir;
 
   const openFolderHandler = () => {
     dispatch(setFolderStack([...folderStack, currentFolder]))
@@ -45,9 +47,9 @@ export const File = (props: IProps) => {
 
   if (folderDisplay === EFolderDisplayOptions.plates) {
     return (
-      <div className="file__plate" onClick={() => type === 'dir' && openFolderHandler()}>
-        <div className={`file__plate-actions ${type === 'dir' ? 'file__plate-actions-dir' : ''}`}>
-          {type !== 'dir' && (
+      <div className="file__plate" onClick={() => isDir && openFolderHandler()}>
+        <div className={`file__plate-actions ${isDir ? 'file__plate-actions-dir' : ''}`}>
+          {!isDir && (
             <img 
               className="file__plate-actions-icon" 
               src={downloadIcon} 
@@ -65,7 +67,7 @@ export const File = (props: IProps) => {
         </div>
         <img 
           className="file__plate-icon" 
-          src={type === 'dir' ? folderIcon : fileIcon} 
+          src={isDir ? folderIcon : fileIcon} 
           alt="dir icon" 
         />
         <div className="file__plate-name">{name}</div>
@@ -74,16 +76,16 @@ export const File = (props: IProps) => {
   }
   
   return (
-    <div className="file" onClick={() => type === 'dir' && openFolderHandler()}>
+    <div className="file" onClick={() => isDir && openFolderHandler()}>
       <img 
         className="file__icon" 
-        src={type === 'dir' ? folderIcon : fileIcon} 
+        src={isDir ? folderIcon : fileIcon} 
         alt="dir icon" 
       />
       <div className="file__name">{name}</div>
       <div className="file__date">{date}</div>
-      <div className="file__size">{type !== 'dir' ? sizeFormat(size) : '---'}</div>
-      {type !== 'dir' && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
+      <div className="file__size">{!isDir ? sizeFormat(size) : '---'}</div>
+      {!isDir && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
       <button className="file__btn-delete" onClick={(e) => onDeleteFile(e)}> Delete file</button>
     </div>
   )
