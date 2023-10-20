@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import './registration.scss'
+import './authorization.scss'
 import { Input } from "../../atoms";
-import { login, registration } from "../../../services/userApi";
-import { useAppDispatch } from "../../../redux";
+import {  AppDispatch, useAppDispatch } from "../../../redux";
 
-export const Registration = () => {
+interface Props {
+  title: string
+  btnText: string
+  action: (email: string, password: string) => (dispatch: AppDispatch) => Promise<void>
+}
+
+export const Authorization = (props: Props) => {
+  const {title, action, btnText} = props
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useAppDispatch()
 
-  const registrationHandler = () => {
-    registration(email, password).then((_) => 
-      setTimeout(() => {
-        dispatch(login(email, password))
-      }, 4000)
-    )
-  }
   return (
-    <div className="registration">
-      <p className="registration__header">Registration</p>
+    <div className="authorization">
+      <p className="authorization__header">{title}</p>
 
       <Input 
         type="test" 
@@ -34,13 +33,12 @@ export const Registration = () => {
       />
 
       <button 
-        className="registration__btn button" 
-        onClick={() => registrationHandler()}
+        className="authorization__btn button" 
+        onClick={() => email && password && dispatch(action(email, password))}
         disabled={!email || !password}
       >
-        Sign Up
+        {btnText}
       </button>
     </div>
   )
 }
-

@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
-import { Registration, Login } from './components/molecules';
+import { Authorization } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
-import { auth } from './services/userApi';
+import { auth, login, registration } from './services/userApi';
 import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,8 +46,20 @@ const App = () => {
               {(!isAuth && !tokenFromStorage )
                 ? (
                     <Routes>
-                      <Route path='/registration' element={<Registration />}/>
-                      <Route path='/login' element={<Login />}/>
+                      <Route path='/registration' element={
+                        <Authorization 
+                          title='Registration' 
+                          action={registration} 
+                          btnText='Sign Up'  
+                        />
+                      }/>
+                      <Route path='/login' element={
+                        <Authorization 
+                          title='Login' 
+                          action={login} 
+                          btnText='Sign In'
+                        />
+                      }/>
                       <Route path="*" element={<Navigate replace to="/login" />} />
                     </Routes>
                 ) : (

@@ -3,14 +3,15 @@ import { toast } from 'react-toastify'
 import { ESSKeys } from '../utils/constants/sessionStorageKeys'
 import { API } from './API'
 
-export const registration = async (email: string, password: string) => {
-  try {
-    const response = await API.post('api/auth/registration', {email, password})
-
-    toast.success(response.data.message)
-  } catch (error: any) {
-    console.log(error)
-    toast.error(error.response.data.message)
+export const registration = (email: string, password: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const response = await API.post('api/auth/registration', {email, password})
+      toast.success(response.data.message)
+      dispatch(login(email, password))
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
   }
 }
 
