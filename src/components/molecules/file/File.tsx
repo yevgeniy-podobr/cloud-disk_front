@@ -2,6 +2,8 @@ import React from "react";
 import './file.scss'
 import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
+import closeIcon from '../../../assets/close-icon.png'
+import downloadIcon from '../../../assets/download-icon.png'
 import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
 import { deleteFileApi, downloadFile } from "../../../services/fileApi";
 import { sizeFormat } from "../../../utils/script/sizeFormat";
@@ -28,12 +30,12 @@ export const File = (props: IProps) => {
     dispatch(setCurrentFolder(id))
   }
 
-  const onDownloadFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onDownloadFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
     downloadFile(id, name)
   }
 
-  const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
     deleteFileApi(id)
       .then(status => {
@@ -44,17 +46,29 @@ export const File = (props: IProps) => {
   if (folderDisplay === EFolderDisplayOptions.plates) {
     return (
       <div className="file__plate" onClick={() => type === 'dir' && openFolderHandler()}>
+        <div className={`file__plate-actions ${type === 'dir' ? 'file__plate-actions-dir' : ''}`}>
+          {type !== 'dir' && (
+            <img 
+              className="file__plate-actions-icon" 
+              src={downloadIcon} 
+              alt="download icon"
+              onClick={(e) => onDownloadFile(e)}
+            />
+          )}
+
+          <img 
+            className="file__plate-actions-icon" 
+            src={closeIcon} 
+            alt="close icon" 
+            onClick={(e) => onDeleteFile(e)}
+          />
+        </div>
         <img 
           className="file__plate-icon" 
           src={type === 'dir' ? folderIcon : fileIcon} 
           alt="dir icon" 
         />
         <div className="file__plate-name">{name}</div>
-        <div className="file__plate-btns">
-          {type !== 'dir' && <button className="file__plate-btns-btn" onClick={(e) => onDownloadFile(e)}> Download </button>} 
-          <button className="file__plate-btns-btn" onClick={(e) => onDeleteFile(e)}> Delete file</button>
-        </div>
-
       </div>
     )
   }

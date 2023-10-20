@@ -10,7 +10,6 @@
   animation: file 500ms forwards;
 
   &:hover {
-    // transform: scale(1.02);
     cursor: pointer;
   }
   &__name {
@@ -60,22 +59,31 @@
     height: 150px;
     width: 150px;
     &-icon {
+      margin-top: 10px;
       height: 80px;
       width: 80px;
     }
     &:hover {
       cursor: pointer;
     }
-    &-btns {
+    &-actions {
       display: none;
     }
-    &:hover &-btns {
+    &:hover &-actions {
+      width: 100px;
       display: flex;
-      flex-direction: column;
-      width: 80px;
-       &-btn {
-        @extend %buttonFile;
-        margin-top: 5px;
+      justify-content: space-between;
+      position: absolute;
+
+      &-icon {
+        width: 20px;
+        height: 20px;
+        &:hover {
+          transform: scale(1.25);
+        }
+      }
+      &-dir {
+        justify-content: flex-end;
       }
     }
   }
