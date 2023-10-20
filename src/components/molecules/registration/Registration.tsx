@@ -33,7 +33,11 @@ export const Registration = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="registration__btn button" onClick={() => registrationHandler()}>
+      <button 
+        className="registration__btn button" 
+        onClick={() => registrationHandler()}
+        disabled={!email || !password}
+      >
         Sign Up
       </button>
     </div>

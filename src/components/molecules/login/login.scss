@@ -23,5 +23,14 @@
 
   &__btn {
     margin-top: 10px;
+    &:disabled {
+      border-color: $greyColor;
+      background-color: $greyColor;
+      color: $darkGreyColor;
+      &:hover {
+        background-color: $greyColor;
+        cursor: auto;
+      }
+    }
   }
 }
