@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './file.scss'
 import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
@@ -24,6 +24,7 @@ export const File = (props: IProps) => {
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const files = useTypedSelector(state => state.file.files)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
+  const [isLoading, setIsLoading] = useState(false)
 
   const isDir = type === EFileType.dir;
 
@@ -34,7 +35,7 @@ export const File = (props: IProps) => {
 
   const onDownloadFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
-    downloadFile(id, name)
+    downloadFile(id, name).finally(() => setIsLoading(false))
   }
 
   const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
@@ -42,7 +43,7 @@ export const File = (props: IProps) => {
     deleteFileApi(id)
       .then(status => {
         if (status) dispatch(setFiles(files.filter(file => file?._id !== id)))
-      })
+      }).finally(() => setIsLoading(false))
   }
 
   if (folderDisplay === EFolderDisplayOptions.plates) {
@@ -85,8 +86,28 @@ export const File = (props: IProps) => {
       <div className="file__name">{name}</div>
       <div className="file__date">{date}</div>
       <div className="file__size">{!isDir ? sizeFormat(size) : '---'}</div>
-      {!isDir && <button className="file__btn-download" onClick={(e) => onDownloadFile(e)}> Download file</button>} 
-      <button className="file__btn-delete" onClick={(e) => onDeleteFile(e)}> Delete file</button>
+      {!isDir && (
+        <button 
+          className="file__btn-download" 
+          onClick={(e) => {
+            setIsLoading(true)
+            onDownloadFile(e)
+          }}
+          disabled={isLoading}
+        > 
+          Download file
+        </button>
+      )} 
+      <button 
+        className="file__btn-delete" 
+        onClick={(e) => {
+          setIsLoading(true)
+          onDeleteFile(e)
+        }}
+        disabled={isLoading}
+      > 
+        Delete file
+      </button>
     </div>
   )
 }

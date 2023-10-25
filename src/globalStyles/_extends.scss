@@ -14,4 +14,13 @@
     color: $whiteColor;
     border: none;
   }
+  &:disabled {
+    border-color: $greyColor;
+    background-color: $greyColor;
+    color: $darkGreyColor;
+    &:hover {
+      background-color: $greyColor;
+      cursor: auto;
+    }
+  }
 }
