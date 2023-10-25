@@ -13,6 +13,7 @@ export const Authorization = (props: Props) => {
   const {title, action, btnText} = props
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useAppDispatch()
 
   return (
@@ -34,8 +35,11 @@ export const Authorization = (props: Props) => {
 
       <button 
         className="authorization__btn button" 
-        onClick={() => email && password && dispatch(action(email, password))}
-        disabled={!email || !password}
+        onClick={() => {
+          setIsLoading(true)
+          dispatch(action(email, password)).finally(() => setIsLoading(false))
+        }}
+        disabled={!email || !password || isLoading}
       >
         {btnText}
       </button>
