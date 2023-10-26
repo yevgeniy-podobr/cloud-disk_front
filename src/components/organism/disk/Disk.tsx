@@ -27,7 +27,7 @@ export const Disk = () => {
   const files = useTypedSelector(state => state.file.files)
   const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
-  const [dragEnter, setDrageEnter] = useState(false)
+  const [dragEnter, setDragEnter] = useState(false)
   const [sortValue, setSortValue] = useState<ElemObj>(sortingOptions[0])
   const formData = new FormData()
   
@@ -65,28 +65,28 @@ export const Disk = () => {
   }
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    ///TODO: add the ability to upload multiple files
+    //TODO: add the ability to upload multiple files
     fileHandler(e.target.files![0])
   }
 
   const dragEnterHandler = (e: React.DragEvent) => {
     e.preventDefault()
-    setDrageEnter(true)
+    setDragEnter(true)
   }
 
-  const dragLeaveHendler = (e: React.DragEvent) => {
+  const dragLeaveHandler = (e: React.DragEvent) => {
     e.preventDefault()
-    setDrageEnter(false)
+    setDragEnter(false)
   }
 
-  const dragOverHendler = (e: React.DragEvent) => {
+  const dragOverHandler = (e: React.DragEvent) => {
     e.preventDefault()
-    setDrageEnter(true)
+    setDragEnter(true)
   }
   
   const dropHandler = (e: React.DragEvent) => {
     e.preventDefault()
-    setDrageEnter(false)
+    setDragEnter(false)
     fileHandler(e.dataTransfer.files[0])
   }
 
@@ -104,8 +104,8 @@ export const Disk = () => {
     !dragEnter ? (
       <div className="disk" 
         onDragEnter={dragEnterHandler} 
-        onDragLeave={dragLeaveHendler}
-        onDragOver={dragOverHendler}
+        onDragLeave={dragLeaveHandler}
+        onDragOver={dragOverHandler}
       >
         <div className="disk__header">
           <div className="disk__header-btns">
@@ -178,8 +178,8 @@ export const Disk = () => {
       <div 
         className="drop-area"
         onDragEnter={dragEnterHandler} 
-        onDragLeave={dragLeaveHendler} 
-        onDragOver={dragOverHendler}
+        onDragLeave={dragLeaveHandler} 
+        onDragOver={dragOverHandler}
         onDrop={dropHandler}
       >
         Add file...

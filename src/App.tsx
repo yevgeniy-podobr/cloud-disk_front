@@ -64,8 +64,8 @@ const App = () => {
                     </Routes>
                 ) : (
                   <Routes>
-                    <Route path='/' element={<Disk />}/>
-                    <Route path="*" element={<Navigate replace to="/" />} />
+                    <Route path='/disk' element={<Disk />}/>
+                    <Route path="*" element={<Navigate replace to="/disk" />} />
                   </Routes>
                 )
               }
