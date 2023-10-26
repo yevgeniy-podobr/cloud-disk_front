@@ -24,3 +24,13 @@
     }
   }
 }
+
+%closeBtn {
+  border: 1px solid $greyColor;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $backgroundColor;
+  }
+}

@@ -9,6 +9,13 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 5px;
+    &-close {
+      @extend %closeBtn;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+    }
   }
 
   &__progress-bar {
