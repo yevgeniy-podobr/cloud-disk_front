@@ -7,7 +7,6 @@ export const Loader = (props: Props) => {
   return (
     <div
       className={`loader ${props.className ?? ''}`}
-      data-testid="loader"
     ></div>
   )
 }

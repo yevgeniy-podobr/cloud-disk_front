@@ -85,7 +85,6 @@ export const Multiselect = (props: Props) => {
         <div
           onClick={onClickDropDown}
           className="select__input"
-          data-testid="select__input"
         >
           <div className="select__placeholder">
             {(multiSelect
@@ -95,7 +94,6 @@ export const Multiselect = (props: Props) => {
           <div className="select__selected-list-wrapper">
             <ul
               className="select__selected-list"
-              data-testid="select__selected-list"
             >
               {multiSelect ? (
                 selectedListState &&
@@ -110,7 +108,6 @@ export const Multiselect = (props: Props) => {
                       className={`select__selected-item${
                         multiSelect ? ' select__selected-item_multi' : ''
                       }`}
-                      data-testid={`select__selected-item_multi_${selectedElem.id}`}
                     >
                       {selectedElem.element}
                     </li>
@@ -119,7 +116,6 @@ export const Multiselect = (props: Props) => {
               ) : (
                 <li
                   className="select__selected-item"
-                  data-testid="select__selected-item"
                 >
                   {selectedItemState && selectedItemState.element}
                 </li>
@@ -142,7 +138,6 @@ export const Multiselect = (props: Props) => {
               ? 'select__last-select'
               : ''
           }`}
-          data-testid="select__list-wrapper"
         >
           <ul className="select__list">
             {elements.map(item => {

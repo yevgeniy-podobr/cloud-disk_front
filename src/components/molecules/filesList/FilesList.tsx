@@ -7,10 +7,10 @@ import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
-  const folserDisplay = useTypedSelector(state => state.file.folderDisplay)
+  const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
   const preparedFiles = files.filter(file => file)
   return (
-    folserDisplay === EFolderDisplayOptions.list ? (
+    folderDisplay === EFolderDisplayOptions.list ? (
       <div className="files-list">
         <div className="files-list__header">
           <div className="files-list__header-name">Name</div>
