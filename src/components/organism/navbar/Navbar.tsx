@@ -70,12 +70,8 @@ export const Navbar = () => {
         <div className="navbar__authorization">
           {!isAuth ? (
             <>
-              <div className="navbar__authorization-login">
-                <NavLink to='/login'>Sing In</NavLink>
-              </div>
-              <div className="navbar__authorization-registration">
-                <NavLink to='/registration'>Sing Up</NavLink>
-              </div>
+              <NavLink className="navbar__authorization-login" to='/login'>Sing In</NavLink>
+              <NavLink className="navbar__authorization-registration" to='/registration'>Sing Up</NavLink>
             </>
           ) : (
             <>
