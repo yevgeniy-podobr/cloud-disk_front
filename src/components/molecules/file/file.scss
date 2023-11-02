@@ -8,10 +8,8 @@
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
   animation: file 500ms forwards;
+  cursor: pointer;
 
-  &:hover {
-    cursor: pointer;
-  }
   &__name {
     grid-column-start: 2;
   }
@@ -57,13 +55,11 @@
     flex-direction: column;
     align-items: center;
     width: 150px;
+    cursor: pointer;
     &-icon {
       margin-top: 10px;
       height: 80px;
       width: 80px;
-    }
-    &:hover {
-      cursor: pointer;
     }
     &-actions {
       display: none;

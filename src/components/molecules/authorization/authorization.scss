@@ -3,7 +3,8 @@
 .authorization {
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   align-items: center;
   background-color: $whiteColor;
   border-radius: 20px;

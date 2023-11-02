@@ -42,12 +42,14 @@
       width: 40px;
       border-radius: 50%;
       object-fit: cover;
+      cursor: pointer;
     }
     &-sign-out {
       text-decoration: underline;
     }
-    &-login, &-registration, &-sign-out, &-avatar {
+    &-login, &-registration, &-sign-out {
       cursor: pointer;
+      font-size: 20px;
     }
   }
 

@@ -21,9 +21,8 @@
     min-height: 37px;
     border: 2px solid $fontColor;
     border-radius: 5px;
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
+
     &-drop-down-icon {
       @include bckImgProps(
         7px,
@@ -36,9 +35,7 @@
       &_rotate {
         transform: rotate(0);
       }
-      &:hover {
-        cursor: pointer;
-      }
+      cursor: pointer;
     }
   }
 
@@ -55,9 +52,7 @@
 
   &__list {
     padding: 7px 0;
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 
   &__selected-list {
