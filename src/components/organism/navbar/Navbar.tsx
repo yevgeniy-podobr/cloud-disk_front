@@ -7,8 +7,9 @@ import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, searchFile } from '../../../services/fileApi'
 import _ from 'lodash'
 import defaultLogo from '../../../assets/default-logo.png'
-import { UploadAvatarModal } from '../uploadAvatarModal'
+import { UploadAvatarModal } from '../../molecules'
 import { API_URL } from '../../../services/config'
+import { Input } from '../../atoms'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -51,14 +52,15 @@ export const Navbar = () => {
       <div className="navbar__wrapper">
         <div className="navbar__header">
           <div className="navbar__header-title">
-            MERN CLOUD
+            CLOUD STORAGE
           </div>
           {isAuth && (
             <div className="navbar__header-search">
-              <input 
+              <Input 
+                type="text" 
                 className='navbar__header-search_input'
-                placeholder='Search files...' 
-                value={searchValue ?? ''} 
+                placeholder="Search files..."
+                value={searchValue ?? ''}
                 onChange={e => searchHandler(e)}
               />
             </div>

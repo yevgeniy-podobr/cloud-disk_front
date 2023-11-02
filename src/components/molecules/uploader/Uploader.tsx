@@ -1,6 +1,6 @@
 import React from "react";
 import './uploader.scss'
-import { UploaderFile } from "../../molecules";
+import { UploaderFile } from "../../atoms";
 import { useAppDispatch, useTypedSelector } from "../../../redux";
 import { setIsVisible, setUploadFiles } from "../../../redux/uploadReducer";
 import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";

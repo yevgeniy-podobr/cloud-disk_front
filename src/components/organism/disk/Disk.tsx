@@ -4,8 +4,7 @@ import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, useAppDis
 import { createFolder, getFiles, uploadFile } from "../../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../molecules";
 import { LoadingContent } from "../../molecules/loadingContent";
-import { Uploader } from "../uploader";
-import { ElemObj, Multiselect } from "../../atoms";
+import { ElemObj, Multiselect, Uploader } from "../../molecules";
 import iconsDisplayIcon from '../../../assets/display-icons.png';
 import listDisplayIcon from '../../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";

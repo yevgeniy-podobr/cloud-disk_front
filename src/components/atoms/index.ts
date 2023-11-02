@@ -1,3 +1,3 @@
 export * from './input'
 export * from './loader'
-export * from './multiselect'
+export * from './uploaderFile'

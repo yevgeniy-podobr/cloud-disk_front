@@ -21,7 +21,7 @@ export const Authorization = (props: Props) => {
       <p className="authorization__header">{title}</p>
 
       <Input 
-        type="test" 
+        type="text" 
         placeholder="Enter email..."
         value={email ?? ''}
         onChange={(e) => setEmail(e.target.value)}
