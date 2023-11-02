@@ -5,6 +5,7 @@ import { Navbar } from './components';
 import { Authorization } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
+import * as route from './services/route'
 import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,26 +47,26 @@ const App = () => {
               {(!isAuth && !tokenFromStorage )
                 ? (
                     <Routes>
-                      <Route path='/registration' element={
+                      <Route path={route.registration} element={
                         <Authorization 
                           title='Registration' 
                           action={registration} 
                           btnText='Sign Up'  
                         />
                       }/>
-                      <Route path='/login' element={
+                      <Route path={route.login} element={
                         <Authorization 
                           title='Login' 
                           action={login} 
                           btnText='Sign In'
                         />
                       }/>
-                      <Route path="*" element={<Navigate replace to="/login" />} />
+                      <Route path="*" element={<Navigate replace to={route.login} />} />
                     </Routes>
                 ) : (
                   <Routes>
-                    <Route path='/disk' element={<Disk />}/>
-                    <Route path="*" element={<Navigate replace to="/disk" />} />
+                    <Route path={route.disk} element={<Disk />}/>
+                    <Route path="*" element={<Navigate replace to={route.disk} />} />
                   </Routes>
                 )
               }

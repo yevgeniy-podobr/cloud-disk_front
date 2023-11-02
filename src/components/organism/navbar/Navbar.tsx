@@ -10,6 +10,7 @@ import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../../molecules'
 import { API_URL } from '../../../services/config'
 import { Input } from '../../atoms'
+import * as route from '../../../services/route'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -70,8 +71,8 @@ export const Navbar = () => {
         <div className="navbar__authorization">
           {!isAuth ? (
             <>
-              <NavLink className="navbar__authorization-login" to='/login'>Sing In</NavLink>
-              <NavLink className="navbar__authorization-registration" to='/registration'>Sing Up</NavLink>
+              <NavLink className="navbar__authorization-login" to={route.login}>Sing In</NavLink>
+              <NavLink className="navbar__authorization-registration" to={route.registration}>Sing Up</NavLink>
             </>
           ) : (
             <>
