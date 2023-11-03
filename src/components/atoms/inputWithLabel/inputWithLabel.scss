@@ -33,4 +33,12 @@
     color: $fontColor;
     letter-spacing: 1px;
   }
+
+  &__icon {
+    position: absolute;
+    right: 20px;
+    top: 1.3rem;
+    width: 25px;
+    cursor: pointer;
+  }
 }
