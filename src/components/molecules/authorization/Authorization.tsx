@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './authorization.scss'
-import { Input } from "../../atoms";
+import { InputWithLabel } from "../../atoms";
 import {  AppDispatch, useAppDispatch } from "../../../redux";
 
 interface Props {
@@ -20,15 +20,18 @@ export const Authorization = (props: Props) => {
     <div className="authorization">
       <p className="authorization__header">{title}</p>
 
-      <Input 
-        type="text" 
-        placeholder="Enter email..."
+      <InputWithLabel 
+        textLabel={email ? "Email" : "Enter email..."}
+        type="text"
+        id="email" 
         value={email ?? ''}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <Input 
-        type="password" 
-        placeholder="Enter password..."
+
+      <InputWithLabel 
+        textLabel={password ? "Password" : "Enter password..."}
+        type="password"
+        id="password" 
         value={password ?? ''}
         onChange={(e) => setPassword(e.target.value)}
       />

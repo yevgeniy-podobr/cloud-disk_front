@@ -12,18 +12,18 @@
   align-self: center;
   margin-top: 100px;
 
-
   &__header {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 700;
+    padding-bottom: 10px;
   }
 
   input {
-    margin: 10px 20px; 
+    margin: 10px 0; 
   }
 
   &__btn {
-    margin-top: 10px;
+    margin-top: 20px;
     &:disabled {
       border-color: $greyColor;
       background-color: $greyColor;
