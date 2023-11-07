@@ -10,6 +10,8 @@ import listDisplayIcon from '../../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
 import { setIsVisible, setUploadFiles } from "../../../redux/uploadReducer";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const sortingOptions: ElemObj[] = [
   {id: 1, element: 'type'},
@@ -29,10 +31,20 @@ export const Disk = () => {
   const [dragEnter, setDragEnter] = useState(false)
   const [sortValue, setSortValue] = useState<ElemObj>(sortingOptions[0])
   const formData = new FormData()
+
+  const createFolderMutation = useMutation({
+    mutationFn: (variables: {currentFolder: string | null, folderName: string}) => createFolder(variables.currentFolder, variables.folderName),
+    onError: err => {
+      if (err instanceof Error) toast.error(err.message)
+    }
+  })
   
   const createFolderHandler = (folderName: string) => {
-    createFolder(currentFolder, folderName)
-      .then(res => dispatch(setFiles([...files, res?.data])))
+    createFolderMutation.mutate({ currentFolder, folderName }, {
+      onSuccess: (res) => {
+        dispatch(setFiles([...files, res?.data]))
+      }
+    })
   }
 
   const onClickBack = () => {
@@ -160,8 +172,8 @@ export const Disk = () => {
           </div>
 
         </div>
-        {isLoading 
-          ? <LoadingContent isLoading={isLoading} /> 
+        {isLoading || createFolderMutation.isPending
+          ? <LoadingContent isLoading={isLoading || createFolderMutation.isPending} /> 
           : <FilesList />
         }
         

@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const AddFolderModal = (props: IProps) => {
-  const { setAddFolderModalOpen, createFolderHandler} = props
+  const { setAddFolderModalOpen, createFolderHandler } = props
   const [folderName, setFolderName] = useState('')
 
   return (
