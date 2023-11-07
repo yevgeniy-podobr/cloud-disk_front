@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './file.scss'
 import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
@@ -8,6 +8,8 @@ import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, set
 import { deleteFileApi, downloadFile } from "../../../services/fileApi";
 import { sizeFormat } from "../../../utils/script/sizeFormat";
 import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 interface IProps {
   name: string,
@@ -24,7 +26,6 @@ export const File = (props: IProps) => {
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const files = useTypedSelector(state => state.file.files)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
-  const [isLoading, setIsLoading] = useState(false)
 
   const isDir = type === EFileType.dir;
 
@@ -33,17 +34,37 @@ export const File = (props: IProps) => {
     dispatch(setCurrentFolder(id))
   }
 
+  const deleteFileMutation = useMutation({
+    mutationFn: (variables: string) => deleteFileApi(variables),
+    onError: err => {
+      if (err instanceof Error) toast.error(err.message)
+    }
+  })
+
+  const downloadMutation = useMutation({
+    mutationFn: (variables: {id: string, name: string}) => downloadFile(variables.id, variables.name),
+    onError: err => {
+      if (err instanceof Error) toast.error(err.message)
+    }
+  })
+
+
   const onDownloadFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
-    downloadFile(id, name).finally(() => setIsLoading(false))
+    const prepareData = {
+      id,
+      name
+    }
+    downloadMutation.mutate(prepareData)
   }
 
   const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
-    deleteFileApi(id)
-      .then(status => {
-        if (status) dispatch(setFiles(files.filter(file => file?._id !== id)))
-      }).finally(() => setIsLoading(false))
+    deleteFileMutation.mutate(id, {
+      onSuccess: () => {
+        dispatch(setFiles(files.filter(file => file?._id !== id)))
+      },
+    })
   }
 
   if (folderDisplay === EFolderDisplayOptions.plates) {
@@ -89,22 +110,16 @@ export const File = (props: IProps) => {
       {!isDir && (
         <button 
           className="file__btn-download" 
-          onClick={(e) => {
-            setIsLoading(true)
-            onDownloadFile(e)
-          }}
-          disabled={isLoading}
+          onClick={(e) => onDownloadFile(e)}
+          disabled={downloadMutation.isPending}
         > 
           Download file
         </button>
       )} 
       <button 
         className="file__btn-delete" 
-        onClick={(e) => {
-          setIsLoading(true)
-          onDeleteFile(e)
-        }}
-        disabled={isLoading}
+        onClick={(e) => onDeleteFile(e)}
+        disabled={deleteFileMutation.isPending}
       > 
         Delete file
       </button>
