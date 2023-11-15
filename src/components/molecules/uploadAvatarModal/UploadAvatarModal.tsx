@@ -12,6 +12,7 @@ export const UploadAvatarModal = (props: IProps) => {
   const dispatch = useAppDispatch()
   const refPhoto = useRef<HTMLInputElement>(null)
   const user = useTypedSelector(state => state.user.currentUser)
+  const formData = new FormData()
 
   const handleUploadPhoto = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -22,8 +23,9 @@ export const UploadAvatarModal = (props: IProps) => {
 
   const handleNewPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhoto = event.target.files![0]
+    formData.append('avatar', newPhoto)
     setIsUploadAvatarModalOpen(false)
-    uploadAvatar(newPhoto).then(res => dispatch(setUser(res)))
+    uploadAvatar(formData).then(res => dispatch(setUser(res)))
   }
 
   const handleDeletebtn = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,6 +48,7 @@ export const UploadAvatarModal = (props: IProps) => {
           title=""
           value=""
           accept={"image/*"}
+          name="avatar"
         />
         <button 
           className="upload-avatar-modal__btn"

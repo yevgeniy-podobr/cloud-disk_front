@@ -44,10 +44,8 @@ export const auth = () => {
   }
 }
 
-export const uploadAvatar = async (file: File) => {
+export const uploadAvatar = async (formData: FormData) => {
   try {
-    const formData = new FormData()
-    formData.append('file', file)
     const response = await API.post('api/files/avatar', formData)
     return response.data
   } catch (error: any) {
