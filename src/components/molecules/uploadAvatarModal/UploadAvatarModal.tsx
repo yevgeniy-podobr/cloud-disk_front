@@ -25,7 +25,9 @@ export const UploadAvatarModal = (props: IProps) => {
     const newPhoto = event.target.files![0]
     formData.append('avatar', newPhoto)
     setIsUploadAvatarModalOpen(false)
-    uploadAvatar(formData).then(res => dispatch(setUser(res)))
+    uploadAvatar(formData).then(res => {
+      dispatch(setUser(res))
+    })
   }
 
   const handleDeletebtn = (event: React.MouseEvent<HTMLElement>) => {

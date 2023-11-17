@@ -78,7 +78,7 @@ export const Navbar = () => {
             <>
               <img 
                 className='navbar__authorization-avatar' 
-                src={user?.avatar ? `${API_URL}${user?.avatar}` : defaultLogo} 
+                src={user?.avatar ? `${API_URL}api/files/avatar/${user?.avatar}` : defaultLogo} 
                 alt='avatar'
                 onClick={() => setIsUploadAvatarModalOpen(true)}  
               />

@@ -47,6 +47,7 @@ export const auth = () => {
 export const uploadAvatar = async (formData: FormData) => {
   try {
     const response = await API.post('api/files/avatar', formData)
+    await API.get(`api/files/avatar/${response.data.avatar}`)
     return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)
@@ -61,3 +62,4 @@ export const deleteAvatar = async () => {
     toast.error(error.response.data.message)
   }
 }
+ 
