@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
 import { Authorization } from './components/molecules';
@@ -30,7 +30,7 @@ const App = () => {
   }, [authHandler])
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app">
         <ToastContainer
           limit={3}
@@ -75,7 +75,7 @@ const App = () => {
         )
       }
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
