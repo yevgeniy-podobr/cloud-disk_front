@@ -139,6 +139,7 @@ export const Disk = () => {
                 id="disk__header-btns_upload-input" 
                 className="disk__header-btns_upload-input" 
                 onChange={(e) => fileUploadHandler(e)}  
+                name='file'
                 // multiple={true}
               />
             </div>
