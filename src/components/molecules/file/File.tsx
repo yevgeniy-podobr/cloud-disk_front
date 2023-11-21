@@ -60,11 +60,16 @@ export const File = (props: IProps) => {
 
   const onDeleteFile = (e: React.MouseEvent<HTMLButtonElement | HTMLImageElement, MouseEvent>) => {
     e.stopPropagation()
-    deleteFileMutation.mutate(id, {
-      onSuccess: () => {
-        dispatch(setFiles(files.filter(file => file?._id !== id)))
-      },
-    })
+    const fileToBeDeleted = files.find(file => file._id === id)
+    if (!!fileToBeDeleted?.childs.length) {
+      toast.error('Dir is not empty')
+    } else {
+      deleteFileMutation.mutate(id, {
+        onSuccess: () => {
+          dispatch(setFiles(files.filter(file => file?._id !== id)))
+        },
+      })
+    }
   }
 
   if (folderDisplay === EFolderDisplayOptions.plates) {
