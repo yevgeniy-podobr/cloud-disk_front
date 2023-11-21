@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate, HashRouter } from 'react-router-dom';
+import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
 import { Authorization } from './components/molecules';
