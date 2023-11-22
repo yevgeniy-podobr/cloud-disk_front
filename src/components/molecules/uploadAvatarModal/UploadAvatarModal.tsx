@@ -40,7 +40,7 @@ export const UploadAvatarModal = (props: IProps) => {
     setIsUploadAvatarModalOpen(false)
     deleteAvatar().then((res) => dispatch(setUser(res)))
   }
-  console.log(isUpdatingAvatar);
+
   return (
     isUpdatingAvatar 
       ? <PopupLoader> Updating Avatar... </PopupLoader> 
