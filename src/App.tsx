@@ -2,14 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
-import { Authorization, ForgotPassword } from './components/molecules';
+import { Authorization, ForgotPassword, ResetPassword, LoadingContent } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
 import * as route from './services/route'
 import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { LoadingContent } from './components/molecules/loadingContent';
 import { authorizationTitle } from './utils/constants/userConstants';
 
 const App = () => {
@@ -63,6 +62,7 @@ const App = () => {
                         />
                       }/>
                       <Route path={route.forgotPassword} element={<ForgotPassword/>}/>
+                      <Route path={route.resetPassword} element={<ResetPassword/>}/>
                       <Route path="*" element={<Navigate replace to={route.login} />} />
                     </Routes>
                 ) : (
