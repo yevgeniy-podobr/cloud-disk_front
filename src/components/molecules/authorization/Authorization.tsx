@@ -3,6 +3,9 @@ import './authorization.scss'
 import { InputWithLabel } from "../../atoms";
 import {  AppDispatch, useAppDispatch } from "../../../redux";
 import { LoadingContent } from "../loadingContent";
+import { Link } from "react-router-dom";
+import * as route from '../../../services/route'
+import { authorizationTitle } from "../../../utils/constants/userConstants";
 
 interface Props {
   title: string
@@ -39,6 +42,9 @@ export const Authorization = (props: Props) => {
             value={password ?? ''}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          {title === authorizationTitle.login 
+            && <Link className="authorization__forgot-pass" to={route.forgotPassword}>Forgot Password?</Link> }
     
           <button 
             className="authorization__btn button" 

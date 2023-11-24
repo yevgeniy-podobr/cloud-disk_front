@@ -62,4 +62,13 @@ export const deleteAvatar = async () => {
     toast.error(error.response.data.message)
   }
 }
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await API.post('/api/reset-password', { email })
+    return response.data
+  } catch (error: any) {
+    toast.error(error.response.data.message)
+  }
+}
  

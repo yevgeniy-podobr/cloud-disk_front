@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
-import { Authorization } from './components/molecules';
+import { Authorization, ForgotPassword } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
 import * as route from './services/route'
@@ -10,6 +10,7 @@ import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingContent } from './components/molecules/loadingContent';
+import { authorizationTitle } from './utils/constants/userConstants';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
@@ -49,18 +50,19 @@ const App = () => {
                     <Routes>
                       <Route path={route.registration} element={
                         <Authorization 
-                          title='Registration' 
+                          title={authorizationTitle.registration}
                           action={registration} 
                           btnText='Sign Up'  
                         />
                       }/>
                       <Route path={route.login} element={
                         <Authorization 
-                          title='Login' 
+                          title={authorizationTitle.login} 
                           action={login} 
                           btnText='Sign In'
                         />
                       }/>
+                      <Route path={route.forgotPassword} element={<ForgotPassword/>}/>
                       <Route path="*" element={<Navigate replace to={route.login} />} />
                     </Routes>
                 ) : (
