@@ -62,7 +62,7 @@ export const File = (props: IProps) => {
     e.stopPropagation()
     const fileToBeDeleted = files.find(file => file._id === id)
     if (!!fileToBeDeleted?.childs.length) {
-      toast.error('Dir is not empty')
+      toast.error('Folder is not empty')
     } else {
       deleteFileMutation.mutate(id, {
         onSuccess: () => {

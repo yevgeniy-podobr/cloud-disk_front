@@ -28,7 +28,12 @@ export const UploadAvatarModal = (props: IProps) => {
     formData.append('avatar', newPhoto)
     setIsUpdatingAvatar(true)
     uploadAvatar(formData).then(res => {
-      dispatch(setUser(res))
+      const prepareData = {
+        ...user,
+        avatar: res.avatar,
+        usedSpace: res.usedSpace
+      }
+      dispatch(setUser(prepareData))
     }).finally(() => {
       setIsUpdatingAvatar(false)
       setIsUploadAvatarModalOpen(false)
@@ -38,7 +43,14 @@ export const UploadAvatarModal = (props: IProps) => {
   const handleDeletebtn = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault()
     setIsUploadAvatarModalOpen(false)
-    deleteAvatar().then((res) => dispatch(setUser(res)))
+    deleteAvatar().then((res) => {
+      const prepareData = {
+        ...user,
+        avatar: res.avatar,
+        usedSpace: res.usedSpace
+      }
+      dispatch(setUser(prepareData))
+    })
   }
 
   return (
