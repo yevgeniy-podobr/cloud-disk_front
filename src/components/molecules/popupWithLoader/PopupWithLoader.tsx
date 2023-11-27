@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Loader } from '../../atoms'
-import './popupLoader.scss'
+import './popupWithLoader.scss'
 
 interface Props extends React.HTMLAttributes<HTMLElement> {}
 
-export const PopupLoader = (props: Props) => {
+export const PopupWithLoader = (props: Props) => {
   const { className } = props
   useEffect(() => {
     document.querySelector('body')?.classList.add('hide-scroll')

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import './uploadAvatarModal.scss';
 import { deleteAvatar, uploadAvatar } from "../../../services/userApi";
 import { setUser, useAppDispatch, useTypedSelector } from "../../../redux";
-import { PopupLoader } from "../../../components/molecules";
+import { PopupWithLoader } from "../../../components/molecules";
 
 interface IProps {
   setIsUploadAvatarModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -43,7 +43,7 @@ export const UploadAvatarModal = (props: IProps) => {
 
   return (
     isUpdatingAvatar 
-      ? <PopupLoader> Updating Avatar... </PopupLoader> 
+      ? <PopupWithLoader> Updating Avatar... </PopupWithLoader> 
       : (
         <div className="upload-avatar-modal" onClick={() => setIsUploadAvatarModalOpen(false)}>
           <div className="upload-avatar-modal__content" onClick={(e) => e.stopPropagation()}>
