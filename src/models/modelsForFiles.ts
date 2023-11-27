@@ -3,7 +3,6 @@ import { EFolderDisplayOptions } from "../utils/constants/fileConstants"
 export interface IFile {
   childs: string[]
   name: string
-  path: string
   size: number
   date: string
   type: string
