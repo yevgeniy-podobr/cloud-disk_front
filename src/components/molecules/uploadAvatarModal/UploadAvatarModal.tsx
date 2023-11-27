@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import './uploadAvatarModal.scss';
 import { deleteAvatar, uploadAvatar } from "../../../services/userApi";
 import { setUser, useAppDispatch, useTypedSelector } from "../../../redux";
-import { PopupLoader } from "../popupLoader";
+import { PopupLoader } from "../../../components/molecules";
 
 interface IProps {
   setIsUploadAvatarModalOpen: React.Dispatch<React.SetStateAction<boolean>>
