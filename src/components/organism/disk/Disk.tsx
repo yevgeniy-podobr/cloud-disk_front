@@ -34,9 +34,6 @@ export const Disk = () => {
 
   const createFolderMutation = useMutation({
     mutationFn: (variables: {currentFolder: string | null, folderName: string}) => createFolder(variables.currentFolder, variables.folderName),
-    onError: err => {
-      if (err instanceof Error) toast.error(err.message)
-    }
   })
   
   const createFolderHandler = (folderName: string) => {

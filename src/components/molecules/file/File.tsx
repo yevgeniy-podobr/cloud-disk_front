@@ -36,9 +36,6 @@ export const File = (props: IProps) => {
 
   const deleteFileMutation = useMutation({
     mutationFn: (variables: string) => deleteFileApi(variables),
-    onError: err => {
-      if (err instanceof Error) toast.error(err.message)
-    }
   })
 
   const downloadMutation = useMutation({
