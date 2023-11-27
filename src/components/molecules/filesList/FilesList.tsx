@@ -3,12 +3,32 @@ import './filesList.scss';
 import { useTypedSelector } from "../../../redux";
 import { File } from "../file";
 import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
+import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
 
 export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
   const preparedFiles = files.filter(file => file)
+
+  const showTextOfEmptyList = () => {
+    if (sessionStorage.getItem(ESSKeys.isFileNotFound)) {
+      return (
+        <div className="files-list__empty">
+          File not found
+        </div>
+      )
+    }
+
+    return (
+      <div className="files-list__empty">
+        {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
+        <br/>
+        Please create a folder or upload a file...
+      </div>
+    )
+  }
+
   return (
     folderDisplay === EFolderDisplayOptions.list ? (
       <div className="files-list">
@@ -18,11 +38,7 @@ export const FilesList = () => {
           <div className="files-list__header-size">Size</div>
         </div>
         {!preparedFiles?.length ? (
-          <div className="files-list__empty">
-            {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
-            <br/>
-            Please create a folder or upload a file...
-          </div>
+          showTextOfEmptyList()
         ) : (
           preparedFiles.filter(file => file).map(file => {
             return (
@@ -40,11 +56,7 @@ export const FilesList = () => {
       </div>
     ) : (
       !preparedFiles?.length ? (
-        <div className="files-list__empty">
-          {`The ${currentFolder ? 'folder' : 'cloud'} is empty.`}
-          <br/>
-          Please create a folder or upload a file...
-        </div>
+        showTextOfEmptyList()
       ) : (
         <div className="files-plates">
           {preparedFiles.map(file => {

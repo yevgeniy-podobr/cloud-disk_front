@@ -11,7 +11,6 @@ import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
 import { setIsVisible, setUploadFiles } from "../../../redux/uploadReducer";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 const sortingOptions: ElemObj[] = [
   {id: 1, element: 'type'},
@@ -101,6 +100,7 @@ export const Disk = () => {
   useEffect(() => {
     if (isAuth) {
       setIsLoading(true)
+      sessionStorage.removeItem(ESSKeys.isFileNotFound)
       getFiles(currentFolder, sortValue.element)
         .then(res => dispatch(setFiles(res)))
         .finally(() => setIsLoading(false))

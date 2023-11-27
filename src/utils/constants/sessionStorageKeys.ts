@@ -1,3 +1,4 @@
 export enum ESSKeys {
-  downloads = 'downloads'
+  downloads = 'downloads',
+  isFileNotFound = 'isFileNotFound'
 }

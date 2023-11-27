@@ -31,10 +31,18 @@ export const Navbar = () => {
   const debounceFunc = useMemo(
     () => _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value === '') {
+        sessionStorage.removeItem(ESSKeys.isFileNotFound)
         getFiles(currentFolder, 'type')
           .then(res => dispatch(setFiles(res)))
       } else {
-        searchFile(e.target.value).then(res => dispatch(setFiles(res)))
+        searchFile(e.target.value).then(res => {
+          if (!res.length) {
+            sessionStorage.setItem(ESSKeys.isFileNotFound, 'true')
+          } else {
+            sessionStorage.removeItem(ESSKeys.isFileNotFound)
+          }
+          dispatch(setFiles(res))
+        })
       }
     }, 500),
     [dispatch, currentFolder]
