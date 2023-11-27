@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
-import { Authorization, ForgotPassword, ResetPassword, LoadingContent } from './components/molecules';
+import { Authorization, ForgotPassword, LoadingContent, ResetPassword } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
 import * as route from './services/route'
