@@ -24,6 +24,9 @@
 
   &__btn {
     margin-top: 20px;
+    width: 130px;
+    height: 40px;
+    font-size: 16px;
     &:disabled {
       border-color: $greyColor;
       background-color: $greyColor;
