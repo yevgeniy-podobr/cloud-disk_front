@@ -61,7 +61,7 @@ export const Navbar = () => {
       <div className="navbar__wrapper">
         <div className="navbar__header">
           <div className="navbar__header-title">
-            CLOUD STORAGE
+            CLOUD STORAGE 2023
           </div>
           {isAuth && (
             <div className="navbar__header-search">
