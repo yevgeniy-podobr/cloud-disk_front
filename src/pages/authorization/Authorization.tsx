@@ -49,7 +49,11 @@ export const Authorization = (props: Props) => {
           />
 
           {title === EAuthorizationTitle.login 
-            && <Link className="authorization__forgot-pass" to={route.forgotPassword}>Forgot Password?</Link> }
+            && (
+              <div className="authorization__forgot-pass">
+                <Link className="authorization__forgot-pass-link" to={route.forgotPassword}>Forgot Password?</Link>
+              </div>
+) }
     
           <button 
             className="authorization__btn button" 
