@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import './forgotPassword.scss'
 import { InputWithLabel } from "../../atoms";
-import { authorizationTitle } from "../../../utils/constants/userConstants";
+import { EAuthorizationTitle, EPageTitle } from "../../../utils/constants/userConstants";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { forgotPassword } from "../../../services/userApi";
 import { useNavigate } from "react-router";
 import * as route from '../../../services/route'
+import { Helmet } from "react-helmet";
 
 
 export const ForgotPassword = () => {
@@ -28,7 +29,10 @@ export const ForgotPassword = () => {
 
   return (
     <div className="forgot-pass">
-      <p className="forgot-pass__header">{authorizationTitle.forgotPassword}</p>
+      <Helmet>
+        <title>{EPageTitle.forgotPassword}</title>
+      </Helmet>
+      <p className="forgot-pass__header">{EAuthorizationTitle.forgotPassword}</p>
 
       <InputWithLabel 
         textLabel={email ? "Email" : "Enter email..."}

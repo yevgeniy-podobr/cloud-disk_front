@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
-import { Authorization, ForgotPassword, LoadingContent, ResetPassword } from './components/molecules';
+import { ForgotPassword, LoadingContent, ResetPassword } from './components/molecules';
 import { useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
 import * as route from './services/route'
-import { Disk } from './components/organism';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { authorizationTitle } from './utils/constants/userConstants';
+import { EAuthorizationTitle, EPageTitle } from './utils/constants/userConstants';
+import { Authorization, Disk } from './pages';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
@@ -48,15 +48,17 @@ const App = () => {
                 ? (
                     <Routes>
                       <Route path={route.registration} element={
-                        <Authorization 
-                          title={authorizationTitle.registration}
+                        <Authorization
+                          title={EAuthorizationTitle.registration}
+                          pageTitle={EPageTitle.registration}
                           action={registration} 
-                          btnText='Sign Up'  
+                          btnText='Sign Up'
                         />
                       }/>
                       <Route path={route.login} element={
                         <Authorization 
-                          title={authorizationTitle.login} 
+                          title={EAuthorizationTitle.login} 
+                          pageTitle={EPageTitle.login}
                           action={login} 
                           btnText='Sign In'
                         />

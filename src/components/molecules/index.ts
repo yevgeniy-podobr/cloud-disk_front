@@ -1,7 +1,6 @@
 export * from './filesList'
 export * from './addFolderModal'
 export * from './file'
-export * from './authorization'
 export * from './multiselect'
 export * from './uploader'
 export * from './uploadAvatarModal'

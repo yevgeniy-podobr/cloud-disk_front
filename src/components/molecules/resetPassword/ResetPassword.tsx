@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import './resetPassword.scss'
 import { InputWithLabel } from "../../atoms";
-import { authorizationTitle } from "../../../utils/constants/userConstants";
+import { EAuthorizationTitle, EPageTitle } from "../../../utils/constants/userConstants";
 import { useNavigate, useParams } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { resetPassword } from "../../../services/userApi";
 import { toast } from "react-toastify";
 import * as route from '../../../services/route'
+import { Helmet } from "react-helmet";
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState('')
@@ -36,7 +37,10 @@ export const ResetPassword = () => {
 
   return (
     <div className="reset-pass">
-      <p className="reset-pass__header">{authorizationTitle.resetPassword}</p>
+      <Helmet>
+        <title>{EPageTitle.resetPassword}</title>
+      </Helmet>
+      <p className="reset-pass__header">{EAuthorizationTitle.resetPassword}</p>
 
       <InputWithLabel 
         textLabel={password ? "New password" : "Enter new password..."}
