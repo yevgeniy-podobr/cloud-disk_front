@@ -1,6 +1,6 @@
 {
-  "short_name": "Cloud Storage",
-  "name": "Cloud Storage 2023",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "cloud-logo.ico",
