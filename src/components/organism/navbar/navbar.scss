@@ -20,6 +20,9 @@
     &-title {
       font-size: 24px;
       font-weight: 700;
+      @media (max-width: $mediumWidth) {
+        font-size: 18px;
+      }
     }
     &-search {
       margin-left: 20px;
@@ -50,6 +53,9 @@
     &-login, &-registration, &-sign-out {
       cursor: pointer;
       font-size: 20px;
+      @media (max-width: $mediumWidth) {
+        font-size: 16px;
+      }
     }
   }
 

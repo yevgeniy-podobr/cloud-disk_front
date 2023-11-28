@@ -104,7 +104,7 @@ export const File = (props: IProps) => {
       <img 
         className="file__icon" 
         src={isDir ? folderIcon : fileIcon} 
-        alt="dir icon" 
+        alt="dir icon"
       />
       <div className="file__name">{name}</div>
       <div className="file__date">{date}</div>
