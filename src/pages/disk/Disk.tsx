@@ -74,7 +74,6 @@ export const Disk = () => {
   }
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //TODO: add the ability to upload multiple files
     fileHandler(e.target.files![0])
   }
 
@@ -134,7 +133,6 @@ export const Disk = () => {
                 Create a folder
               </button>
 
-              {/* //TODO need add multiply for upload file*/}
               <div className="disk__header-btns_upload">    
                 <label htmlFor="disk__header-btns_upload-input" className="disk__header-btns_upload-label">Upload file</label>
                 <input 
@@ -143,7 +141,6 @@ export const Disk = () => {
                   className="disk__header-btns_upload-input" 
                   onChange={(e) => fileUploadHandler(e)}  
                   name='file'
-                  // multiple={true}
                 />
               </div>
             </div>

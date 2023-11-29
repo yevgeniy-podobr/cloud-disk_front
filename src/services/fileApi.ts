@@ -106,7 +106,7 @@ export const searchFile = async (searchValue: string) => {
 export const renameFile = async (id: string, name: string, variables?: string) => {
   try {
     const response = await API.post('api/files/rename', { id, name })
-    return response.data.message
+    return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)
   }

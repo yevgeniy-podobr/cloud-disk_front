@@ -81,23 +81,27 @@ export const File = (props: IProps) => {
     }
   }
 
-  const handleChangeName = useCallback((event: any) => {
-    if (newNameRef.current && !newNameRef.current.contains(event.target)) {
+  const handleChangeName = useCallback(async (event: any) => {
+    if (newNameRef.current && (!newNameRef.current.contains(event.target) || event.key === 'Enter')) {
       const isFileWithSameName = filesWithoutCurrentFile.some(file => file.name === newFileName)
-
+      
       if (isFileWithSameName) {
         toast.error(`${type === EFileType.dir ? 'Folder' : 'File'} with this name exists`)
+        setNewFileName(name)
       } else {
-        setIsChangeName(false);
         if (!newFileName) {
           setNewFileName(name)
         } else {
-          renameFileMutation.mutate({ id, name: newFileName })
+          renameFileMutation.mutate({ id, name: newFileName }, {
+            onSuccess: (updatedFile) => {
+              dispatch(setFiles(files.map(file => file?._id === id ? updatedFile : file)))
+            }
+          })
         }
       }
-
+      setIsChangeName(false);
     }
-  }, [newFileName, files, name, id, renameFileMutation])
+  }, [newFileName, name, id, renameFileMutation, filesWithoutCurrentFile, type, files, dispatch])
 
   useEffect(() => {
     document.addEventListener('click', handleChangeName, true);
@@ -144,6 +148,10 @@ export const File = (props: IProps) => {
                 value={newFileName}
                 onChange={(e) => setNewFileName(e.target.value)}
                 ref={newNameRef}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleChangeName(e)
+                }}}
               />
             ) : newFileName
           }
@@ -168,18 +176,34 @@ export const File = (props: IProps) => {
       >
         {isChangeName 
           ? (
-            <input
-              className="file__name-input"
-              value={newFileName}
-              onChange={(e) => setNewFileName(e.target.value)}
-              ref={newNameRef}
-            />
+            <div className="file__name-input_wrapper">
+              <input
+                className="file__name-input"
+                value={newFileName}
+                onChange={(e) => setNewFileName(e.target.value)}
+                ref={newNameRef}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleChangeName(e)
+                }}}
+              />
+
+            </div>
+            
           ) : newFileName
         }
         
       </div>
-      <div className="file__date">{date}</div>
-      <div className="file__size">{!isDir ? sizeFormat(size) : '---'}</div>
+      <div 
+        className="file__date"
+        onClick={() => isDir && openFolderHandler()}  
+      >{date}</div>
+      <div 
+        className="file__size"
+        onClick={() => isDir && openFolderHandler()}
+      >
+        {!isDir ? sizeFormat(size) : '---'}
+      </div>
       {!isDir && (
         <button 
           className="file__btn-download" 
