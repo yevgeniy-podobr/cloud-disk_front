@@ -37,6 +37,8 @@ export const File = (props: IProps) => {
     dispatch(setCurrentFolder(id))
   }
 
+  const filesWithoutCurrentFile = files.filter(file => file.name !== name)
+
   const deleteFileMutation = useMutation({
     mutationFn: (variables: string) => deleteFileApi(variables),
   })
@@ -81,9 +83,10 @@ export const File = (props: IProps) => {
 
   const handleChangeName = useCallback((event: any) => {
     if (newNameRef.current && !newNameRef.current.contains(event.target)) {
-      const isFileWithSameName = files.filter(file => file.name !== newFileName).some(file => file.name === newFileName)
+      const isFileWithSameName = filesWithoutCurrentFile.some(file => file.name === newFileName)
+
       if (isFileWithSameName) {
-        toast.error('File with this name exists')
+        toast.error(`${type === EFileType.dir ? 'Folder' : 'File'} with this name exists`)
       } else {
         setIsChangeName(false);
         if (!newFileName) {
