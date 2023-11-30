@@ -21,7 +21,7 @@ export const Uploader = () => {
         <div className="uploader__header-title">
           Downloads
         </div>
-        <button className="uploader__header-close" onClick={() => onClose()}>X</button>
+        <button className="uploader__header-close" onClick={onClose}>X</button>
       </div>
       {files.map(file => {
           return (

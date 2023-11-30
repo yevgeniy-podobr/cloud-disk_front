@@ -90,7 +90,7 @@ export const Navbar = () => {
                 alt='avatar'
                 onClick={() => setIsUploadAvatarModalOpen(true)}  
               />
-              <div className="navbar__authorization-sign-out" onClick={() => onLogout()}>
+              <div className="navbar__authorization-sign-out" onClick={onLogout}>
                 Sing Out
               </div>
             </>

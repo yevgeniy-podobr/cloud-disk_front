@@ -26,7 +26,7 @@ export const UploaderFile = (props: IProps) => {
         <div className="uploader-file__header-title">
           {name}
         </div>
-        <button className="uploader-file__header-close" onClick={() => onCloseUploadFile()}>X</button>
+        <button className="uploader-file__header-close" onClick={onCloseUploadFile}>X</button>
       </div>
       <div className="uploader-file__progress-bar">
         <div className="uploader-file__progress-bar_upload-bar" style={{width: progress + '%'}}/>

@@ -88,14 +88,14 @@
   .loading-content {
     margin-top: 20vh;
   }
-}
 
-.drop-area {
-  width: 100%;
-  height: 80vh;
-  border: dashed $fontColor 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
+  &__drop-area {
+    width: 100%;
+    height: 80vh;
+    border: dashed $fontColor 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+  }
 }

@@ -188,7 +188,7 @@ export const Disk = () => {
         </div>
       ) : (
         <div 
-          className="drop-area"
+          className="disk__drop-area"
           onDragEnter={dragEnterHandler} 
           onDragLeave={dragLeaveHandler} 
           onDragOver={dragOverHandler}
