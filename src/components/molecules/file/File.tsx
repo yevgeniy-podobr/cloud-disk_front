@@ -111,13 +111,13 @@ export const File = (props: IProps) => {
 
   }, [handleChangeName]);
 
-  if (folderDisplay === EFolderDisplayOptions.plates) {
+  if (folderDisplay === EFolderDisplayOptions.tiles) {
     return (
-      <div className="file__plate" >
-        <div className={`file__plate-actions ${isDir ? 'file__plate-actions-dir' : ''}`}>
+      <div className="file__tile" >
+        <div className={`file__tile-actions ${isDir ? 'file__tile-actions-dir' : ''}`}>
           {!isDir && (
             <img 
-              className="file__plate-actions-icon" 
+              className="file__tile-actions-icon" 
               src={downloadIcon} 
               alt="download icon"
               onClick={(e) => onDownloadFile(e)}
@@ -125,26 +125,26 @@ export const File = (props: IProps) => {
           )}
 
           <img 
-            className="file__plate-actions-icon" 
+            className="file__tile-actions-icon" 
             src={closeIcon} 
             alt="close icon" 
             onClick={(e) => onDeleteFile(e)}
           />
         </div>
         <img 
-          className="file__plate-icon" 
+          className="file__tile-icon" 
           src={isDir ? folderIcon : fileIcon} 
           alt="dir icon" 
           onClick={() => isDir && openFolderHandler()}
         />
         <div 
-          className="file__plate-name"
+          className="file__tile-name"
           onClick={() => setIsChangeName(true)}  
         >
           {isChangeName 
             ? (
               <input
-                className="file__plate-name-input"
+                className="file__tile-name-input"
                 value={newFileName}
                 onChange={(e) => setNewFileName(e.target.value)}
                 ref={newNameRef}

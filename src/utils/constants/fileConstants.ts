@@ -1,6 +1,6 @@
 export enum EFolderDisplayOptions {
   list = 'list',
-  plates= 'plates',
+  tiles= 'tiles',
 }
 
 export enum EFileType {

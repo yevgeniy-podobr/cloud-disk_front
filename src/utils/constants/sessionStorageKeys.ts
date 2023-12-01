@@ -1,4 +1,5 @@
 export enum ESSKeys {
   downloads = 'downloads',
-  isFileNotFound = 'isFileNotFound'
+  isFileNotFound = 'isFileNotFound',
+  isFileDisplayedInTile = 'isFileDisplayedInTile'
 }

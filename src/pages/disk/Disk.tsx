@@ -102,8 +102,11 @@ export const Disk = () => {
     if (isAuth) {
       setIsLoading(true)
       sessionStorage.removeItem(ESSKeys.isFileNotFound)
+      sessionStorage.getItem(ESSKeys.isFileDisplayedInTile) && dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
       getFiles(currentFolder, sortValue.element)
-        .then(res => dispatch(setFiles(res)))
+        .then(res => {
+          dispatch(setFiles(res))
+        })
         .finally(() => setIsLoading(false))
 
     }
@@ -161,13 +164,19 @@ export const Disk = () => {
                   className="disk__header-display-folder_list"
                   src={listDisplayIcon}
                   alt="list display icon" 
-                  onClick={() => dispatch(setFolderDisplay(EFolderDisplayOptions.list))}
+                  onClick={() => {
+                    dispatch(setFolderDisplay(EFolderDisplayOptions.list))
+                    sessionStorage.removeItem(ESSKeys.isFileDisplayedInTile)
+                  }}
                 />
                 <img 
-                  className="disk__header-display-folder_plates"
+                  className="disk__header-display-folder_tiles"
                   src={iconsDisplayIcon}
-                  alt="plate display icons" 
-                  onClick={() => dispatch(setFolderDisplay(EFolderDisplayOptions.plates))}  
+                  alt="tile display icons" 
+                  onClick={() => {
+                    dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
+                    sessionStorage.setItem(ESSKeys.isFileDisplayedInTile, 'true')
+                  }}  
                 />
               </div>
             </div>

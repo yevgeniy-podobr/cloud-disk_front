@@ -58,7 +58,7 @@ export const FilesList = () => {
       !preparedFiles?.length ? (
         showTextOfEmptyList()
       ) : (
-        <div className="files-plates">
+        <div className="files-tiles">
           {preparedFiles.map(file => {
             return (
               <File 

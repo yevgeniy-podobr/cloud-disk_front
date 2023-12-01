@@ -21,7 +21,7 @@ export const InputWithLabel = (pros: Props) => {
         <img
           className="input-container__icon"
           src={!isPassVisible ? openEyeIcon : hideEyeIcon}
-          alt="plate display icons" 
+          alt="tile display icons" 
           onClick={() => setIsPassVisible(!isPassVisible)} 
         />
       )}
