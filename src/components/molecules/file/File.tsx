@@ -10,6 +10,7 @@ import { sizeFormat } from "../../../utils/script/sizeFormat";
 import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { Prompt } from "../../atoms";
 
 interface IProps {
   name: string,
@@ -190,7 +191,14 @@ export const File = (props: IProps) => {
 
             </div>
             
-          ) : newFileName
+          ) : (
+            <Prompt
+              text='If you need to rename the file, click here'
+              className="file__name-prompt"
+            >
+              {newFileName}
+            </Prompt>
+          ) 
         }
         
       </div>

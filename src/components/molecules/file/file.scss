@@ -17,6 +17,13 @@
       width: 40%;
       background-color: $whiteColor;
     }
+    &-prompt {
+      display: inline-block;
+      & .prompt__hover-block {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
   &__date {
     grid-column-start: 5;

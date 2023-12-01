@@ -1,0 +1,45 @@
+@import '../../../globalStyles/main.scss';
+
+.prompt {
+  position: relative;
+  width: fit-content;
+  &__window {
+    z-index: 20;
+    position: absolute;
+    width: max-content;
+    max-width: 300px;
+    padding: 5px;
+    background-color: #EFEFEF;
+    font-weight: normal;
+    font-size: 12px;
+    align-items: center;
+    letter-spacing: 0.2px;
+    border: 1px solid #737373;
+    bottom: 29px;
+    display: none;
+    &_show {
+      @media (max-width: calc(#{$largeWidth} - 1px)) {
+        display: block;
+      }
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      background-color: #EFEFEF;
+      border-left: 1px solid #737373;
+      border-top: 1px solid #737373;
+      width: 10px;
+      height: 10px;
+      transform: rotate(225deg);
+    }
+  }
+  @media (min-width: $largeWidth) {
+    &:hover .prompt__window {
+      display: block;
+    }
+  }
+  &__hover-block {
+    padding: 5px;
+  }
+}
