@@ -40,18 +40,21 @@ export const FilesList = () => {
         {!preparedFiles?.length ? (
           showTextOfEmptyList()
         ) : (
-          preparedFiles.filter(file => file).map(file => {
-            return (
-              <File 
-                key={file._id} 
-                name={file.name} 
-                date={file.date.slice(0, 10)} 
-                size={file.size} 
-                id={file._id}
-                type={file.type}
-              />
-            )}
-          )
+          <div className="files-list__content">
+            {preparedFiles.filter(file => file).map(file => {
+                return (
+                  <File 
+                    key={file._id} 
+                    name={file.name} 
+                    date={file.date.slice(0, 10)} 
+                    size={file.size} 
+                    id={file._id}
+                    type={file.type}
+                  />
+                )})}
+          </div>
+
+
         )}
       </div>
     ) : (

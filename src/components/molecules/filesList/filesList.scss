@@ -29,6 +29,17 @@
     align-items: center;
     font-size: 40px;
   }
+
+  &__content {
+    max-height: 400px;
+    overflow-y: auto;
+    @media (min-height: 750px) {
+      max-height: 550px;
+    }
+    @media (min-height: 1000px) {
+      max-height: 1150px;
+    }
+  }
 }
 
 .files-tiles {
