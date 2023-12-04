@@ -193,7 +193,7 @@ export const File = (props: IProps) => {
             
           ) : (
             <Prompt
-              text='If you need to rename the file, click here'
+              text={`If you need to rename the ${isDir ? 'folder' : 'file'}, click here`}
               className="file__name-prompt"
             >
               {newFileName}
