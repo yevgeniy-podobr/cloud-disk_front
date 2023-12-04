@@ -19,11 +19,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+
   &__wrapper {
     max-width: 1140px;
     display: flex;
     flex-direction: column;
+    background-image: url('assets/cloud-image.jpg');
+    background-size: cover;
+    height: calc(100vh - 70px);
   }
 
   .loading-content {
