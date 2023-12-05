@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react'
 import './navbar.scss'
-import { NavLink } from 'react-router-dom'
 import { setFiles, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 import { setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
@@ -10,7 +9,6 @@ import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../../molecules'
 import { API_URL } from '../../../services/config'
 import { Input } from '../../atoms'
-import * as route from '../../../services/route'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -76,26 +74,19 @@ export const Navbar = () => {
           )}
         </div>
         
-        <div className="navbar__authorization">
-          {!isAuth ? (
-            <>
-              <NavLink className="navbar__authorization-login" to={route.login}>Sing In</NavLink>
-              <NavLink className="navbar__authorization-registration" to={route.registration}>Sing Up</NavLink>
-            </>
-          ) : (
-            <>
-              <img 
-                className='navbar__authorization-avatar' 
-                src={user?.avatar ? `${API_URL}api/files/avatar/${user?.avatar}` : defaultLogo} 
-                alt='avatar'
-                onClick={() => setIsUploadAvatarModalOpen(true)}  
-              />
-              <div className="navbar__authorization-sign-out" onClick={() => onLogout()}>
-                Sing Out
-              </div>
-            </>
-          )}
-        </div>
+        {isAuth && 
+          <div className="navbar__authorization">
+            <img 
+              className='navbar__authorization-avatar' 
+              src={user?.avatar ? `${API_URL}api/files/avatar/${user?.avatar}` : defaultLogo} 
+              alt='avatar'
+              onClick={() => setIsUploadAvatarModalOpen(true)}  
+            />
+            <div className="navbar__authorization-sign-out" onClick={onLogout}>
+              Sing Out
+            </div>
+          </div>
+        }
       </div>
     </div>
   )

@@ -53,7 +53,7 @@ export const Authorization = (props: Props) => {
               <div className="authorization__forgot-pass">
                 <Link className="authorization__forgot-pass-link" to={route.forgotPassword}>Forgot Password?</Link>
               </div>
-) }
+            )}
     
           <button 
             className="authorization__btn button" 
@@ -65,6 +65,13 @@ export const Authorization = (props: Props) => {
           >
             {btnText}
           </button>
+          {title === EAuthorizationTitle.login 
+            ? (
+              <p className="authorization__redirection"> Don't have an account? <Link to={route.registration}>Sign Up </Link></p>
+            ) : (
+              <p className="authorization__redirection"> Already have an account? <Link to={route.login}>Sign In </Link></p>
+            )}
+          
         </div>
       )
   )

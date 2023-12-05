@@ -17,6 +17,7 @@
   &__header {
     display: flex;
     align-items: center;
+    
     &-title {
       font-size: 24px;
       font-weight: 700;
@@ -31,14 +32,14 @@
         margin-right: 20px;
       }
     }
-
+    @media (min-width: $smallWidth) {
+      margin-right: 15px;
+    }
   }
   &__authorization {
     display: flex;
     align-items: center;
-    &-login {
-      margin-right: 20px;
-    }
+
     &-avatar {
       margin-right: 10px;
       height: 40px;
@@ -49,8 +50,6 @@
     }
     &-sign-out {
       text-decoration: underline;
-    }
-    &-login, &-registration, &-sign-out {
       cursor: pointer;
       font-size: 20px;
       @media (max-width: $mediumWidth) {
