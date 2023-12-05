@@ -31,7 +31,7 @@ export const login = (email: string, password: string) => {
 export const auth = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await API.get('api/auth/auth')
+      const response = await API.get('api/auth')
       dispatch(setUser(response.data.user))
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
