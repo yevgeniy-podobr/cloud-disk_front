@@ -9,7 +9,7 @@ export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
-  const preparedFiles = files.filter(file => file)
+  const preparedFiles = files?.filter(file => file)
 
   const showTextOfEmptyList = () => {
     if (sessionStorage.getItem(ESSKeys.isFileNotFound)) {
@@ -41,7 +41,7 @@ export const FilesList = () => {
           showTextOfEmptyList()
         ) : (
           <div className="files-list__content">
-            {preparedFiles.filter(file => file).map(file => {
+            {preparedFiles?.filter(file => file).map(file => {
                 return (
                   <File 
                     key={file._id} 
@@ -62,7 +62,7 @@ export const FilesList = () => {
         showTextOfEmptyList()
       ) : (
         <div className="files-tiles">
-          {preparedFiles.map(file => {
+          {preparedFiles?.map(file => {
             return (
               <File 
                 key={file._id} 

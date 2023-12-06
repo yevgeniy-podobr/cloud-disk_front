@@ -15,7 +15,7 @@ export const AddFolderModal = (props: IProps) => {
   const files = useTypedSelector(state => state.file.files)
 
   const handleCreateFolder = () => {
-    const isFolderWithSameName = files.some(file => file.name === folderName)
+    const isFolderWithSameName = files?.some(file => file?.name === folderName)
     if (isFolderWithSameName) {
       toast.error('Folder with this name exists')
     } else {

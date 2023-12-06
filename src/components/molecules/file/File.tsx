@@ -38,7 +38,7 @@ export const File = (props: IProps) => {
     dispatch(setCurrentFolder(id))
   }
 
-  const filesWithoutCurrentFile = files.filter(file => file.name !== name)
+  const filesWithoutCurrentFile = files?.filter(file => file?.name !== name)
 
   const deleteFileMutation = useMutation({
     mutationFn: (variables: string) => deleteFileApi(variables),
@@ -75,8 +75,8 @@ export const File = (props: IProps) => {
       toast.error('Folder is not empty')
     } else {
       deleteFileMutation.mutate(id, {
-        onSuccess: () => {
-          dispatch(setFiles(files.filter(file => file?._id !== id)))
+        onSuccess: (status) => {
+          status && status < 300 && dispatch(setFiles(files.filter(file => file?._id !== id)))
         },
       })
     }
