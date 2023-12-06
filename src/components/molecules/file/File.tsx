@@ -46,9 +46,6 @@ export const File = (props: IProps) => {
 
   const downloadMutation = useMutation({
     mutationFn: (variables: {id: string, name: string}) => downloadFile(variables.id, variables.name),
-    onError: err => {
-      if (err instanceof Error) toast.error(err.message)
-    }
   })
 
   const renameFileMutation = useMutation({

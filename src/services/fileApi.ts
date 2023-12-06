@@ -71,16 +71,24 @@ export const uploadFile = (formData: FormData, fileId: number) => {
 }
 
 export const downloadFile = async ( fileId: string, fileName: string ) => {
-  const response = await API(`api/files/download?id=${fileId}`, {responseType: 'blob'})
-  if (response.status === 200) {
-    const blob = await response.data
-    const downloadUrl = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = downloadUrl
-    link.download = fileName
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
+  try {
+    const response = await API(`api/files/download?id=${fileId}`, {responseType: 'blob'})
+    if (response.status === 200) {
+      const blob = await response.data
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = downloadUrl
+      link.download = fileName
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }
+  } catch (error: any) {
+    const responseObj = await error.response.data.text()
+
+    JSON.parse(responseObj) && JSON.parse(responseObj).message 
+      ? toast.error(JSON.parse(responseObj).message)
+      : toast.error('Something went wrong')
   }
 }
 
