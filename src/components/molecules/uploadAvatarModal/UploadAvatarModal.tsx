@@ -3,6 +3,7 @@ import './uploadAvatarModal.scss';
 import { deleteAvatar, uploadAvatar } from "../../../services/userApi";
 import { setUser, useAppDispatch, useTypedSelector } from "../../../redux";
 import { PopupWithLoader } from "../../../components/molecules";
+import { useMutation } from "@tanstack/react-query";
 
 interface IProps {
   setIsUploadAvatarModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -15,6 +16,10 @@ export const UploadAvatarModal = (props: IProps) => {
   const user = useTypedSelector(state => state.user.currentUser)
   const formData = new FormData()
   const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false)
+
+  const deleteAvatarMutation = useMutation({
+    mutationFn: (variables: string) => deleteAvatar(variables),
+  })
 
   const handleUploadPhoto = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -44,24 +49,25 @@ export const UploadAvatarModal = (props: IProps) => {
 
   const handleDeletebtn = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault()
-    setIsUpdatingAvatar(true)
-    deleteAvatar().then((res) => {
-      if (res) {
-        const prepareData = {
-          ...user,
-          avatar: res.avatar,
-          usedSpace: res.usedSpace
+    user?.id && deleteAvatarMutation.mutate(user?.id, {
+      onSuccess: (res) => {
+        if (res) {
+          const prepareData = {
+            ...user,
+            avatar: res.avatar,
+            usedSpace: res.usedSpace
+          }
+          dispatch(setUser(prepareData))
         }
-        dispatch(setUser(prepareData))
-      }
-    }).finally(() => {
-      setIsUpdatingAvatar(false)
-      setIsUploadAvatarModalOpen(false)
+      },
+      onSettled: () => {
+        setIsUploadAvatarModalOpen(false)
+      },
     })
   }
 
   return (
-    isUpdatingAvatar 
+    isUpdatingAvatar || deleteAvatarMutation.isPending
       ? <PopupWithLoader> Updating Avatar... </PopupWithLoader> 
       : (
         <div className="upload-avatar-modal" onClick={() => setIsUploadAvatarModalOpen(false)}>

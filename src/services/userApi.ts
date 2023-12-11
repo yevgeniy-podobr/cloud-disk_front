@@ -54,9 +54,11 @@ export const uploadAvatar = async (formData: FormData) => {
   }
 }
 
-export const deleteAvatar = async () => {
+export const deleteAvatar = async (userId: string) => {
   try {
-    const response = await API.delete('api/files/avatar')
+    const response = await API.delete('api/files/avatar', {
+      params: { userId },
+    })
     return response.data
   } catch (error: any) {
     toast.error(error.response.data.message)
