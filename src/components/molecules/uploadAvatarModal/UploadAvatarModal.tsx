@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import './uploadAvatarModal.scss';
 import { deleteAvatar, uploadAvatar } from "../../../services/userApi";
 import { setUser, useAppDispatch, useTypedSelector } from "../../../redux";
@@ -15,10 +15,13 @@ export const UploadAvatarModal = (props: IProps) => {
   const refPhoto = useRef<HTMLInputElement>(null)
   const user = useTypedSelector(state => state.user.currentUser)
   const formData = new FormData()
-  const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false)
 
   const deleteAvatarMutation = useMutation({
     mutationFn: (variables: string) => deleteAvatar(variables),
+  })
+
+  const uploadAvatarMutation = useMutation({
+    mutationFn: (variables: FormData) => uploadAvatar(variables),
   })
 
   const handleUploadPhoto = (e: React.MouseEvent<HTMLElement>) => {
@@ -31,19 +34,21 @@ export const UploadAvatarModal = (props: IProps) => {
   const handleNewPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhoto = event.target.files![0]
     formData.append('avatar', newPhoto)
-    setIsUpdatingAvatar(true)
-    uploadAvatar(formData).then(res => {
-      if (res) {
-        const prepareData = {
-          ...user,
-          avatar: res.avatar,
-          usedSpace: res.usedSpace
+
+    uploadAvatarMutation.mutate(formData, {
+      onSuccess: (res) => {
+        if (res) {
+          const prepareData = {
+            ...user,
+            avatar: res.avatar,
+            usedSpace: res.usedSpace
+          }
+          dispatch(setUser(prepareData))
         }
-        dispatch(setUser(prepareData))
-      }
-    }).finally(() => {
-      setIsUpdatingAvatar(false)
-      setIsUploadAvatarModalOpen(false)
+      },
+      onSettled: () => {
+        setIsUploadAvatarModalOpen(false)
+      },
     })
   }
 
@@ -67,8 +72,10 @@ export const UploadAvatarModal = (props: IProps) => {
   }
 
   return (
-    isUpdatingAvatar || deleteAvatarMutation.isPending
-      ? <PopupWithLoader> Updating Avatar... </PopupWithLoader> 
+    uploadAvatarMutation.isPending || deleteAvatarMutation.isPending
+      ? <PopupWithLoader> 
+          {`${uploadAvatarMutation.isPending ? 'Updating' : 'Deleting'} Avatar...`} 
+        </PopupWithLoader> 
       : (
         <div className="upload-avatar-modal" onClick={() => setIsUploadAvatarModalOpen(false)}>
           <div className="upload-avatar-modal__content" onClick={(e) => e.stopPropagation()}>
