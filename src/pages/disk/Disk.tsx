@@ -20,6 +20,8 @@ const sortingOptions: ElemObj[] = [
   {id: 3, element: 'date'}
 ]
 
+const mainFolder = 'main_folder'
+
 export const Disk = () => {
   const dispatch = useAppDispatch()
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
@@ -47,8 +49,12 @@ export const Disk = () => {
 
   const onClickBack = () => {
     const parentFolderId = folderStack[folderStack.length - 1]
+    const preparedFolderStack = folderStack.slice(0, folderStack.length-1)
+
     dispatch(setCurrentFolder(parentFolderId))
-    dispatch(setFolderStack(folderStack.slice(0, folderStack.length-1)))
+    dispatch(setFolderStack(preparedFolderStack))
+    sessionStorage.setItem(ESSKeys.currentFolder, parentFolderId ?? mainFolder)
+    sessionStorage.setItem(ESSKeys.folderStack, JSON.stringify(preparedFolderStack))
   }
 
   const fileHandler = (newFile: File) => {
@@ -111,6 +117,16 @@ export const Disk = () => {
 
     }
   }, [currentFolder, isAuth, dispatch, sortValue])
+
+  useEffect(() => {
+    const currentFolderFromSS = sessionStorage.getItem(ESSKeys.currentFolder)
+    const folderStackFromSS = sessionStorage.getItem(ESSKeys.folderStack)
+
+    if (currentFolderFromSS && folderStackFromSS) {
+      dispatch(setCurrentFolder(currentFolderFromSS === mainFolder ? null : currentFolderFromSS))
+      dispatch(setFolderStack(JSON.parse(folderStackFromSS)))
+    }
+  }, [dispatch])
 
   return  (
     <>

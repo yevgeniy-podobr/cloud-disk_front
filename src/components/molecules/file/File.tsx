@@ -11,6 +11,7 @@ import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileC
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { Prompt } from "../../atoms";
+import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
 
 interface IProps {
   name: string,
@@ -34,8 +35,12 @@ export const File = (props: IProps) => {
   const isDir = type === EFileType.dir;
 
   const openFolderHandler = () => {
-    dispatch(setFolderStack([...folderStack, currentFolder]))
+    const preparedData = [...folderStack, currentFolder]
+
+    dispatch(setFolderStack(preparedData))
     dispatch(setCurrentFolder(id))
+    sessionStorage.setItem(ESSKeys.currentFolder, id)
+    sessionStorage.setItem(ESSKeys.folderStack, JSON.stringify(preparedData))
   }
 
   const filesWithoutCurrentFile = files?.filter(file => file?.name !== name)
