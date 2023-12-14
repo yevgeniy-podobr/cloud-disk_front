@@ -10,9 +10,10 @@ import listDisplayIcon from '../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../utils/constants/fileConstants";
 import { ESSKeys } from "../../utils/constants/sessionStorageKeys";
 import { setIsVisible, setUploadFiles } from "../../redux/uploadReducer";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { EPageTitle } from "../../utils/constants/userConstants";
+import { FilesQueries } from "../../utils/constants/queries";
 
 const sortingOptions: ElemObj[] = [
   {id: 1, element: 'type'},
@@ -29,11 +30,20 @@ export const Disk = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth)
   const isVisible = useTypedSelector(state => state.uploadFiles.isVisible)
   const files = useTypedSelector(state => state.file.files)
-  const [isLoading, setIsLoading] = useState(false)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
   const [dragEnter, setDragEnter] = useState(false)
   const [sortValue, setSortValue] = useState<ElemObj>(sortingOptions[0])
   const formData = new FormData()
+
+  const {
+    refetch: getListOfFilesRefresh,
+    isPending,
+  } = useQuery({
+      queryKey: [FilesQueries.listOfFiles], 
+      queryFn: () => getFiles(currentFolder, sortValue.element).then(res => dispatch(setFiles(res))),
+      enabled: false,
+    },
+  )
 
   const createFolderMutation = useMutation({
     mutationFn: (variables: {currentFolder: string | null, folderName: string}) => createFolder(variables.currentFolder, variables.folderName),
@@ -106,17 +116,11 @@ export const Disk = () => {
 
   useEffect(() => {
     if (isAuth) {
-      setIsLoading(true)
       sessionStorage.removeItem(ESSKeys.isFileNotFound)
       sessionStorage.getItem(ESSKeys.isFileDisplayedInTile) && dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
-      getFiles(currentFolder, sortValue.element)
-        .then(res => {
-          dispatch(setFiles(res))
-        })
-        .finally(() => setIsLoading(false))
-
+      getListOfFilesRefresh()
     }
-  }, [currentFolder, isAuth, dispatch, sortValue])
+  }, [currentFolder, isAuth, dispatch, getListOfFilesRefresh, sortValue.element])
 
   useEffect(() => {
     const currentFolderFromSS = sessionStorage.getItem(ESSKeys.currentFolder)
@@ -198,8 +202,8 @@ export const Disk = () => {
             </div>
 
           </div>
-          {isLoading || createFolderMutation.isPending
-            ? <LoadingContent isLoading={isLoading || createFolderMutation.isPending} /> 
+          {isPending || createFolderMutation.isPending
+            ? <LoadingContent isLoading={isPending || createFolderMutation.isPending} /> 
             : <FilesList />
           }
           

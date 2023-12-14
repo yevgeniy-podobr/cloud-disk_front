@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import './navbar.scss'
-import { setFiles, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
+import { setCurrentFolder, setFiles, setFolderStack, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 import { setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, searchFile } from '../../../services/fileApi'
@@ -9,6 +9,7 @@ import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../../molecules'
 import { API_URL } from '../../../services/config'
 import { Input } from '../../atoms'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -17,13 +18,17 @@ export const Navbar = () => {
   const user = useTypedSelector(state => state.user.currentUser)
   const [searchValue, setSearchValue] = useState<string | null>(null)
   const [isUploadAvatarModalOpen, setIsUploadAvatarModalOpen] = useState(false)
+  const queryClient = useQueryClient()
 
   const onLogout = () => {
     dispatch(setUser({}))
-    dispatch(setIsAuth(false))
+    dispatch(setIsAuth(false)) 
     localStorage.removeItem("token")
     sessionStorage.clear()
     dispatch(setUploadFiles([]))
+    queryClient.clear()
+    dispatch(setCurrentFolder(null))
+    dispatch(setFolderStack([]))
   } 
 
   const debounceFunc = useMemo(
