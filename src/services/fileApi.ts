@@ -102,7 +102,7 @@ export const deleteFileApi = async (fileId: string) => {
   }
 }
 
-export const searchFile = async (searchValue: string) => {
+export const getSearchFiles = async (searchValue: string) => {
   try {
     const response = await API.get(`api/files/search?search=${searchValue}`)
     return response.data

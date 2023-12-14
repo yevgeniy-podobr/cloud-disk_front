@@ -3,13 +3,14 @@ import './navbar.scss'
 import { setCurrentFolder, setFiles, setFolderStack, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 import { setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
-import { getFiles, searchFile } from '../../../services/fileApi'
+import { getFiles, getSearchFiles } from '../../../services/fileApi'
 import _ from 'lodash'
 import defaultLogo from '../../../assets/default-logo.png'
 import { UploadAvatarModal } from '../../molecules'
 import { API_URL } from '../../../services/config'
 import { Input } from '../../atoms'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { FilesQueries } from '../../../utils/constants/queries'
 
 export const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -20,6 +21,33 @@ export const Navbar = () => {
   const [isUploadAvatarModalOpen, setIsUploadAvatarModalOpen] = useState(false)
   const queryClient = useQueryClient()
 
+  const {
+    refetch: getFilesRefresh,
+  } = useQuery({
+      queryKey: [FilesQueries.listOfFiles], 
+      queryFn: () => getFiles(currentFolder, 'type').then(res => {
+        sessionStorage.removeItem(ESSKeys.isFileNotFound)
+        dispatch(setFiles(res))}),
+      enabled: false,
+    },
+  )
+
+  const {
+    refetch: getFilesFromSearchRefresh,
+  } = useQuery({
+      queryKey: [FilesQueries.listOfFilesFromSearch], 
+      queryFn: () => getSearchFiles(searchValue ?? '').then(res => {
+        if (!res.length) {
+          sessionStorage.setItem(ESSKeys.isFileNotFound, 'true')
+        } else {
+          sessionStorage.removeItem(ESSKeys.isFileNotFound)
+        }
+        dispatch(setFiles(res))
+      }),
+      enabled: false,
+    },
+  )
+
   const onLogout = () => {
     dispatch(setUser({}))
     dispatch(setIsAuth(false)) 
@@ -29,26 +57,18 @@ export const Navbar = () => {
     queryClient.clear()
     dispatch(setCurrentFolder(null))
     dispatch(setFolderStack([]))
+    setSearchValue(null)
   } 
 
   const debounceFunc = useMemo(
     () => _.debounce((e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.value === '') {
-        sessionStorage.removeItem(ESSKeys.isFileNotFound)
-        getFiles(currentFolder, 'type')
-          .then(res => dispatch(setFiles(res)))
+        getFilesRefresh()
       } else {
-        searchFile(e.target.value).then(res => {
-          if (!res.length) {
-            sessionStorage.setItem(ESSKeys.isFileNotFound, 'true')
-          } else {
-            sessionStorage.removeItem(ESSKeys.isFileNotFound)
-          }
-          dispatch(setFiles(res))
-        })
+        getFilesFromSearchRefresh()
       }
     }, 500),
-    [dispatch, currentFolder]
+    [getFilesFromSearchRefresh, getFilesRefresh]
   )
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

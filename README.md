@@ -2,7 +2,8 @@
 
 ## Demo link
 
-Follow the link to the [live demo](https://test-cloud-disk.onrender.com)
+Follow the link to the [live demo](https://test-cloud-disk.onrender.com) 
+(Login/Registration may take some time due to server startup)
 
 ## Available Scripts
 

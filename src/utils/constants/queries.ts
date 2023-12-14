@@ -1,3 +1,4 @@
 export enum FilesQueries {
-  listOfFiles = 'listOfFiles'
+  listOfFiles = 'listOfFiles',
+  listOfFilesFromSearch = 'listOfFilesFromSearch'
 }
