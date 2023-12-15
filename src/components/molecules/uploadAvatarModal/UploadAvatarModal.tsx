@@ -4,6 +4,7 @@ import { deleteAvatar, uploadAvatar } from "../../../services/userApi";
 import { setUser, useAppDispatch, useTypedSelector } from "../../../redux";
 import { PopupWithLoader } from "../../../components/molecules";
 import { useMutation } from "@tanstack/react-query";
+import { ESSUserKeys } from "../../../utils/constants/sessionStorageKeys";
 
 interface IProps {
   setIsUploadAvatarModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,6 +45,7 @@ export const UploadAvatarModal = (props: IProps) => {
             usedSpace: res.usedSpace
           }
           dispatch(setUser(prepareData))
+          sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(prepareData))
         }
       },
       onSettled: () => {
@@ -63,6 +65,7 @@ export const UploadAvatarModal = (props: IProps) => {
             usedSpace: res.usedSpace
           }
           dispatch(setUser(prepareData))
+          sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(prepareData))
         }
       },
       onSettled: () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useStateWithDep } from '../../../utils/hooks/useStateWithDeps'
+import { useStateWithDep } from '../../../utils/hooks'
 import './multiselect.scss'
 
 export interface ElemObj {

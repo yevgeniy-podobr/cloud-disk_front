@@ -1,6 +1,6 @@
 import { AppDispatch, setIsAuth, setUser } from '../redux'
 import { toast } from 'react-toastify'
-import { ESSFileKeys } from '../utils/constants/sessionStorageKeys'
+import { ESSUserKeys } from '../utils/constants/sessionStorageKeys'
 import { API } from './API'
 
 export const registration = (email: string, password: string) => {
@@ -20,22 +20,12 @@ export const login = (email: string, password: string) => {
     try {
       const response = await API.post('api/auth/login', {email, password})
       dispatch(setUser(response.data.user))
+      sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(response.data.user))
       dispatch(setIsAuth(true))
       localStorage.setItem("token", response.data.token)
     } catch (error: any) {
       toast.error(error.response.data.message)
     }
-  }
-}
-
-export const auth = async () => {
-  try {
-    const response = await API.get('api/auth')
-    return response.data
-  } catch (error: any) {
-    localStorage.removeItem("token")
-    sessionStorage.removeItem(ESSFileKeys.downloads)
-    toast.error(error.response.data.message)
   }
 }
 

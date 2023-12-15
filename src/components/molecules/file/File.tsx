@@ -6,7 +6,7 @@ import closeIcon from '../../../assets/close-icon.png'
 import downloadIcon from '../../../assets/download-icon.png'
 import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
 import { deleteFileApi, downloadFile, renameFile } from "../../../services/fileApi";
-import { sizeFormat } from "../../../utils/script/sizeFormat";
+import { sizeFormat } from "../../../utils/script";
 import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";

@@ -5,3 +5,7 @@ export enum ESSFileKeys {
   currentFolder = 'currentFolder',
   folderStack = 'folderStack'
 }
+
+export enum ESSUserKeys {
+  userData = 'userData'
+}
