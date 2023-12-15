@@ -28,19 +28,14 @@ export const login = (email: string, password: string) => {
   }
 }
 
-export const auth = () => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      const response = await API.get('api/auth')
-      dispatch(setUser(response.data.user))
-      dispatch(setIsAuth(true))
-      localStorage.setItem("token", response.data.token)
-      sessionStorage.removeItem(ESSKeys.downloads)
-    } catch (error: any) {
-      localStorage.removeItem("token")
-      sessionStorage.removeItem(ESSKeys.downloads)
-      toast.error(error.response.data.message)
-    }
+export const auth = async () => {
+  try {
+    const response = await API.get('api/auth')
+    return response.data
+  } catch (error: any) {
+    localStorage.removeItem("token")
+    sessionStorage.removeItem(ESSKeys.downloads)
+    toast.error(error.response.data.message)
   }
 }
 

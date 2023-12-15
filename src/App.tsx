@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import { Navbar } from './components';
 import { ForgotPassword, LoadingContent, ResetPassword } from './components/molecules';
-import { useAppDispatch, useTypedSelector } from './redux';
+import { setIsAuth, setUser, useAppDispatch, useTypedSelector } from './redux';
 import { auth, login, registration } from './services/userApi';
 import * as route from './services/route'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EAuthorizationTitle, EPageTitle } from './utils/constants/userConstants';
 import { Authorization, Disk } from './pages';
+import { ESSKeys } from './utils/constants/sessionStorageKeys';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
@@ -17,17 +18,18 @@ const App = () => {
   const tokenFromStorage = localStorage.getItem("token")
   const [isLoading, setIsLoading] = useState(false)
 
-  const authHandler = useCallback(() => {
-    if (tokenFromStorage) {
-      setIsLoading(true)
-      dispatch(auth()).finally(() => setIsLoading(false))
-    }
-    // eslint-disable-next-line
-  }, [])
-
   useEffect(() => {
-    authHandler()
-  }, [authHandler])
+    if (tokenFromStorage && !isAuth) {
+      setIsLoading(true)
+      auth()
+        .then((res) => {
+          dispatch(setUser(res.user))
+          dispatch(setIsAuth(true))
+          sessionStorage.removeItem(ESSKeys.downloads)
+        })
+        .finally(() => setIsLoading(false))
+    }
+  }, [dispatch, tokenFromStorage, isAuth])
 
   return (
     <HashRouter>
