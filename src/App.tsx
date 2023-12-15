@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EAuthorizationTitle, EPageTitle } from './utils/constants/userConstants';
 import { Authorization, Disk } from './pages';
-import { ESSKeys } from './utils/constants/sessionStorageKeys';
+import { ESSFileKeys } from './utils/constants/sessionStorageKeys';
 
 const App = () => {
   const isAuth = useTypedSelector(state => state.user.isAuth);
@@ -25,7 +25,7 @@ const App = () => {
         .then((res) => {
           dispatch(setUser(res.user))
           dispatch(setIsAuth(true))
-          sessionStorage.removeItem(ESSKeys.downloads)
+          sessionStorage.removeItem(ESSFileKeys.downloads)
         })
         .finally(() => setIsLoading(false))
     }

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 import { API } from './API'
-import { ESSKeys } from '../utils/constants/sessionStorageKeys'
+import { ESSFileKeys } from '../utils/constants/sessionStorageKeys'
 import { AppDispatch } from '../redux'
 import { IUploadFile } from '../models'
 import { setUploadFiles } from '../redux/uploadReducer'
@@ -39,8 +39,8 @@ export const createFolder = async (folderId: string | null, name: string) => {
 export const uploadFile = (formData: FormData, fileId: number) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const filesFromSS = sessionStorage.getItem(ESSKeys.downloads) 
-          ? JSON.parse(sessionStorage.getItem(ESSKeys.downloads) ?? '') 
+      const filesFromSS = sessionStorage.getItem(ESSFileKeys.downloads) 
+          ? JSON.parse(sessionStorage.getItem(ESSFileKeys.downloads) ?? '') 
           : []
 
       const response = await axios.post(`${API_URL}api/files/upload`, formData, 
@@ -59,7 +59,7 @@ export const uploadFile = (formData: FormData, fileId: number) => {
             } : file
           })
           dispatch(setUploadFiles(preparedFiles))
-          sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedFiles))
+          sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedFiles))
         },
       })    
       return response                                 

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import './navbar.scss'
 import { setCurrentFolder, setFiles, setFolderStack, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
 import { setUploadFiles } from '../../../redux/uploadReducer'
-import { ESSKeys } from '../../../utils/constants/sessionStorageKeys'
+import { ESSFileKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, getSearchFiles } from '../../../services/fileApi'
 import _ from 'lodash'
 import defaultLogo from '../../../assets/default-logo.png'
@@ -26,7 +26,7 @@ export const Navbar = () => {
   } = useQuery({
       queryKey: [FilesQueries.listOfFiles], 
       queryFn: () => getFiles(currentFolder, 'type').then(res => {
-        sessionStorage.removeItem(ESSKeys.isFileNotFound)
+        sessionStorage.removeItem(ESSFileKeys.isFileNotFound)
         dispatch(setFiles(res))}),
       enabled: false,
     },
@@ -38,9 +38,9 @@ export const Navbar = () => {
       queryKey: [FilesQueries.listOfFilesFromSearch], 
       queryFn: () => getSearchFiles(searchValue ?? '').then(res => {
         if (!res.length) {
-          sessionStorage.setItem(ESSKeys.isFileNotFound, 'true')
+          sessionStorage.setItem(ESSFileKeys.isFileNotFound, 'true')
         } else {
-          sessionStorage.removeItem(ESSKeys.isFileNotFound)
+          sessionStorage.removeItem(ESSFileKeys.isFileNotFound)
         }
         dispatch(setFiles(res))
       }),

@@ -2,7 +2,7 @@ import React from "react";
 import './uploaderFile.scss'
 import { useAppDispatch, useTypedSelector } from "../../../redux";
 import { setUploadFiles } from "../../../redux/uploadReducer";
-import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys } from "../../../utils/constants/sessionStorageKeys";
 import { IUploadFile } from "../../../models";
 
 interface IProps extends React.HTMLAttributes<HTMLElement>{
@@ -17,7 +17,7 @@ export const UploaderFile = (props: IProps) => {
   const onCloseUploadFile = () => {
     const preparedData = uploadFiles.filter(file => file.id !== id)
     dispatch(setUploadFiles(preparedData))
-    sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedData))
+    sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedData))
   }
 
   return (

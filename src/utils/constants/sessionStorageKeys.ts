@@ -1,4 +1,4 @@
-export enum ESSKeys {
+export enum ESSFileKeys {
   downloads = 'downloads',
   isFileNotFound = 'isFileNotFound',
   isFileDisplayedInTile = 'isFileDisplayedInTile',

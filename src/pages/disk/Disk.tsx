@@ -8,7 +8,7 @@ import { ElemObj, Multiselect, Uploader } from "../../components/molecules";
 import iconsDisplayIcon from '../../assets/display-icons.png';
 import listDisplayIcon from '../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../utils/constants/fileConstants";
-import { ESSKeys } from "../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys } from "../../utils/constants/sessionStorageKeys";
 import { setIsVisible, setUploadFiles } from "../../redux/uploadReducer";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
@@ -63,8 +63,8 @@ export const Disk = () => {
 
     dispatch(setCurrentFolder(parentFolderId))
     dispatch(setFolderStack(preparedFolderStack))
-    sessionStorage.setItem(ESSKeys.currentFolder, parentFolderId ?? mainFolder)
-    sessionStorage.setItem(ESSKeys.folderStack, JSON.stringify(preparedFolderStack))
+    sessionStorage.setItem(ESSFileKeys.currentFolder, parentFolderId ?? mainFolder)
+    sessionStorage.setItem(ESSFileKeys.folderStack, JSON.stringify(preparedFolderStack))
   }
 
   const fileHandler = (newFile: File) => {
@@ -73,17 +73,17 @@ export const Disk = () => {
       formData.append('parent', currentFolder)
     }
     const fileForDownload = {id: Date.now(), name: newFile?.name, progress: 0}
-    const downloads = sessionStorage.getItem(ESSKeys.downloads)
+    const downloads = sessionStorage.getItem(ESSFileKeys.downloads)
     dispatch(setIsVisible(true))
 
     if (!downloads) {
       dispatch(setUploadFiles([fileForDownload]))
-      sessionStorage.setItem(ESSKeys.downloads, JSON.stringify([fileForDownload]))
+      sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify([fileForDownload]))
     } else {
       const preparedData = [...(JSON.parse(downloads)), fileForDownload]
 
       dispatch(setUploadFiles(preparedData))
-      sessionStorage.setItem(ESSKeys.downloads, JSON.stringify(preparedData))
+      sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedData))
     }
 
     dispatch(uploadFile(formData, fileForDownload.id)).then(res => dispatch(setFiles([...files, res?.data])))
@@ -116,15 +116,15 @@ export const Disk = () => {
 
   useEffect(() => {
     if (isAuth) {
-      sessionStorage.removeItem(ESSKeys.isFileNotFound)
-      sessionStorage.getItem(ESSKeys.isFileDisplayedInTile) && dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
+      sessionStorage.removeItem(ESSFileKeys.isFileNotFound)
+      sessionStorage.getItem(ESSFileKeys.isFileDisplayedInTile) && dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
       getListOfFilesRefresh()
     }
   }, [currentFolder, isAuth, dispatch, getListOfFilesRefresh, sortValue.element])
 
   useEffect(() => {
-    const currentFolderFromSS = sessionStorage.getItem(ESSKeys.currentFolder)
-    const folderStackFromSS = sessionStorage.getItem(ESSKeys.folderStack)
+    const currentFolderFromSS = sessionStorage.getItem(ESSFileKeys.currentFolder)
+    const folderStackFromSS = sessionStorage.getItem(ESSFileKeys.folderStack)
 
     if (currentFolderFromSS && folderStackFromSS) {
       dispatch(setCurrentFolder(currentFolderFromSS === mainFolder ? null : currentFolderFromSS))
@@ -186,7 +186,7 @@ export const Disk = () => {
                   alt="list display icon" 
                   onClick={() => {
                     dispatch(setFolderDisplay(EFolderDisplayOptions.list))
-                    sessionStorage.removeItem(ESSKeys.isFileDisplayedInTile)
+                    sessionStorage.removeItem(ESSFileKeys.isFileDisplayedInTile)
                   }}
                 />
                 <img 
@@ -195,7 +195,7 @@ export const Disk = () => {
                   alt="tile display icons" 
                   onClick={() => {
                     dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
-                    sessionStorage.setItem(ESSKeys.isFileDisplayedInTile, 'true')
+                    sessionStorage.setItem(ESSFileKeys.isFileDisplayedInTile, 'true')
                   }}  
                 />
               </div>

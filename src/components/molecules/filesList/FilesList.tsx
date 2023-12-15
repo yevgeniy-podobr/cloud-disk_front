@@ -3,7 +3,7 @@ import './filesList.scss';
 import { useTypedSelector } from "../../../redux";
 import { File } from "../file";
 import { EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
-import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys } from "../../../utils/constants/sessionStorageKeys";
 
 export const FilesList = () => {
   const files = useTypedSelector(state => state.file.files)
@@ -12,7 +12,7 @@ export const FilesList = () => {
   const preparedFiles = files?.filter(file => file)
 
   const showTextOfEmptyList = () => {
-    if (sessionStorage.getItem(ESSKeys.isFileNotFound)) {
+    if (sessionStorage.getItem(ESSFileKeys.isFileNotFound)) {
       return (
         <div className="files-list__empty">
           File not found

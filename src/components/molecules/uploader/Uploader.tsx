@@ -3,7 +3,7 @@ import './uploader.scss'
 import { UploaderFile } from "../../atoms";
 import { useAppDispatch, useTypedSelector } from "../../../redux";
 import { setIsVisible, setUploadFiles } from "../../../redux/uploadReducer";
-import { ESSKeys } from "../../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys } from "../../../utils/constants/sessionStorageKeys";
 
 export const Uploader = () => {
   const dispatch = useAppDispatch()
@@ -12,7 +12,7 @@ export const Uploader = () => {
   const onClose = () => {
     dispatch(setIsVisible(false))
     dispatch(setUploadFiles([]))
-    sessionStorage.removeItem(ESSKeys.downloads)
+    sessionStorage.removeItem(ESSFileKeys.downloads)
   }
   
   return (
