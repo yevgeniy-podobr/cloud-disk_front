@@ -37,7 +37,7 @@ export const Disk = () => {
 
   const {
     refetch: getListOfFilesRefresh,
-    isPending,
+    isFetching
   } = useQuery({
       queryKey: [FilesQueries.listOfFiles], 
       queryFn: () => getFiles(currentFolder, sortValue.element).then(res => dispatch(setFiles(res))),
@@ -134,101 +134,99 @@ export const Disk = () => {
 
   return  (
     <>
-    <Helmet>
-        <title>{EPageTitle.disk}</title>
-    </Helmet>
-    {!dragEnter ? (
-        <div className="disk" 
-          onDragEnter={dragEnterHandler} 
-          onDragLeave={dragLeaveHandler}
-          onDragOver={dragOverHandler}
-        >
-          <div className="disk__header">
-            <div className="disk__header-btns">
-              <button 
-                className="disk__header-btns_back" 
-                onClick={() => currentFolder && onClickBack()}
-                disabled={!currentFolder}  
-              >
-                Back
-              </button>
-              <button className="disk__header-btns_create" onClick={() => setAddFolderModalOpen(true)}>
-                Create a folder
-              </button>
+      <Helmet>
+          <title>{EPageTitle.disk}</title>
+      </Helmet>
+      {!dragEnter ? (
+          <div className="disk" 
+            onDragEnter={dragEnterHandler} 
+            onDragLeave={dragLeaveHandler}
+            onDragOver={dragOverHandler}
+          >
+            <div className="disk__header">
+              <div className="disk__header-btns">
+                <button 
+                  className="disk__header-btns_back" 
+                  onClick={() => currentFolder && onClickBack()}
+                  disabled={!currentFolder}  
+                >
+                  Back
+                </button>
+                <button className="disk__header-btns_create" onClick={() => setAddFolderModalOpen(true)}>
+                  Create a folder
+                </button>
 
-              <div className="disk__header-btns_upload">    
-                <label htmlFor="disk__header-btns_upload-input" className="disk__header-btns_upload-label">Upload file</label>
-                <input 
-                  type="file" 
-                  id="disk__header-btns_upload-input" 
-                  className="disk__header-btns_upload-input" 
-                  onChange={(e) => fileUploadHandler(e)}  
-                  name='file'
+                <div className="disk__header-btns_upload">    
+                  <label htmlFor="disk__header-btns_upload-input" className="disk__header-btns_upload-label">Upload file</label>
+                  <input 
+                    type="file" 
+                    id="disk__header-btns_upload-input" 
+                    className="disk__header-btns_upload-input" 
+                    onChange={(e) => fileUploadHandler(e)}  
+                    name='file'
+                  />
+                </div>
+              </div>
+              <div className="disk__header-right-side">
+                <div className="disk__header-sorting_title">
+                  Sorted by:
+                </div>
+                
+                <Multiselect
+                  className={`disk__header-sorting_select`}
+                  multiSelect={false}
+                  elements={sortingOptions}
+                  selectedElement={sortingOptions[0]}
+                  getSelectedElement={option => option && setSortValue(option)}
                 />
+                <div className="disk__header-display-folder">
+                  <img 
+                    className="disk__header-display-folder_list"
+                    src={listDisplayIcon}
+                    alt="list display icon" 
+                    onClick={() => {
+                      dispatch(setFolderDisplay(EFolderDisplayOptions.list))
+                      sessionStorage.removeItem(ESSFileKeys.isFileDisplayedInTile)
+                    }}
+                  />
+                  <img 
+                    className="disk__header-display-folder_tiles"
+                    src={iconsDisplayIcon}
+                    alt="tile display icons" 
+                    onClick={() => {
+                      dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
+                      sessionStorage.setItem(ESSFileKeys.isFileDisplayedInTile, 'true')
+                    }}  
+                  />
+                </div>
               </div>
+
             </div>
-            <div className="disk__header-right-side">
-              <div className="disk__header-sorting_title">
-                Sorted by:
-              </div>
-              
-              <Multiselect
-                className={`disk__header-sorting_select`}
-                multiSelect={false}
-                elements={sortingOptions}
-                selectedElement={sortingOptions[0]}
-                getSelectedElement={option => option && setSortValue(option)}
+            {isFetching || createFolderMutation.isPending
+              ? <LoadingContent isLoading={isFetching || createFolderMutation.isPending} /> 
+              : <FilesList />
+            }
+            
+            {isAddFolderModalOpen && (
+              <AddFolderModal 
+                setAddFolderModalOpen={setAddFolderModalOpen}
+                createFolderHandler={createFolderHandler}
               />
-              <div className="disk__header-display-folder">
-                <img 
-                  className="disk__header-display-folder_list"
-                  src={listDisplayIcon}
-                  alt="list display icon" 
-                  onClick={() => {
-                    dispatch(setFolderDisplay(EFolderDisplayOptions.list))
-                    sessionStorage.removeItem(ESSFileKeys.isFileDisplayedInTile)
-                  }}
-                />
-                <img 
-                  className="disk__header-display-folder_tiles"
-                  src={iconsDisplayIcon}
-                  alt="tile display icons" 
-                  onClick={() => {
-                    dispatch(setFolderDisplay(EFolderDisplayOptions.tiles))
-                    sessionStorage.setItem(ESSFileKeys.isFileDisplayedInTile, 'true')
-                  }}  
-                />
-              </div>
-            </div>
-
+            )}
+            {isVisible && <Uploader />} 
           </div>
-          {isPending || createFolderMutation.isPending
-            ? <LoadingContent isLoading={isPending || createFolderMutation.isPending} /> 
-            : <FilesList />
-          }
-          
-          {isAddFolderModalOpen && (
-            <AddFolderModal 
-              setAddFolderModalOpen={setAddFolderModalOpen}
-              createFolderHandler={createFolderHandler}
-            />
-          )}
-          {isVisible && <Uploader />} 
-        </div>
-      ) : (
-        <div 
-          className="disk__drop-area"
-          onDragEnter={dragEnterHandler} 
-          onDragLeave={dragLeaveHandler} 
-          onDragOver={dragOverHandler}
-          onDrop={dropHandler}
-        >
-          Add file...
-        </div>
-      )
-    }
+        ) : (
+          <div 
+            className="disk__drop-area"
+            onDragEnter={dragEnterHandler} 
+            onDragLeave={dragLeaveHandler} 
+            onDragOver={dragOverHandler}
+            onDrop={dropHandler}
+          >
+            Add file...
+          </div>
+        )
+      }
     </>
-
- 
   )
 }
