@@ -212,7 +212,7 @@ export const File = (props: IProps) => {
         className="file__size"
         onClick={() => isDir && openFolderHandler()}
       >
-        {!isDir ? sizeFormat(size) : '---'}
+        {size ? sizeFormat(size) : '---'}
       </div>
       {!isDir && (
         <button 

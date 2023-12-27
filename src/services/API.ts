@@ -34,6 +34,8 @@ API.interceptors.response.use(
   response => response,
   error => {
     if (error.response.data.message === ERROR_AUTH) {
+      localStorage.clear()
+      sessionStorage.clear()
       setTimeout(() => window.location.reload(), 3000)
     }
     return Promise.reject(error)
