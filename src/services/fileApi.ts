@@ -3,7 +3,7 @@ import { API } from './API'
 import { ESSFileKeys } from '../utils/constants/sessionStorageKeys'
 import { AppDispatch } from '../redux'
 import { IUploadFile } from '../models'
-import { setUploadFiles } from '../redux/uploadReducer'
+import { setIsVisible, setUploadFiles } from '../redux/uploadReducer'
 import axios from 'axios'
 import { API_URL } from './config'
 
@@ -38,11 +38,11 @@ export const createFolder = async (folderId: string | null, name: string) => {
 
 export const uploadFile = (formData: FormData, fileId: number) => {
   return async (dispatch: AppDispatch) => {
-    try {
-      const filesFromSS = sessionStorage.getItem(ESSFileKeys.downloads) 
-          ? JSON.parse(sessionStorage.getItem(ESSFileKeys.downloads) ?? '') 
-          : []
+    const filesFromSS = sessionStorage.getItem(ESSFileKeys.downloads) 
+      ? JSON.parse(sessionStorage.getItem(ESSFileKeys.downloads) ?? '') 
+      : []
 
+    try {
       const response = await axios.post(`${API_URL}api/files/upload`, formData, 
       {
         headers: {
@@ -61,10 +61,15 @@ export const uploadFile = (formData: FormData, fileId: number) => {
           dispatch(setUploadFiles(preparedFiles))
           sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedFiles))
         },
-      })    
+      })
       return response                                 
     } catch (error: any) {
+
+      const preparedFiles = filesFromSS.filter((file: IUploadFile) => file.id !== fileId)
+      dispatch(setUploadFiles(preparedFiles))
+      sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedFiles))
       toast.error(error.response.data.message)
+      !preparedFiles.length && dispatch(setIsVisible(false))
     }
   }
 

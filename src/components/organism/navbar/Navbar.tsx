@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import './navbar.scss'
 import { setCurrentFolder, setFiles, setFolderStack, setIsAuth, setUser, useAppDispatch, useTypedSelector } from '../../../redux'
-import { setUploadFiles } from '../../../redux/uploadReducer'
+import { setIsVisible, setUploadFiles } from '../../../redux/uploadReducer'
 import { ESSFileKeys } from '../../../utils/constants/sessionStorageKeys'
 import { getFiles, getSearchFiles } from '../../../services/fileApi'
 import _ from 'lodash'
@@ -54,6 +54,7 @@ export const Navbar = () => {
     localStorage.removeItem("token")
     sessionStorage.clear()
     dispatch(setUploadFiles([]))
+    dispatch(setIsVisible(false))
     queryClient.clear()
     dispatch(setCurrentFolder(null))
     dispatch(setFolderStack([]))
