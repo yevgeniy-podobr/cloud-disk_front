@@ -111,7 +111,7 @@ export const getSearchFiles = async (searchValue: string) => {
   }
 }
 
-export const renameFile = async (id: string, name: string, variables?: string) => {
+export const renameFile = async (id: string, name: string ) => {
   try {
     const response = await API.post('api/files/rename', { id, name })
     return response.data
