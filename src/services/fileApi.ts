@@ -96,7 +96,7 @@ export const deleteFileApi = async (fileId: string) => {
   try {
     const response = await API.delete(`api/files?id=${fileId}`)
     toast.success(response.data.message)
-    return response.status
+    return response
   } catch (error: any) {
     toast.error(error.response.data.message)
   }

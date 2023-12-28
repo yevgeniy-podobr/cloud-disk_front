@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './disk.scss';
-import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, useAppDispatch, useTypedSelector } from "../../redux";
+import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, setUser, useAppDispatch, useTypedSelector } from "../../redux";
 import { createFolder, getFiles, uploadFile } from "../../services/fileApi";
 import { AddFolderModal, FilesList } from "../../components/molecules";
 import { LoadingContent } from "../../components/molecules/loadingContent";
@@ -8,7 +8,7 @@ import { ElemObj, Multiselect, Uploader } from "../../components/molecules";
 import iconsDisplayIcon from '../../assets/display-icons.png';
 import listDisplayIcon from '../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../utils/constants/fileConstants";
-import { ESSFileKeys } from "../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys, ESSUserKeys } from "../../utils/constants/sessionStorageKeys";
 import { setIsVisible, setUploadFiles } from "../../redux/uploadReducer";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
@@ -28,6 +28,7 @@ export const Disk = () => {
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const isAuth = useTypedSelector(state => state.user.isAuth)
+  const user = useTypedSelector(state => state.user.currentUser)
   const isVisible = useTypedSelector(state => state.uploadFiles.isVisible)
   const files = useTypedSelector(state => state.file.files)
   const [isAddFolderModalOpen, setAddFolderModalOpen] = useState(false)
@@ -52,7 +53,13 @@ export const Disk = () => {
   const createFolderHandler = (folderName: string) => {
     createFolderMutation.mutate({ currentFolder, folderName }, {
       onSuccess: (res) => {
-        dispatch(setFiles([...files, res?.data]))
+        const preparedUserData = {
+          ...user,
+          usedSpace: res?.data.usedSpace ?? user?.usedSpace
+        }
+        dispatch(setFiles([...files, res?.data.file]))
+        dispatch(setUser(preparedUserData))
+        sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(preparedUserData))
       }
     })
   }
@@ -86,7 +93,16 @@ export const Disk = () => {
       sessionStorage.setItem(ESSFileKeys.downloads, JSON.stringify(preparedData))
     }
 
-    dispatch(uploadFile(formData, fileForDownload.id)).then(res => dispatch(setFiles([...files, res?.data])))
+    dispatch(uploadFile(formData, fileForDownload.id))
+      .then(res => {
+        const preparedUserData = {
+          ...user,
+          usedSpace: res?.data.usedSpace ?? user?.usedSpace
+        }
+        dispatch(setFiles([...files, res?.data.file]))
+        dispatch(setUser(preparedUserData))
+        sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(preparedUserData))
+      })
   }
 
   const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

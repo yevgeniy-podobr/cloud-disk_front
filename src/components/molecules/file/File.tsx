@@ -4,14 +4,14 @@ import folderIcon from '../../../assets/folder-icon.png'
 import fileIcon from '../../../assets/file-icon.png'
 import closeIcon from '../../../assets/close-icon.png'
 import downloadIcon from '../../../assets/download-icon.png'
-import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles } from "../../../redux";
+import { setFolderStack, setCurrentFolder, useAppDispatch, useTypedSelector, setFiles, setUser } from "../../../redux";
 import { deleteFileApi, downloadFile, renameFile } from "../../../services/fileApi";
 import { sizeFormat } from "../../../utils/script";
 import { EFileType, EFolderDisplayOptions } from "../../../utils/constants/fileConstants";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { Prompt } from "../../atoms";
-import { ESSFileKeys } from "../../../utils/constants/sessionStorageKeys";
+import { ESSFileKeys, ESSUserKeys } from "../../../utils/constants/sessionStorageKeys";
 
 interface IProps {
   name: string,
@@ -27,6 +27,7 @@ export const File = (props: IProps) => {
   const currentFolder = useTypedSelector(state => state.file.currentFolder)
   const folderStack = useTypedSelector(state => state.file.folderStack)
   const files = useTypedSelector(state => state.file.files)
+  const user = useTypedSelector(state => state.user.currentUser)
   const folderDisplay = useTypedSelector(state => state.file.folderDisplay)
   const [newFileName, setNewFileName] = useState<string>(name)
   const [isChangeName, setIsChangeName] = useState(false)
@@ -77,8 +78,14 @@ export const File = (props: IProps) => {
       toast.error('Folder is not empty')
     } else {
       deleteFileMutation.mutate(id, {
-        onSuccess: (status) => {
-          status && status < 300 && dispatch(setFiles(files.filter(file => file?._id !== id)))
+        onSuccess: (res) => {
+          res?.status && res.status < 300 && dispatch(setFiles(files.filter(file => file?._id !== id)))
+          const preparedUserData = {
+            ...user,
+            usedSpace: res?.data.usedSpace ?? user?.usedSpace
+          }
+          dispatch(setUser(preparedUserData))
+          sessionStorage.setItem(ESSUserKeys.userData, JSON.stringify(preparedUserData))
         },
       })
     }
