@@ -5,8 +5,16 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     @media (max-width: $mediumWidth) {
       flex-direction: column;
+    }
+
+    &-fullness {
+      width: 200px;
+      @media (max-width: $mediumWidth) {
+        margin: 5px 0;
+      }
     }
 
     &-btns {

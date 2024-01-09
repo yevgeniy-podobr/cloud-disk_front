@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import './disk.scss';
 import { setCurrentFolder, setFiles, setFolderDisplay, setFolderStack, setUser, useAppDispatch, useTypedSelector } from "../../redux";
 import { createFolder, getFiles, uploadFile } from "../../services/fileApi";
-import { AddFolderModal, FilesList } from "../../components/molecules";
-import { LoadingContent } from "../../components/molecules/loadingContent";
-import { ElemObj, Multiselect, Uploader } from "../../components/molecules";
+import { AddFolderModal, FilesList, CloudFullness, ElemObj, Multiselect, Uploader, LoadingContent } from "../../components/molecules";
 import iconsDisplayIcon from '../../assets/display-icons.png';
 import listDisplayIcon from '../../assets/display-list.png';
 import { EFolderDisplayOptions } from "../../utils/constants/fileConstants";
@@ -49,6 +47,13 @@ export const Disk = () => {
   const createFolderMutation = useMutation({
     mutationFn: (variables: {currentFolder: string | null, folderName: string}) => createFolder(variables.currentFolder, variables.folderName),
   })
+
+  const cloudFullPercentage = useMemo(() => {
+    if (user && user.diskSpace) {
+      return Math.round(((user.usedSpace ?? 0) / user.diskSpace) * 100)
+    }
+    return undefined
+  }, [user])
   
   const createFolderHandler = (folderName: string) => {
     createFolderMutation.mutate({ currentFolder, folderName }, {
@@ -182,7 +187,13 @@ export const Disk = () => {
                     name='file'
                   />
                 </div>
+                
               </div>
+              <CloudFullness
+                title="Cloud Fullness"
+                overallPercentage={cloudFullPercentage}
+                className="disk__header-fullness"
+              />
               <div className="disk__header-right-side">
                 <div className="disk__header-sorting_title">
                   Sorted by:

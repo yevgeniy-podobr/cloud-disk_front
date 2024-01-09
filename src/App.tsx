@@ -39,7 +39,7 @@ const App = () => {
       />
       
       <Navbar/>
-      <div className="app__wrapper container">
+      <div className={`app__wrapper container ${!isAuth ? 'app__auth-page' : ''}`}>
         {(!isAuth && (!tokenFromStorage || !userDataFromStorage))
           ? (
               <Routes>

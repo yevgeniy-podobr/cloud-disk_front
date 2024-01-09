@@ -1,0 +1,34 @@
+@import '../../../globalStyles/main.scss';
+
+.cloud-fullness {
+  display: grid;
+
+  &__percent-block {
+    display: flex;
+    justify-content: space-between;
+    &-title {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    &-percent {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+  &__line {
+    position: relative;
+    height: 11px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: $whiteColor;
+
+    &-filled {
+      height: 100%;
+      background-color: $fontColor;
+      position: absolute;
+      transition: 0.5s;
+      border-radius: 30px;
+    }
+  }
+}

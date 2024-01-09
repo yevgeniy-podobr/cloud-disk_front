@@ -26,7 +26,16 @@ body {
     flex-direction: column;
     background-image: url('assets/cloud-image.jpg');
     background-size: cover;
-    height: calc(100vh - 70px);
+
+    @media (min-height: 700px) {
+      height: calc(100vh - 70px);
+    }
+  }
+
+  &__auth-page {
+    @media (max-width: 400px) {
+      height: calc(100vh - 70px);
+    }
   }
 
   .loading-content {
