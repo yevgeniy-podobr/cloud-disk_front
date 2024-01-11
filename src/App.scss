@@ -27,7 +27,7 @@ body {
     background-image: url('assets/cloud-image.jpg');
     background-size: cover;
 
-    @media (min-height: 700px) {
+    @media (min-height: 600px) {
       height: calc(100vh - 70px);
     }
   }
